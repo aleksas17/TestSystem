@@ -1,0 +1,18 @@
+﻿<script type="text/javascript">
+    $('select').on('change',function () {
+        alert("rnd");
+        var selectedId = $(this).val();
+        $("#statistic").load("/TestAdministration/" + selectedId, {testName: "rnd"});
+
+    });
+</script>
+<h1>Test statistics</h1>
+<div>
+<select class="form-control" id="stats" name="statistics">
+    <option value="_UserStatistics">User statistics</option>
+    <option>Questions statistics</option>
+</select>
+
+<div id="statistic">
+</div>
+</div>

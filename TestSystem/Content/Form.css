@@ -1,0 +1,150 @@
+/*---------Global form style buttons, inputs and validation-----------*/
+
+/*---------Input style for type=text-----------*/
+
+.input-holder {
+    margin-top: 40px;
+    position: relative;
+}
+
+.input-holder > input[type=text],
+.input-holder > input[type=password] {
+    width: 100%;
+    color: #8a8a8a;
+    background: transparent;
+    font-size: 18px;
+    padding: 8px 0px;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #8a8a8a;
+    box-sizing: border-box;
+    transition: border .4s ease all; 
+    -moz-transition: border .4s ease all; 
+    -webkit-transition: border .4s ease all;
+}
+
+.input-holder > input[type=text]:focus,
+.input-holder > input[type=password]:focus { 
+    outline: none;
+    border-color: transparent;
+}
+
+/*---------Input label-----------*/
+
+.input-holder > label {
+    color: #999; 
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    top: 10px;
+    transition: .2s ease all; 
+    -moz-transition: .2s ease all; 
+    -webkit-transition: .2s ease all;
+}
+
+/*---------Input active state-----------*/
+
+.input-holder > input[type=text]:focus ~ label,
+.input-holder > input[type=text]:valid ~ label,
+.input-holder > input[type=password]:focus ~ label,
+.input-holder > input[type=password]:valid ~ label {
+    top: -15px;
+    font-size: 12px;
+    color: #017eff;
+}
+
+/*---------Input bottom bars-----------*/
+
+.input-bar 	{
+    position: relative; 
+    display: block;
+    width: 100%;
+}
+
+.input-bar:before,
+.input-bar:after {
+    content: '';
+    height: 2px; 
+    width: 0;
+    bottom: 1px; 
+    position: absolute;
+    background: #017eff;
+    transition: 0.2s ease all; 
+    -moz-transition: 0.2s ease all; 
+    -webkit-transition: 0.2s ease all;
+}
+
+.input-bar:before {
+    left: 50%;
+}
+
+.input-bar:after {
+    right: 50%; 
+}
+
+/*---------Input bottom bars active animation-----------*/
+
+.input-holder > input[type=text]:focus ~ .input-bar:before,
+.input-holder > input[type=text]:focus ~ .input-bar:after,
+.input-holder > input[type=password]:focus ~ .input-bar:before,
+.input-holder > input[type=password]:focus ~ .input-bar:after {
+    width: 50%;
+}
+
+/*---------Input validation style-----------*/
+
+.field-validation-error, .validation-summary-errors {
+    padding-top: 8px;
+    color: #f95f7d;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+}
+
+.validation-summary-errors {
+    display: flex;
+    justify-content: center;
+}
+
+/*---------Button style-----------*/
+
+button {
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    border: none;
+    border-radius: 40px;
+    background: #283593;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #F5F5F5;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+    transition: box-shadow .5s ease-in-out, transform .5s ease-in-out;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0099ff+1,017eff+100 */
+    background: #0099ff; /* Old browsers */
+    background: -moz-linear-gradient(45deg, #0099ff 1%, #017eff 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, #0099ff 1%,#017eff 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, #0099ff 1%,#017eff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0099ff', endColorstr='#017eff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+button:hover {
+    background: #0099FF;
+}
+
+/*---------Button disabled style-----------*/
+
+button:disabled,
+button[disabled]{
+    background: #dfdfdf;
+    color: #a5a5a5;
+    box-shadow: none;
+    cursor: default;
+    transform: translate3d(0,2px,0);
+}
+
+

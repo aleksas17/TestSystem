@@ -1,0 +1,132 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<TestSystem.Models.Account.UserModel>
+
+@Styles.Render("~/Content/Users.css")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/Scripts/Users.js")
+
+<div id="bubble-popup-helper" onclick="HideBubblePopups()"></div>
+
+<section class="item-container">
+    <div class="list-controlls">
+
+        @using (Html.BeginForm("UserList", "Account", FormMethod.Get, new {id = "list-search"}))
+        {
+            <button type="submit">
+                <svg viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </button>
+            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new {@onfocus = "SearchFocus()", @onblur = "SearchBlur()"})
+        }
+
+        <div>
+            <button class="list-create-item" onclick="OpenCreateUser()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
+                </svg>
+            </button>
+
+            @using (Html.BeginForm("ImportUsers", "Account", FormMethod.Post, new { enctype = "multipart/form-data", name = "upload", @class = "list-import-item"}))
+            {
+                
+                <input class="list-import-item" id="model" type="file" accept="csv" name="model" onchange="UploadFile()" />
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 3L5 6.99h3V14h2V6.99h3L9 3zm7 14.01V10h-2v7.01h-3L15 21l4-3.99h-3z" />
+                </svg>
+            }
+        </div>
+    </div>
+
+    <ul class="item-header">
+        <li>@Html.ActionLink("Username", "UserList", new { sortOrder = ViewBag.UsernameSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+        <li>@Html.ActionLink("Name", "UserList", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+        <li>@Html.ActionLink("LastName", "UserList", new { sortOrder = ViewBag.LastNameSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+        <li>@Html.ActionLink("Position", "UserList", new { sortOrder = ViewBag.PositionSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+        <li>@Html.ActionLink("Group", "UserList", new { sortOrder = ViewBag.GroupSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+        <li></li>
+    </ul>
+
+    <ul class="item-container-shadow">
+        @foreach (var user in Model)
+        {
+            <li class="form-test">
+
+                <ul>
+                    <li>@Html.DisplayFor(modelItem => user.Username)</li>
+                    <li>@Html.DisplayFor(modelItem => user.FirstName)</li>
+                    <li>@Html.DisplayFor(modelItem => user.Lastname)</li>
+                    <li>@Html.DisplayFor(modelItem => user.Position)</li>
+                    <li>@Html.DisplayFor(modelItem => user.Group)</li>
+                    <li id="@user.UserId" onclick="PopupBubbleOpen(this.id)">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                        </svg>
+                    </li>
+                </ul>
+
+                <ul class="form-test-bubble" id="list-item-bubble-@user.UserId">
+
+                    <div class="form-test-bubble-arrow"></div>
+
+                    <ul onclick="OpenEditUser(@user.UserId)">
+                        <li>
+                            <svg>
+                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                            </svg>
+                        </li>
+                        <li>Edit</li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <svg>
+                                <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                            </svg>
+                        </li>
+                        <li>@Html.ActionLink("Delete", "DeleteRecord", new { id = user.UserId }, new { id = "confirmDialog" })</li>
+                    </ul>
+                </ul>
+
+            </li>
+        }
+
+    </ul>
+    <div class="pagination-current-page">
+         Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+    @Html.PagedListPager(Model, page => Url.Action("UserList",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</section>
+
+<section id="create-new-user-helper">
+    <div class="create-new-user"></div>
+</section>
+
+   
+    @*<script type="text/javascript">
+
+        function UploadFile() {
+        document.forms["upload"].submit();
+        }
+
+        function CreateUser() {
+            alert("yolo");
+            $("#partial").load("/Account/AddEditRecord");
+
+        }
+
+        $(document).ready(function () {
+            $.ajaxSetup({ cache: false });
+
+
+            $(document).on("click", ".createUser", function (e) {
+                alert("ts");
+            e.preventDefault();
+           
+            var url = $(this).attr('href');
+            alert(value);
+            $("#partial").load(url);
+        });
+
+    });
+</script>*@

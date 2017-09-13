@@ -1,0 +1,161 @@
+﻿@model TestSystem.Models.Account.UserModel
+
+@using (Ajax.BeginForm("AddEditRecord", "Account", null, new AjaxOptions
+{
+    OnSuccess = "onSuccess()",
+    UpdateTargetId = "create-new-user-helper",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}, new { @class = "create-new-user"}))
+{
+    if (!ViewBag.IsUpdate)
+    {
+        <h1>Create User
+            <button type="button"onclick="CloseCreateUser()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </button>
+        </h1>
+    }
+    else
+    {
+        <h1>
+            Edit User
+            <button type="button" onclick="CloseCreateUser()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                </svg>
+            </button>
+        </h1>
+        @Html.HiddenFor(model => model.UserId)
+    }
+    @Html.EditorFor(m => m.Username, new {htmlAttributes = new {placeholder = "Username"}})
+    @Html.ValidationMessageFor(m => m.Username)
+
+    @Html.EditorFor(m => m.FirstName, new {htmlAttributes = new {placeholder = "FirstName"}})
+    @Html.ValidationMessageFor(m => m.FirstName)
+
+    @Html.EditorFor(m => m.Lastname, new {htmlAttributes = new {placeholder = "Lastname"}})
+    @Html.ValidationMessageFor(m => m.Lastname)
+
+    <select id="Role" name="Role">
+        <option value="">Role</option>
+        <option value="User">User</option>
+        <option value="Admin">Admin</option>
+    </select>
+    @Html.ValidationMessageFor(m => m.Role)
+
+    @Html.EditorFor(m => m.Position, new {htmlAttributes = new {placeholder = "Position"}})
+    @Html.ValidationMessageFor(m => m.Position)
+
+    @Html.EditorFor(m => m.Group, new {htmlAttributes = new {placeholder = "Group"}})
+    @Html.ValidationMessageFor(m => m.Group)
+
+    @Html.PasswordFor(m => m.Password, new {placeholder = "Password"})
+    @Html.ValidationMessageFor(m => m.Password)
+
+    @Html.PasswordFor(m => m.RepeatPassword, new {placeholder = "Confirm password"})
+    @Html.ValidationMessageFor(m => m.RepeatPassword)
+
+    if (!ViewBag.IsUpdate)
+    {
+        <button type="submit" value="Save" name="cmd">REGISTER</button>
+    }
+    else
+    {
+        <button type="submit" value="Update" name="cmd" > Edit </button>
+    }
+
+}
+
+@*@using (Ajax.BeginForm("AddEditRecord", "Account", null, new AjaxOptions { 
+    OnSuccess = "onSuccess",
+    UpdateTargetId = "dialog-edit",
+    InsertionMode = InsertionMode.Replace, 
+    HttpMethod = "POST"
+}, null))
+{
+    @Html.ValidationSummary(true)
+ <fieldset>
+     <legend>User</legend>
+     @if (ViewBag.IsUpdate == true)
+     { 
+         @Html.HiddenFor(model => model.UserId)
+     }
+     <div class="editor-label">
+         @Html.LabelFor(model => model.Username)
+     </div>
+     <div class="editor-field">
+         @Html.EditorFor(model => model.Username)
+         @Html.ValidationMessageFor(model => model.Username)
+     </div>
+     <div class="editor-label">
+         @Html.LabelFor(model => model.FirstName)
+     </div>
+     <div class="editor-field">
+         @Html.EditorFor(model => model.FirstName)
+         @Html.ValidationMessageFor(model => model.FirstName)
+     </div>
+     <div class="editor-label">
+         @Html.LabelFor(model => model.Lastname)
+     </div>
+     <div class="editor-field">
+         @Html.EditorFor(model => model.Lastname)
+         @Html.ValidationMessageFor(model => model.Lastname)
+     </div>
+     <div class="editor-label">
+         @Html.LabelFor(model => model.Position)
+     </div>
+     <div class="editor-field">
+         @Html.EditorFor(model => model.Position)
+         @Html.ValidationMessageFor(model => model.Position)
+     </div>
+     <div class="editor-label">
+         @Html.LabelFor(model => model.Group)
+     </div>
+     <div class="editor-field">
+         @Html.EditorFor(model => model.Group)
+         @Html.ValidationMessageFor(model => model.Group)
+     </div>
+     <div class="editor-label">
+         @Html.LabelFor(model => model.Password)
+     </div>
+     <div class="editor-field">
+         @Html.PasswordFor(model => model.Password)
+         @Html.ValidationMessageFor(model => model.Password)
+     </div>
+     <div class="editor-label">
+         @Html.LabelFor(model => model.RepeatPassword)
+     </div>
+     <div class="editor-field">
+         @Html.PasswordFor(model => model.RepeatPassword)
+         @Html.ValidationMessageFor(model => model.RepeatPassword)
+     </div>
+     <p>
+         @if (ViewBag.IsUpdate == true)
+         { 
+             <input type="submit" value="Update" id="btnUpdate" name="cmd" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
+         }
+         else
+         { 
+             <input type="submit" value="Save" id="btnSave" name="cmd" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
+         }
+         <input type="button" value="Cancel" id="btncancel" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
+     </p>
+ </fieldset>
+}*@
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse(document);
+        var onSuccess = function (result) {
+            alert("ts");
+            $.validator.unobtrusive.parse($(result));
+        };
+    });
+</script>
+
+   
+

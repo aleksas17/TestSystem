@@ -1,0 +1,100 @@
+﻿@using TestSystem.ViewModels.TestAdministration
+@model List<TestTemplatesViewModel>
+<div id="TestPanel">
+    <div id="TestList"> 
+        <table class="table table-bordered testTable">
+            <thead>
+            <tr>
+                <th>TestName</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var test in Model)
+            {
+                <tr id="@test.TestId">
+                    <th>@test.Name</th>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    @Html.ActionLink("Create New", "AddTest", "TestAdministration", new { @id = "testCreateDialog" })
+</div>
+
+<div id="partial">
+</div>
+<div id="dialog-confirm" style="display: none">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+    </p>
+</div>
+<div id="dialog" style="display: none">
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(window).load(function () {
+            var testTable = $(".testTable tbody").children("tr:first");
+            if (testTable.length > 0) {
+                testTable.addClass('selected');
+                loadPartialView();
+            }
+        });
+
+        function loadPartialView() {
+            var value = $('.selected').attr('id');
+            alert(value);
+            $("#partial").load("/TestAdministration/TestTemplatesPartial",{ testId: value });
+        }
+
+    $(".testTable tbody tr").click(function () {
+        $(this).addClass('selected').siblings().removeClass('selected');
+        loadPartialView();
+    });
+
+    //$("#TestNavigation #properties").click(function () {
+    //    loadTestTemplateProperties();
+    //});
+
+    //function loadTestTemplateProperties() {
+    //    var value = $('.selected').find('th:first').html();
+    //    $("#partial").load("/TestAdministration/_TestTemplateProperties",
+    //        { testName: value });
+    //}
+
+    //function loadTestTemplateQuestions() {
+    //    var value = $('.selected').find('th:first').html();
+    //    $("#partial").load("/TestAdministration/_TestTemplateQuestions",
+    //        { testName: value });
+    //}
+
+    //$("#TestNavigation #questions").click(function () {
+    //    loadTestTemplateQuestions();
+    //});
+   
+
+    $(document).on("click", "#testCreateDialog", function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $("#dialog").dialog({
+            title: 'Add Test',
+            autoOpen: false,
+            resizable: false,
+            height: 250,
+            width: 350,
+            show: { effect: 'drop', direction: "up" },
+            modal: true,
+            draggable: true,
+            open: function (event, ui) {
+                $(this).load(url);
+            },
+            close: function (event, ui) {
+                $(this).dialog('close');
+            }
+        });
+        $("#dialog").dialog('open');
+        return false;
+        });
+    });
+</script>

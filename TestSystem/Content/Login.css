@@ -1,0 +1,121 @@
+/*---------Logo animation-----------*/
+
+@keyframes stroke-fill {
+    0% {transform: translate3d(100px,0,0) scale3d(2,2,1); }
+    70%  {stroke-dashoffset: 0;}
+    80% {stroke-dashoffset: 0; fill-opacity: 1;}
+    90% {transform: translate3d(100px,0,0) scale3d(2,2,1);}
+    100% {stroke-dashoffset: 0; fill-opacity: 1;}
+}
+
+@keyframes slide-right {
+    from  {transform: translate3d(-200px,0,0);}
+    to {transform: translate3d(0,0,0);}
+}
+
+/*---------Main container-----------*/
+
+.login-card {
+    width: 780px;
+    height: 480px;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    display: flex;
+}
+
+/*---------Login card left side-----------*/
+
+.teltonika-name-svg {
+    fill: #ffffff;
+    transform: translate3d(-200px,0,0);
+    animation: slide-right .5s linear forwards;
+    animation-delay: 4s;
+}
+
+.teltonika-logo-svg {
+    fill: #ffffff;
+    fill-opacity: 0;
+    stroke: #ffffff;
+    stroke-width: 1;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: stroke-fill 4s linear forwards;
+}
+
+.container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card-left {
+    position: relative;
+    height: 100%;
+    width: 60%;
+    overflow: hidden;
+    background: #0099ff; /* Old browsers */
+    background: -moz-linear-gradient(45deg, #0099ff 1%, #017eff 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, #0099ff 1%,#017eff 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, #0099ff 1%,#017eff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.login-card-left video {
+    position: absolute;
+    width: 200%;
+    mix-blend-mode: multiply;
+    filter: grayscale(100%);
+    z-index: 1;
+}
+
+.animation-holder {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.animation-holder div:first-child svg {
+    width: 100px;
+    height: 100px;
+}
+
+.animation-holder div:last-child {
+    overflow: hidden;
+}
+
+.animation-holder div:last-child svg {
+    width: 200px;
+    height: 200px;
+}
+
+/*---------Login card right side-----------*/
+
+.login-card-right {
+    box-sizing: border-box;
+    padding: 95px 40px 40px 40px;
+    background: #fafafa;
+    height: 100%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-card-right p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    color: #555555;
+}
+
+.login-card-right button {
+    align-self: center;
+    margin-top: 50px;
+    height: 36px;
+    width: 120px; 
+}
+
+

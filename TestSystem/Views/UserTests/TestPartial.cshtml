@@ -1,0 +1,30 @@
+﻿@model TestSystem.ViewModels.UserTests.TestPartialViewModel
+@{
+    Layout = "";
+}
+@using (Ajax.BeginForm("TestPartial", "UserTests", null, new AjaxOptions
+{
+    OnSuccess = "onSuccess()",
+    UpdateTargetId = "ts",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}, new { @class = "test-question" }))
+{
+     <h1>@Model.QuestionModel.Name</h1>
+     @Html.HiddenFor(model => model.UserAnswerId)
+     @Html.HiddenFor(model => model.UserTestId)
+     <ul>
+         @foreach (var answer in Model.QuestionModel.Answers)
+         {
+             <li>
+                 
+                 @Html.RadioButton("answer", answer.AnswerId, new {id="option-" + answer.AnswerId })
+                 <label for="@("option-"+answer.AnswerId)">@answer.Name</label>
+                 <div class="check"></div>
+             </li>
+         }
+     </ul>
+    <button disabled="disabled" type="submit">NEXT</button>
+ }
+@Scripts.Render("~/bundles/jquery")                 
+@Scripts.Render("~/Scripts/TestPartial.js")

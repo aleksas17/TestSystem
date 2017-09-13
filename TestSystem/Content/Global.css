@@ -1,0 +1,22 @@
+﻿/*---------Global style-----------*/
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+*:focus {
+    outline: none;
+}
+
+html, body {
+    background: #ffffff;
+}
+
+li > a {
+    color: inherit;
+}
+

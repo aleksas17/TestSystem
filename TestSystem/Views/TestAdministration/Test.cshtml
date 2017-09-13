@@ -1,0 +1,76 @@
+﻿@model List<TestSystem.ViewModels.TestAdministration.TestViewModel>
+<div id="TestPanel">
+    <div id="TestList">
+        <table class="table table-bordered testTable">
+            <thead>
+            <tr>
+                <th>TestName</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var test in Model)
+            {
+                <tr>
+                    <th id=@test.TestId>@test.Name</th>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="TestNavigation">
+    <button type="button" id="properties" class="btn btn-primary">Properties</button>
+    <button type="button" id="statistics" class="btn btn-primary">Statistics</button>
+    <button type="button" id="questions" class="btn btn-primary">Questions</button>
+</div>
+<div id="partial">
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(window).load(function () {
+            var testTable = $(".testTable tbody").children("tr:first");
+            if (testTable.length > 0) {
+                testTable.addClass('selected');
+                loadTestProperties();
+            }
+        });
+
+        $(".testTable tbody tr").click(function () {
+            $(this).addClass('selected').siblings().removeClass('selected');
+            loadTestProperties();
+        });
+
+        $("#TestTemplateNavigation #properties").click(function () {
+            loadTestProperties();
+        });
+
+        function loadTestProperties() {
+            var value = $('.selected').find('th:first').html();
+            $("#partial").load("/TestAdministration/_TestProperties",
+                { testName: value });
+        }
+
+        function loadTestTemplateQuestions() {
+            var value = $('.selected').find('th:first').html();
+            $("#partial").load("/TestAdministration/_TestTemplateQuestions",
+                { testName: value });
+        }
+
+        $("#TestTemplateNavigation #questions").click(function () {
+            loadTestTemplateQuestions();
+        });
+
+        function loadTestStatistics() {
+            var value = $('.selected').find('th:first').html();
+            $("#partial").load("/TestAdministration/_TestStatistics",
+                { testName: value });
+        }
+
+        $("#TestTemplateNavigation #statistics").click(function () {
+            loadTestStatistics();
+        });
+    });
+</script>
