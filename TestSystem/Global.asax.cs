@@ -50,6 +50,12 @@ namespace TestSystem
                 cnf.CreateMap<UserCsvModel, User>();
                 cnf.CreateMap<UserAnswer, TestPartialViewModel>()
                     .ForMember(a => a.QuestionModel, b => b.MapFrom(src => src.Question));
+                cnf.CreateMap<AssignTestPartialViewModel, UserTest>()
+                    .ForMember(a => a.UserId, b => b.MapFrom(src => src.UserId))
+                    .ForMember(a => a.TestId, b => b.MapFrom(src => src.TestId))
+                    .ForMember(a => a.Status, b => b.MapFrom(src => src.Status))
+                    .ForMember(a => a.TestStart, b => b.MapFrom(src => src.TestStart))
+                    .ForMember(a => a.Time, b => b.MapFrom(src => src.Time));
             });
             ModelBinders.Binders.Add(typeof(UserCsvModel[]), new CsvModelBinder<UserCsvModel>());
         }

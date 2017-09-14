@@ -50,21 +50,11 @@ namespace TestSystem.Controllers
         {
             using (var uow = new UnitOfWork())
             {
-                //var userTest = uow.UserTestRepository.GetUserTestById(userTestId);
-             
                 var userAnswer = uow.UserAnswerRepository.GetNextUserAnswer(id);
-                //userAnswer.Question.Answers = userAnswer.Question.Answers.OrderBy(r => Guid.NewGuid()).Take(5).ToList();
                 if (userAnswer == null )
                 {
                     return RedirectToAction("TestFinish",new {id});
                 }
-                //if (userAnswer == null || userTest.TestStart.Value.AddMinutes(duration)<=DateTime.Now)
-                //{
-                //    userTest.Status = "finished";
-                //    userTest.Time = (Convert.ToDateTime(userTest.TestStart) - DateTime.Now).TotalMinutes;
-                //    uow.Commit();
-                //    return RedirectToAction("TestList");
-                //}
                 var testPartialViewModel = Mapper.Map<TestPartialViewModel>(userAnswer);
                 return View(testPartialViewModel);
             }

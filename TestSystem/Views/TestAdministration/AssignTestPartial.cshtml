@@ -1,8 +1,4 @@
 ﻿@model TestSystem.ViewModels.TestAdministration.AssignTestPartialViewModel
-@{
-    Layout = "";
-}
-
 @Styles.Render("~/Content/AssignTest.css")
 
 @using (Ajax.BeginForm("AssignTestPartial", "TestAdministration", null, new AjaxOptions
@@ -14,7 +10,8 @@
 }, new { @class = "create-new-user" }))
 {
     <h1>
-        Assign Test: @Model.Name
+        Assign Test: @Model.TestName
+        @Html.HiddenFor(model => model.TestId)
         <button onclick="CloseCreateUser()">
             <svg viewBox="0 0 24 24">
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -22,8 +19,8 @@
         </button>
     </h1>
 
-    <input type="datetime-local"></input>
-    <input placeholder="Test Time In Minutes"></input>
+    @Html.EditorFor(m => m.TestStart, new { htmlAttributes = new { placeholder = "test start time" } })
+    @Html.EditorFor(m => m.Time, new { htmlAttributes = new { placeholder = "Test Time In Minutes" } })
 
     <div class="user-list-table">
 
@@ -48,7 +45,7 @@
         <div class="user-list-item-holder">
             <div class="user-list-table-item">
                 <div>
-                    <input type="checkbox" />
+                    <input type="checkbox" name="usersIds" value="@user.UserId">
                     <label>@user.FirstName @user.Lastname</label>
                 </div>
                 <label>@user.Group</label>
@@ -60,4 +57,13 @@
 }
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/Scripts/AssignTest.js")  
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse(document);
+        var onSuccess = function (result) {
+            alert("ts");
+            $.validator.unobtrusive.parse($(result));
+        };
+    });
+</script>*@
 

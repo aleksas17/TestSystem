@@ -18,7 +18,7 @@ namespace TestSystem.Controllers
     public class TestAdministrationController : Controller
     {
         /// <summary>
-        /// Deletes test from list
+        /// Deletes test from list.
         /// </summary>
         /// <param name="id">Test id</param>
         /// <returns>Refrested list</returns>
@@ -34,53 +34,65 @@ namespace TestSystem.Controllers
             return RedirectToAction("TestList", "TestAdministration");
         }
 
+        /// <summary>
+        /// Get user list for assign popup.
+        /// </summary>
+        /// <param name="id">Test id</param>
+        /// <returns>Partial view with viewmodel</returns>
         [Authorize(Roles ="Admin")]
         [HttpGet]
         public ActionResult AssignTest(int? id)
         {
-
-            var userModels = new List<UserModel>();
+            var assignTestPartialViewModel = new AssignTestPartialViewModel();
             using (var uow = new UnitOfWork())
             {
+                // Geting user list.
+                var userModels = new List<UserModel>();
                 IEnumerable<User> users;
-                // Geting user list
                 users = uow.UserRepository.GetAll();
                 foreach (var user in users)
                 {
                     var userModel = Mapper.Map<UserModel>(user);
                     userModels.Add(userModel);
                 }
-                var assignTestPartialViewModel = new AssignTestPartialViewModel();
                 assignTestPartialViewModel.UserModel = userModels;
-                // Geting test name.
+                // Geting test name and id.
                 var test = uow.TestRepository.Get(id);
-                assignTestPartialViewModel.Name = test.Name;
-                return PartialView("AssignTestPartial", assignTestPartialViewModel);
+                assignTestPartialViewModel.TestName = test.Name;
+                assignTestPartialViewModel.TestId = test.TestId;
             }
-            
+            return PartialView("AssignTestPartial", assignTestPartialViewModel);
         }
 
+        /// <summary>
+        /// Assign test to selected user.
+        /// </summary>
+        /// <param name="assignTestPartialViewModel">Test id, test time and start date</param>
+        /// <param name="usersIds">Selected users</param>
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult AssignTestPartial(UserTestModel userTestModel, string answer)
+        public ActionResult AssignTestPartial(AssignTestPartialViewModel assignTestPartialViewModel, int[] usersIds)
         {
-
-            var name = answer;
-            return View();
-
+            if (!ModelState.IsValid || usersIds == null) return new EmptyResult();
+            using (var uow = new UnitOfWork())
+            {
+                foreach (var userId in usersIds)
+                {
+                    // Adding to userTest table.
+                    assignTestPartialViewModel.UserId = userId;
+                    var usertest = Mapper.Map<UserTest>(assignTestPartialViewModel);
+                    uow.UserTestRepository.Add(usertest);
+                }
+                uow.Commit();
+            }
+            return JavaScript("location.reload(true)");
         }
-
 
         [Authorize(Roles = "Admin")]
         public ActionResult TestList(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "username_desc" : "";
-            //ViewBag.NameSortParm = sortOrder == "Name" ? "name_desc" : "Name";
-            //ViewBag.LastNameSortParm = sortOrder == "LastName" ? "lastName_desc" : "LastName";
-            //ViewBag.PositionSortParm = sortOrder == "Position" ? "position_desc" : "Position";
-            //ViewBag.GroupSortParm = sortOrder == "Group" ? "group_desc" : "Group";
-
             if (searchString != null)
             {
                 page = 1;
