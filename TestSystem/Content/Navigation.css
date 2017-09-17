@@ -1,80 +1,167 @@
 ﻿/*---------Navigation-----------*/
 
-header {
+body > nav {
     position: fixed;
-    width: 100%;
-    background: #283593;
-    box-sizing: border-box;
-    padding: 8px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    height: 100%;
+    width: 300px;
     z-index: 100;
+    transform: translate3d(-220px,0,0);
+    transition: all .7s cubic-bezier(0.91, 0.01, 0.6, 0.99);
+    overflow: hidden;
+    background: #ffffff;
 }
 
-.hamburgerIcon {
-    padding: 12px;
-    width: 24px;
-    height: 24px;
+.slide-nav-back {
+    transform: translate3d(0,0,0);
+    -webkit-box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.35);
+}
+
+nav > div:first-child {
+    position: absolute;
+    z-index: 100;
+    padding: 100px;
+    width: 100%;
+    height: 100%;
+    background-color: #017eff;
+    transform: translate3d(0,0,0);
+    transition: all 1s cubic-bezier(0.91, 0.01, 0.6, 0.99);
+    backface-visibility: hidden;
+    outline: 1px solid transparent;
+    border-style: solid;
+    border-color: #017eff;
+}
+
+.start-animation {
+    transform: translate3d(0,-55%,0) rotate(-75deg)!important;
+}
+
+.header-item-holder > header {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 150px;
+}
+
+.company-name {
+    position: relative;
+    z-index: 100;
+    width: 200px;
+    height: 40px;
+    background-image: url(../Resources/Svgs/teltonika_logo_name.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/*---------Hamburger logo with it's animations-----------*/
+
+.hamburger-logo {
+    position: relative;
+    z-index: 100;
+    display: block;
+    position: relative;
+    cursor: pointer; 
+    width: 30px;
+    box-sizing: border-box;
+    margin: 5px;
+    padding-top: 15px;
+}
+
+.hamburger-logo span, 
+.hamburger-logo span:before, 
+.hamburger-logo span:after {
+    height: 3px;
+    width: 30px;
+    background: #ffffff;
+    display: block;
+    content: "";
+    position: absolute;
+    left: 50%;
+    margin-left: -15px;
     cursor: pointer;
 }
 
-.hamburgerIcon svg {
-    fill: #ffffff;
+.hamburger-logo span {
+    transition: background-color .3s ease .3s;
+    -webkit-transition: background-color .3s ease .3s;
 }
 
-header > svg {
-    height: 40px;
-    fill: #ffffff;
+.hamburger-logo span:before {
+    top: -9px;
+    transition: top .2s ease .2s, transform .2s ease;
+    -webkit-transition: top .2s ease .2s, -webkit-transform .2s ease;
 }
 
-.userImage {
-    background: #ffffff;
-    margin: 8px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+.hamburger-logo span:after {
+    bottom: -9px;
+    transition: bottom .2s ease .2s, transform .2s ease;
+    -webkit-transition: bottom .2s ease .2s, -webkit-transform .2s ease;
 }
 
-#sideControl {
-    position: fixed;
-    top: 0px;
-    width: 280px;
-    height: 100%;
-    background: #ffffff;
-    box-shadow: 0 0 16px rgba(0,0,0,.28);
-    transition: transform .25s cubic-bezier(0.4,0.0,0.2,1),visibility 0s linear 0s;
-    transform: translate3d(-280px,0,0);
-    z-index: 102;
-    padding: 60px 0 0 0;
+.hamburger-logo.active span {
+    background-color: transparent;
+    transition: background-color .3s ease;
+    -webkit-transition: background-color .3s ease;
 }
 
-#navHelper {
-    position: fixed;
+.hamburger-logo.active span:before {
+    top: 0;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    transition: top .2s ease .1s, transform .2s ease .3s;
+    -webkit-transition: top .2s ease .1s, -webkit-transform .2s ease .3s;
+}
+
+.hamburger-logo.active span:after {
+    bottom: 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    transition: bottom .2s ease .1s, transform .2s ease .3s;
+    -webkit-transition: bottom .2s ease .1s, -webkit-transform .2s ease .3s;
+}
+
+/*---------Navigation list items-----------*/
+
+.header-item-holder {
     width: 100%;
     height: 100%;
-    top: 0px;
-    display: none;
-    z-index: 101;
+    display: flex;
+    flex-direction: column;
 }
 
-nav ul {
-    
-    padding: 0;
+.header-item-holder ul {
+    display: flex;
+    flex-direction: column;
 }
 
-nav ul li {
-    padding: 18px 0px 18px 28px;
+.header-item-holder ul li a {
+    display: flex;
+    align-items: center;
     font-family: 'Roboto', sans-serif;
     font-size: 14px;
     font-weight: 500;
-    text-rendering: optimizeLegibility;
-    color: #555555;
+    color: #293341;
     cursor: pointer;
-    
+    transition: all 1s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-nav ul li:hover {
-    background: #eeeeee;
+.header-item-holder ul li a label {
+    margin: 16px;
+    cursor: pointer;
+}
+
+.header-item-holder ul li a:hover {
+    background: #E7E7E7;
+}
+
+.header-item-holder ul li a svg {
+    margin: 16px;
+    height: 30px;
+    width: 30px;
+    fill: #969aa1;
+}
+
+.header-item-holder ul hr {
+    margin: 4px 0px;
+    border: 1px solid #efeeef;
 }

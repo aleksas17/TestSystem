@@ -171,7 +171,7 @@
 .PagedList-skipToPrevious, .PagedList-skipToNext {
     width: 30px;
     height: 30px;
-    background-image: url("~/Resources/Icons/icon-next.svg");
+    background-image: url("../Resources/Svgs/navigate_next.svg");
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 50%;
