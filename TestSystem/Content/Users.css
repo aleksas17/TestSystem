@@ -288,9 +288,11 @@
     align-items: center;
     visibility: hidden;
     z-index: 101;
+    overflow: auto;
 }
 
-.create-new-user {
+.create-new-user, 
+.create-new-test {
     box-sizing: border-box;
     padding: 40px;
     background: #f5f5f5;
@@ -299,62 +301,70 @@
     flex-direction: column;
 }
 
-    .create-new-user input:first-child {
-        margin-top: 0px;
-    }
+.create-new-user input:first-child,
+.create-new-test input:first-child {
+    margin-top: 0px;
+}
 
-    .create-new-user input {
-        width: 500px;
-        margin-top: 30px;
-    }
+.create-new-user input,
+.create-new-test input {
+    width: 500px;
+    margin-top: 30px;
+}
 
-    .create-new-user select {
-        background: transparent;
-        height: 24px;
-        margin-top: 30px;
-        padding-bottom: 5px;
-        font-family: 'Roboto', sans-serif;
-        font-size: 14px;
-        border-width: 0;
-        border-bottom-width: 1px;
-        border-color: #757575;
-        transition: .1s ease-in-out;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-    }
+.create-new-user select,
+.create-new-test select {
+    background: transparent;
+    height: 24px;
+    margin-top: 30px;
+    padding-bottom: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-color: #757575;
+    transition: .1s ease-in-out;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
 
-    .create-new-user h1 {
-        font-family: 'Roboto', sans-serif;
-        font-size: 20px;
-        font-weight: 400;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+.create-new-user h1,
+.create-new-test h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    .create-new-user > button {
-        margin-top: 50px;
-        height: 36px;
-        width: 120px;
-        align-self: center;
-    }
+.create-new-user > button,
+.create-new-test > button {
+    margin-top: 50px;
+    height: 36px;
+    width: 120px;
+    align-self: center;
+}
 
-    .create-new-user h1 button {
-        border: none;
-        box-shadow: none;
-        border-radius: 50%;
-        padding: 5px;
-        height: 24px;
-        width: 24px;
-        background: transparent;
-        cursor: pointer;
-    }
+.create-new-user h1 button,
+.create-new-test h1 button {
+    border: none;
+    box-shadow: none;
+    border-radius: 50%;
+    padding: 5px;
+    height: 24px;
+    width: 24px;
+    background: transparent;
+    cursor: pointer;
+}
 
-        .create-new-user h1 button:hover {
-            background: #bebebe;
-        }
+.create-new-user h1 button:hover,
+.create-new-test h1 button:hover {
+    background: #bebebe;
+}
 
-        .create-new-user h1 button svg {
-            fill: #717171;
-        }
+.create-new-user h1 button svg,
+.create-new-test h1 button svg {
+    fill: #717171;
+}

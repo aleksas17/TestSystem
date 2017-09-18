@@ -35,6 +35,24 @@ namespace TestSystem.Controllers
         }
 
         /// <summary>
+        /// Create user popup.
+        /// </summary>
+        /// <returns>Partial view with viewmodel</returns>
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult CreateTest()
+        {
+            return PartialView("TestCreatePartial");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult CreateTest(TestCreateViewModel testCreateViewModel)
+        {
+            return JavaScript("location.reload(true)");
+        }
+
+        /// <summary>
         /// Get user list for assign popup.
         /// </summary>
         /// <param name="id">Test id</param>

@@ -7,7 +7,7 @@ namespace TestSystem.ViewModels.TestAdministration
 {
     public class AssignTestPartialViewModel
     {
-        #region Publick Propertys
+        #region Public Propertys
 
         /// <summary>
         /// Test time.

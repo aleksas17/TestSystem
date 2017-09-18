@@ -5,9 +5,8 @@ namespace TestSystem.Models.TestAdministration
 {
     public class QuestionModel
     {
-        public string Name { get; set; }
-        public string Choices { get; set; }
-
-        public List<AnswerModel> Answers { get; set; }
+        public int QuestionId { get; set; }
+        public int TestId { get; set; }
+        public string Name;
     }
 }

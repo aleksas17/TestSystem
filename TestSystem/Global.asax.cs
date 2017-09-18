@@ -37,14 +37,14 @@ namespace TestSystem
                 cnf.CreateMap<Test, TestTemplatesViewModel>();
                 cnf.CreateMap<User, UserModel>();
                 cnf.CreateMap<Test, TestModel>();
-                cnf.CreateMap<Answer, TestAnswer>();
+                //cnf.CreateMap<Answer, TestAnswer>();
                 cnf.CreateMap<UserModel, User>().ForAllMembers(a=> a.Condition((src, dest, srcVal, destVal, c) => srcVal != null));
-                cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>().ForMember(a => a.Answers, b => b.MapFrom(src => src.Answers));
+                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>().ForMember(a => a.Answers, b => b.MapFrom(src => src.Answers));
                 cnf.CreateMap<Test, TestViewModel>();
                 cnf.CreateMap<UserTest, Models.UserTests.UserTestModel>().ForMember("Name", opt => opt.MapFrom(b => b.Test.Name));
                 cnf.CreateMap<UserAnswer, UserAnswerModel>();
                 cnf.CreateMap<Question, Models.UserTests.QuestionModel>();
-                cnf.CreateMap<Answer, AnswerModel>();
+                //cnf.CreateMap<Answer, AnswerModel>();
                 cnf.CreateMap<Question, UserAnswer>();
                 cnf.CreateMap<UserTest, UserStatisticsModel>().ForMember(a => a.Group,b => b.MapFrom(src => src.User));
                 cnf.CreateMap<UserCsvModel, User>();

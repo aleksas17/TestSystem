@@ -4,8 +4,8 @@ namespace TestSystem.Models.UserTests
 {
     public class QuestionModel
     {
+        public int QuestionId { get; set; }
+        public int TestId { get; set; }
         public string Name;
-        public List<AnswerModel> Answers { get; set; }
     }
-  
 }
