@@ -14,6 +14,7 @@ using TestSystem.Utilities;
 using TestSystem.ViewModels.TestAdministration;
 using TestSystem.ViewModels.UserTests;
 using TestViewModel = TestSystem.ViewModels.TestAdministration.TestViewModel;
+using System.Collections.Generic;
 
 namespace TestSystem
 {
@@ -32,9 +33,43 @@ namespace TestSystem
             }
             Mapper.Initialize(cnf =>
             {
-                cnf.CreateMap<Test, TestTemplatesPartialViewModel>()
-                    .ForMember(a => a.QuestionModels, b => b.MapFrom(src => src.Questions));
-                cnf.CreateMap<Test, TestTemplatesViewModel>();
+                cnf.CreateMap<TestCreateViewModel, Test>();
+                // .ForMember(opt => opt.Questions,a=>a.Ignore());
+                cnf.CreateMap<Models.TestAdministration.QuestionModel, Question>();
+                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>();
+
+                cnf.CreateMap<Models.TestAdministration.AnswerModel, Answer>();
+                
+                //cnf.CreateMap<Test, TestCreateViewModel>().ForMember(dest => dest.Questions,
+                //    opt => opt.MapFrom
+                //    (
+                //        src => Mapper.Map<List<Question>, List<Models.TestAdministration.QuestionModel>>(src.Questions)
+                //    )
+                //);
+
+                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>().ForMember(dest => dest.Answers,
+                //    opt => opt.MapFrom
+                //    (
+                //        src => Mapper.Map<List<Answer>, List<Models.TestAdministration.AnswerModel>>(src.Answers)
+                //    )
+                //);
+
+                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>()
+                //    .ForMember(dest => dest.Answers, opt => opt.MapFrom(src => src.Answers));
+
+                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>();
+                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>()
+                //    .ConstructUsing(ct => Mapper.Map<Models.TestAdministration.QuestionModel>(ct.Answers))
+                //    .ForAllMembers(opt => opt.Ignore());
+                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>()
+                //    .ForMember(a => a.Answers, b => b.MapFrom(src => src.Answers));
+
+                //cnf.CreateMap<Answer, Models.TestAdministration.AnswerModel>();
+
+                //cnf.CreateMap<Test, TestTemplatesPartialViewModel>()
+                //    .ForMember(a => a.QuestionModels, b => b.MapFrom(src => src.Questions));
+                //cnf.CreateMap<Test, TestTemplatesViewModel>();
+
                 cnf.CreateMap<User, UserModel>();
                 cnf.CreateMap<Test, TestModel>();
                 //cnf.CreateMap<Answer, TestAnswer>();
@@ -44,7 +79,6 @@ namespace TestSystem
                 cnf.CreateMap<UserTest, Models.UserTests.UserTestModel>().ForMember("Name", opt => opt.MapFrom(b => b.Test.Name));
                 cnf.CreateMap<UserAnswer, UserAnswerModel>();
                 cnf.CreateMap<Question, Models.UserTests.QuestionModel>();
-                //cnf.CreateMap<Answer, AnswerModel>();
                 cnf.CreateMap<Question, UserAnswer>();
                 cnf.CreateMap<UserTest, UserStatisticsModel>().ForMember(a => a.Group,b => b.MapFrom(src => src.User));
                 cnf.CreateMap<UserCsvModel, User>();
@@ -56,6 +90,7 @@ namespace TestSystem
                     .ForMember(a => a.Status, b => b.MapFrom(src => src.Status))
                     .ForMember(a => a.TestStart, b => b.MapFrom(src => src.TestStart))
                     .ForMember(a => a.Time, b => b.MapFrom(src => src.Time));
+                
             });
             ModelBinders.Binders.Add(typeof(UserCsvModel[]), new CsvModelBinder<UserCsvModel>());
         }

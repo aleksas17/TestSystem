@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TestSystem.Models.TestAdministration;
 
 namespace TestSystem.ViewModels.TestAdministration
@@ -10,17 +11,16 @@ namespace TestSystem.ViewModels.TestAdministration
         /// <summary>
         /// Main test 
         /// </summary>
-        public TestModel TestModel { get; set; }
+        public string Name { get; set; }
+        public string Language { get; set; }
+        public int Duration { get; set; }
+        public string Status { get; set; }
+        public DateTime? TestEnd { get; set; }
 
         /// <summary>
         /// Test questions
         /// </summary>
-        public IEnumerable<QuestionModel> QuestionModel { get; set; }
-
-        /// <summary>
-        /// Test questions choices with answers
-        /// </summary>
-        public IEnumerable<AnswerModel> AnswerModel { get; set; }
+        public List<QuestionModel> Questions { get; set; }
 
         #endregion
     }

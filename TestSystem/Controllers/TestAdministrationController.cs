@@ -49,7 +49,13 @@ namespace TestSystem.Controllers
         [HttpPost]
         public ActionResult CreateTest(TestCreateViewModel testCreateViewModel)
         {
-            return JavaScript("location.reload(true)");
+            /// To do add test field that can't be nulls
+            var test = Mapper.Map<Test>(testCreateViewModel);
+            using (var uow = new UnitOfWork()) {
+                uow.TestRepository.Add(test);
+                uow.Commit();
+                return JavaScript("location.reload(true)");
+            }
         }
 
         /// <summary>
