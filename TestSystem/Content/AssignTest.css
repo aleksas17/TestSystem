@@ -106,3 +106,7 @@
 .create-new-user > button {
     margin-top: 20px
 }
+
+.input-holder input[type=text] {
+    width: 600px;
+}

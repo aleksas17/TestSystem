@@ -188,3 +188,24 @@ span {
 .input-radio-checkbox input[type=radio]:checked ~ .check::before{
   background: #017eff;
 }
+
+
+.test-propertys {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.test-propertys select {
+    margin: 0;
+    height: 40px;
+    width: 90px;
+    margin-right: 40px;
+}
+
+.test-propertys svg {
+    margin-right: 20px;
+    height: 30px;
+    width: 30px;
+    fill: #717171;
+}

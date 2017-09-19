@@ -19,8 +19,11 @@
         </button>
     </h1>
 
-    @Html.EditorFor(m => m.TestStart, new { htmlAttributes = new { placeholder = "test start time" } })
-    @Html.EditorFor(m => m.Time, new { htmlAttributes = new { placeholder = "Test Time In Minutes" } })
+    <div class="input-holder">
+        @Html.EditorFor(m => m.TestStart, new { htmlAttributes = new { required = "required" , type = "text" } })
+        <span class="input-bar"></span>
+        <label>Test Start</label>
+    </div>
 
     <div class="user-list-table">
 
