@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Data;
@@ -11,7 +8,6 @@ using TestSystem.Models.TestAdministration;
 using PagedList;
 using TestSystem.ViewModels.TestAdministration;
 using TestSystem.Models.Account;
-using TestSystem.Models.UserTests;
 
 namespace TestSystem.Controllers
 {
@@ -45,7 +41,6 @@ namespace TestSystem.Controllers
             return PartialView("TestCreatePartial");
         }
 
-
         /// <summary>
         /// Creating test by inserting testCreateViewModel data to DB
         /// </summary>
@@ -59,8 +54,8 @@ namespace TestSystem.Controllers
             using (var uow = new UnitOfWork()) {
                 uow.TestRepository.Add(test);
                 uow.Commit();
-                return RedirectToAction("TestList", "TestAdministration");
             }
+            return JavaScript("location.reload(true)");
         }
 
         /// <summary>
@@ -120,6 +115,14 @@ namespace TestSystem.Controllers
             return JavaScript("location.reload(true)");
         }
 
+        /// <summary>
+        /// Sortin test list and searching in test list
+        /// </summary>
+        /// <param name="sortOrder">What sort order is right now</param>
+        /// <param name="currentFilter">what filter we selected</param>
+        /// <param name="searchString">Test name</param>
+        /// <param name="page">In witch test list page we are searchin and filtering</param>
+        /// <returns>Sorted list / Searchted item</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult TestList(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -160,12 +163,6 @@ namespace TestSystem.Controllers
                 case "name_desc":
                     testModels = testModels.OrderByDescending(s => s.Name).ToList();
                 break;
-                //case "Name":
-                //    userModels = userModels.OrderBy(s => s.FirstName).ToList();
-                //    break;
-                //case "name_desc":
-                //    userModels = userModels.OrderByDescending(s => s.FirstName).ToList();
-                //    break;
             }
             var pageSize = 10;
             var pageNumber = (page ?? 1);

@@ -13,7 +13,7 @@ namespace TestSystem.Controllers
     public class UserTestsController : Controller
     {
         /// <summary>
-        /// Get logged-in user tests
+        /// Get, logged-in user tests
         /// </summary>
         /// <returns>All active user tests list</returns>
         public ActionResult TestList()
@@ -45,7 +45,9 @@ namespace TestSystem.Controllers
                     TimeLeft = (long)(userTest.TestStart.Value.AddMinutes(duration) - DateTime.Now).TotalSeconds,
                     TotalQuestions = userTest.UserAnswers.Count,
                     QuestionsLeft = userTest.UserAnswers.Select(s => s.AnswerId != null).Count()
-            };
+                };
+                Console.Write(testViewModel);
+         
                 return View(testViewModel);
             }
         }
@@ -82,7 +84,7 @@ namespace TestSystem.Controllers
             if (!ModelState.IsValid || answer == null) return RedirectToAction("TestList");
             using (var uow = new UnitOfWork())
             {
-                var userAnswer = uow.UserAnswerRepository.Get(userAnswerModel.AnswerId);
+                var userAnswer = uow.UserAnswerRepository.Get(userAnswerModel.UserAnswerId);
                 userAnswer.AnswerId = Convert.ToInt32(answer);
                 uow.Commit();
             }
@@ -95,19 +97,19 @@ namespace TestSystem.Controllers
             {
                 var userTest = uow.UserTestRepository.GetUserTestById(id);
                 var duration = userTest.Test.Duration;
-                if (userTest.TestStart != null && userTest.Status !="Finished")
+                if (userTest.TestStart != null && userTest.Status != "Finished")
                 {
                     var timeLeft = userTest.TestStart.Value.AddMinutes(duration) - DateTime.Now;
                     if (timeLeft < new TimeSpan(0, 0, 0))
                     {
-                        userTest.Time = userTest.Test.Duration;
+                        userTest.Time = TimeSpan.FromMinutes(userTest.Test.Duration);
                     }
                     else
                     {
-                        
+                        userTest.Time = timeLeft;
                     }
                     userTest.Status = "finished";
-                    userTest.Time = (Convert.ToDateTime(userTest.TestStart) - DateTime.Now).TotalMinutes;
+                    //userTest.Time = (Convert.ToDateTime(userTest.TestStart) - DateTime.Now).TotalMinutes;
                     uow.Commit();
                     return Content("<div class=\"height-helper\"></div>");
                 }

@@ -3,6 +3,11 @@
     public class AnswerModel
     {
         /// <summary>
+        /// Unique id for answer
+        /// </summary>
+        public int AnswerId { get; set; }
+
+        /// <summary>
         /// Answer
         /// </summary>
         public string Name { get; set; }

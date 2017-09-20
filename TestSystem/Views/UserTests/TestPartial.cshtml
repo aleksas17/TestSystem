@@ -17,7 +17,6 @@
          @foreach (var answer in Model.QuestionModel.Answers)
          {
              <li>
-                 
                  @Html.RadioButton("answer", answer.AnswerId, new {id="option-" + answer.AnswerId })
                  <label for="@("option-"+answer.AnswerId)">@answer.Name</label>
                  <div class="check"></div>

@@ -1,7 +1,6 @@
 ﻿@model TestSystem.ViewModels.UserTests.TestViewModel
 @Styles.Render("~/Content/Test.css")
 
-
 <section class="item-container">
             
     <div id="test-container">
@@ -11,12 +10,11 @@
         <div class="timer-loader-left"></div>
                 
         <div id="test-time"><h2></h2></div>
-        <h2 class="test-name">my custom test</h2>
+        <h2 class="test-name"></h2>
                 
-    <div id="ts">
-        </div>
+        <div id="ts"></div>
 
-        <div class="test-question-number">1 / 10</div>
+        <div class="test-question-number"></div>
         <div class="test-progress-bar">
             <div id="test-progress"></div>
         </div>
@@ -27,9 +25,24 @@
 
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
-        
-    /*--------JavaScript--------*/
-        
+    /*--------Time loading bar animation-------*/
+    var questionsLeft = @Model.QuestionsLeft;
+    var questions = @Model.TotalQuestions;
+
+    function ProgressBar() {
+        questionsLeft -= 1;
+        $(".test-question-number").text(questions - questionsLeft + " / " + questions);
+        $("#test-progress").css("transform", "translate3d(-" + 100 / questions * questionsLeft + "%,0,0)");
+        if (questionsLeft == questions) {
+            $(".test-hider").css("transform", "rotate(45deg) translate3d(0,0,0)");
+        }
+    }
+
+    /*--------If answer was successfully sended to DB-------*/
+    function onSuccess() {
+        ProgressBar();
+    }
+
     /*--------Main countdown timer metahod--------*/
     function CountDownTimer(duration, granularity) {
         this.duration = duration;
@@ -42,7 +55,7 @@
         if (this.running) {
             return;
         }
-            
+
         this.running = true;
         var start = Date.now(),
             that = this,
@@ -53,7 +66,7 @@
 
             if (diff > 0) {
                 setTimeout(timer, that.granularity);
-            } 
+            }
             else {
                 diff = 0;
                 that.running = false;
@@ -83,12 +96,15 @@
             'seconds': (seconds % 60) | 0
         };
     };
-        
-    /*--------Jquery--------*/
-        
-    $( document ).ready(function() {
 
+    /*--------Jquery--------*/
+    $(document).ready(function () {
+        /*--------If use reconects, refresh progressbar-------*/
+        //ProgressBar(0);
+
+        /*--------Load question with answers-------*/
         $("#ts").load("/UserTests/TestPartial/@Model.TestId");
+
         /*--------Timer set up-------*/
         var display = document.querySelector('#test-time > h2'),
             testTime = @Model.TimeLeft,
@@ -103,36 +119,17 @@
                 display.textContent = minutes + ':' + seconds;
             };
         }
-            
+
         /*--------Time loader animation-------*/
         var stepAnimationTime = testTime / 4;
-            
         $(".timer-loader-right").css("animation", stepAnimationTime + "s timer-loader-height-animation-top-to-bottom linear forwards");
-
         $(".timer-loader-bottom").css("animation", stepAnimationTime + "s timer-loader-width-animation-right-to-left linear forwards");
         $(".timer-loader-bottom").css("animation-delay", stepAnimationTime + "s");
-
         $(".timer-loader-left").css("animation", stepAnimationTime + "s timer-loader-height-animation-bottom-to-top linear forwards");
         $(".timer-loader-left").css("animation-delay", stepAnimationTime * 2 + "s");
-            
         $(".timer-loader-top").css("animation", stepAnimationTime + "s timer-loader-width-animation-left-to-right linear forwards");
         $(".timer-loader-top").css("animation-delay", stepAnimationTime * 3 + "s");
-
-        /*--------Time loading bar animation-------*/
-
-        var questionLeft = @Model.QuestionsLeft;
-        $(".test-question button").on("click", function () {
-            var questions = @Model.TotalQuestions;
-            questionAnswered += 1;
-            $(".test-question-number").text(questionAnswered + " / " + questions);
-            $("#test-progress").css("transform", "translate3d(-" + (100 / questions) * questionLeft + "%,0,0)");
-            if (questionAnswered == questions) {
-                $(".test-hider").css("transform", "rotate(45deg) translate3d(0,0,0)");
-
-            }
-        });
     });
-        
 </script>
 
       

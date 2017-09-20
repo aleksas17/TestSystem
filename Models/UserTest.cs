@@ -10,7 +10,7 @@ namespace Models
         public int TestId { get; set; }
         public string Status { get; set; }
         public DateTime? TestStart { get; set; }
-        public double Time { get; set; }
+        public TimeSpan Time { get; set; }
 
         public virtual List<UserAnswer> UserAnswers { get; set; }
         public User User { get; set; }
