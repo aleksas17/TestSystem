@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
@@ -6,6 +7,7 @@ namespace Models
     {
         public int QuestionId { get; set; }
         public int TestId { get; set; }
+        [StringLength(500)]
         public string Name { get; set; }
 
         public virtual Test Test { get; set; }

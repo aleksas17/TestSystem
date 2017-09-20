@@ -12,7 +12,12 @@ namespace Data.Repositories
 
         public IEnumerable<Question> GetQuestionsByTestName(string testName)
         {
-            return DbSet.Include(a=>a.Answers).Where(a => a.Test.Name == testName);
+            return DbSet.Include(a => a.Answers).Where(a => a.Test.Name == testName);
+        }
+
+        public IEnumerable<Question> GetQuestionsByTestId(int testId)
+        {
+            return DbSet.Where(a => a.Test.TestId == testId);
         }
     }
 }

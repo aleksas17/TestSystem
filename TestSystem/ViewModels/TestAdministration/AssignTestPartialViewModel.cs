@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TestSystem.Models.Account;
-using TestSystem.Models.TestAdministration;
+using TestSystem.Models.UserTests;
 
 namespace TestSystem.ViewModels.TestAdministration
 {
@@ -25,7 +25,7 @@ namespace TestSystem.ViewModels.TestAdministration
         public int TestId { get; set; }
 
         /// <summary>
-        /// What is the status for the test (active / finished).
+        /// What is the status for the test (active (defult on assign) / finished).
         /// </summary>
         public string Status { get; set; } = "active";
 
@@ -37,7 +37,9 @@ namespace TestSystem.ViewModels.TestAdministration
         /// <summary>
         /// Test time.
         /// </summary>
-        public double Time { get; set; } = 2;
+        //public double Time { get; set; } = 2;
+
+        public List<UserAnswerModel> UserAnswers { get; set; }
 
         /// <summary>
         /// Model for user list to select from.

@@ -4,8 +4,9 @@ namespace TestSystem.Models.TestAdministration
 {
     public class QuestionModel
     {
-        //public int QuestionId { get; set; }
-        //public int TestId { get; set; }
+        /// <summary>
+        /// Question
+        /// </summary>
         public string Name { get; set; }
 
         /// <summary>

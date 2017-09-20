@@ -12,14 +12,18 @@ namespace TestSystem.Controllers
     [Authorize]
     public class UserTestsController : Controller
     {
+        /// <summary>
+        /// Get logged-in user tests
+        /// </summary>
+        /// <returns>All active user tests list</returns>
         public ActionResult TestList()
         {
             var name = HttpContext.User.Identity.Name;
             using (var uow = new UnitOfWork())
             {
                 var userTests = uow.UserTestRepository.GetActivateUserTestsByUsername(name);
-                var userTestModel = Mapper.Map<List<UserTestModel>>(userTests);
-                return View(userTestModel);
+                var testListViewModel = Mapper.Map<List<TestListViewModel>>(userTests);
+                return View(testListViewModel);
             }
         }
 
@@ -46,6 +50,11 @@ namespace TestSystem.Controllers
             }
         }
 
+        /// <summary>
+        /// Get next test question and answers
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Next user question with answer / no more questions go to TestFinish action</returns>
         public ActionResult TestPartial(int id)
         {
             using (var uow = new UnitOfWork())
@@ -56,17 +65,24 @@ namespace TestSystem.Controllers
                     return RedirectToAction("TestFinish",new {id});
                 }
                 var testPartialViewModel = Mapper.Map<TestPartialViewModel>(userAnswer);
-                return View(testPartialViewModel);
+                return PartialView(testPartialViewModel);
             }
         }
 
+        /// <summary>
+        /// Post user answer to DB and Get next question
+        /// </summary>
+        /// <param name="userAnswerModel">Data with </param>
+        /// <param name="answer">User selected answer</param>
+        /// <returns>Next question go to TestPartial action / 
+        /// model state wrong or no more questions go to user test list page</returns>
         [HttpPost]
         public ActionResult TestPartial(UserAnswerModel userAnswerModel,string answer)
         {
             if (!ModelState.IsValid || answer == null) return RedirectToAction("TestList");
             using (var uow = new UnitOfWork())
             {
-                var userAnswer = uow.UserAnswerRepository.Get(userAnswerModel.UserAnswerId);
+                var userAnswer = uow.UserAnswerRepository.Get(userAnswerModel.AnswerId);
                 userAnswer.AnswerId = Convert.ToInt32(answer);
                 uow.Commit();
             }

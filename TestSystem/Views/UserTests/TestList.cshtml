@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TestSystem.Models.UserTests.UserTestModel>
+﻿@model IEnumerable<TestSystem.ViewModels.UserTests.TestListViewModel>
 
 @Styles.Render("~/Content/UserTestList.css")
 
@@ -7,8 +7,8 @@
     {
     <div class="user-test">
         <h1>@userTest.Name</h1>
-        <h2><label>Test time:</label>2 min</h2>
-        <h2><label>Test starts:</label>@userTest.TestStart</h2>
+        <h2><label>Test time:</label> @userTest.Time min</h2>
+        <h2><label>Test starts:</label> @userTest.TestStart</h2>
         <a href='@Url.Action("Test", "UserTests", new { userTestId = userTest.UserTestId }, null)'>start</a>
     </div>
     }

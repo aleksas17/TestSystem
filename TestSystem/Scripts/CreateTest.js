@@ -8,10 +8,10 @@ var currentChoise = 1;
 /*--------Add choise--------*/
 function AddChoice() {
     $(".field-validation-error:last").after("<div class='choice'>"
-        + '<input type= "hidden" name= "Questions[' + currentQuestion + '].Answers.Index" value= "' + currentChoise + '" />'
+        + '<input type="hidden" name="Questions[' + currentQuestion + '].Answers.Index" value="' + currentChoise + '" />'
         + '<div class="input-radio-checkbox">'
-        + '<input type="radio" name="question-' + currentQuestion + '" id="question-' + currentQuestion + '-choice-' + currentChoise + '" checked>'
-        + '<label class="check" for="question-' + currentQuestion + '-choice-' + currentChoise + '"></label>'
+        + '<input class="question-' + currentQuestion + '" type="radio" name="Questions[' + currentQuestion + '].Answers[' + currentChoise + '].IsCorrect" id="Questions[' + currentQuestion + '].Answers[' + currentChoise + ']">'
+        + '<label class="check" for="Questions[' + currentQuestion + '].Answers[' + currentChoise + ']"></label>'
         + '</div>'
         + '<div class="input-holder">'
         + '<input type="text" name="Questions[' + currentQuestion + '].Answers[' + currentChoise + '].Name" required>'
@@ -30,6 +30,14 @@ function AddChoice() {
 
 /*--------When document fully loads--------*/
 $(document).ready(function () {
+    /*--------Custom radio button by class grouping, add and remove check from item when needed--------*/
+    $('body').on("change", "input[type=radio]", function () {
+        var checkboxClassName = $(this).attr("class");
+        $("." + checkboxClassName).not(this).prop('checked', false);
+        $("." + checkboxClassName).not(this).prop('value', 0);
+        $(this).prop('value', 1);
+    });
+
     /*--------Add choise on clicking add choice--------*/
     $(".add-answer").on("click", function () {
         AddChoice();
@@ -73,6 +81,9 @@ $(document).ready(function () {
         $("#question-creator .input-holder-question input[type=hidden]").prop("value", currentQuestion);
         $("#question-creator .input-holder-question .input-holder input[type=text]").prop("name", "Questions[" + currentQuestion + "].Name");
         AddChoice();
+        // Seting up firs choice to be checked when we clear question-creator
+        $("#question-creator .input-radio-checkbox input[type=radio]").prop('checked', true);
+        $("#question-creator .input-radio-checkbox input[type=radio]").prop('value', 1);
     });
 
     $(".create-new-test").submit(function () {

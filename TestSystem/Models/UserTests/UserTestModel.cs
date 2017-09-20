@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TestSystem.Models.UserTests
 {
     public class UserTestModel
     {
-        public int UserTestId { get; set; }
+        public int UserId { get; set; }
+        public int TestId { get; set; }
         public string Status { get; set; }
-        public string Name { get; set; }
         public DateTime? TestStart { get; set; }
+        public double Time { get; set; }
+
+        public List<UserAnswerModel> UserAnswers { get; set; }
     }
 }

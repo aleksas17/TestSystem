@@ -6,5 +6,6 @@ namespace Data.IRepositories
     public interface IQuestionRepository : IBaseRepository<Question>
     {
         IEnumerable<Question> GetQuestionsByTestName(string testName);
+        IEnumerable<Question> GetQuestionsByTestId(int testId);
     }
 }

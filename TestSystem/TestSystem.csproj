@@ -184,8 +184,6 @@
     <Compile Include="Models\TestAdministration\TestModel.cs" />
     <Compile Include="Models\TestAdministration\UserStatisticsModel.cs" />
     <Compile Include="Models\TestAdministration\UserTestStaticsModel.cs" />
-    <Compile Include="Models\UserTests\AnswerModel.cs" />
-    <Compile Include="Models\UserTests\QuestionModel.cs" />
     <Compile Include="Models\UserTests\TestModelView.cs" />
     <Compile Include="Models\UserTests\UserAnswerModel.cs" />
     <Compile Include="Models\UserTests\UserTestModel.cs" />

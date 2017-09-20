@@ -34,12 +34,9 @@ namespace TestSystem
             Mapper.Initialize(cnf =>
             {
                 cnf.CreateMap<TestCreateViewModel, Test>();
-                // .ForMember(opt => opt.Questions,a=>a.Ignore());
                 cnf.CreateMap<Models.TestAdministration.QuestionModel, Question>();
-                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>();
-
                 cnf.CreateMap<Models.TestAdministration.AnswerModel, Answer>();
-                
+                cnf.CreateMap<Answer, Models.TestAdministration.AnswerModel>();
                 //cnf.CreateMap<Test, TestCreateViewModel>().ForMember(dest => dest.Questions,
                 //    opt => opt.MapFrom
                 //    (
@@ -76,20 +73,21 @@ namespace TestSystem
                 cnf.CreateMap<UserModel, User>().ForAllMembers(a=> a.Condition((src, dest, srcVal, destVal, c) => srcVal != null));
                 //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>().ForMember(a => a.Answers, b => b.MapFrom(src => src.Answers));
                 cnf.CreateMap<Test, TestViewModel>();
-                cnf.CreateMap<UserTest, Models.UserTests.UserTestModel>().ForMember("Name", opt => opt.MapFrom(b => b.Test.Name));
+                cnf.CreateMap<UserTest, TestListViewModel>().ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Test.Name));
                 cnf.CreateMap<UserAnswer, UserAnswerModel>();
-                cnf.CreateMap<Question, Models.UserTests.QuestionModel>();
+                cnf.CreateMap<Question, QuestionModel>();
+                cnf.CreateMap<QuestionModel, Question>();
                 cnf.CreateMap<Question, UserAnswer>();
                 cnf.CreateMap<UserTest, UserStatisticsModel>().ForMember(a => a.Group,b => b.MapFrom(src => src.User));
                 cnf.CreateMap<UserCsvModel, User>();
                 cnf.CreateMap<UserAnswer, TestPartialViewModel>()
                     .ForMember(a => a.QuestionModel, b => b.MapFrom(src => src.Question));
-                cnf.CreateMap<AssignTestPartialViewModel, UserTest>()
-                    .ForMember(a => a.UserId, b => b.MapFrom(src => src.UserId))
-                    .ForMember(a => a.TestId, b => b.MapFrom(src => src.TestId))
-                    .ForMember(a => a.Status, b => b.MapFrom(src => src.Status))
-                    .ForMember(a => a.TestStart, b => b.MapFrom(src => src.TestStart))
-                    .ForMember(a => a.Time, b => b.MapFrom(src => src.Time));
+                cnf.CreateMap<AssignTestPartialViewModel, UserTest>();
+                    //.ForMember(a => a.UserId, b => b.MapFrom(src => src.UserId))
+                    //.ForMember(a => a.TestId, b => b.MapFrom(src => src.TestId))
+                    //.ForMember(a => a.Status, b => b.MapFrom(src => src.Status))
+                    //.ForMember(a => a.TestStart, b => b.MapFrom(src => src.TestStart))
+                    //.ForMember(a => a.Time, b => b.MapFrom(src => src.Time));
                 
             });
             ModelBinders.Binders.Add(typeof(UserCsvModel[]), new CsvModelBinder<UserCsvModel>());

@@ -9,7 +9,7 @@ namespace Data.Configurations
         {
             ToTable("Answer");
             Property(p => p.IsCorrect).IsRequired();
-            Property(p => p.Name).IsRequired();
+            Property(p => p.Name).IsRequired().HasMaxLength(140);
         }
     }
 }

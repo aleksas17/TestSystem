@@ -8,7 +8,7 @@ namespace Data.Configurations
         public QuestionConfiguration()
         {
             ToTable("Question");
-            Property(g => g.Name).IsRequired().HasMaxLength(25);
+            Property(g => g.Name).IsRequired().HasMaxLength(500);
             Property(g => g.TestId).IsRequired();
         }
     }

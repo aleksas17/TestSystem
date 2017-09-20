@@ -35,9 +35,9 @@ namespace TestSystem.Controllers
         }
 
         /// <summary>
-        /// Create user popup.
+        /// Create test popup.
         /// </summary>
-        /// <returns>Partial view with viewmodel</returns>
+        /// <returns>Create test partial view</returns>
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult CreateTest()
@@ -45,16 +45,21 @@ namespace TestSystem.Controllers
             return PartialView("TestCreatePartial");
         }
 
+
+        /// <summary>
+        /// Creating test by inserting testCreateViewModel data to DB
+        /// </summary>
+        /// <param name="testCreateViewModel">Test values</param>
+        /// <returns>Refresh curent page</returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult CreateTest(TestCreateViewModel testCreateViewModel)
         {
-            /// To do add test field that can't be nulls
             var test = Mapper.Map<Test>(testCreateViewModel);
             using (var uow = new UnitOfWork()) {
                 uow.TestRepository.Add(test);
                 uow.Commit();
-                return JavaScript("location.reload(true)");
+                return RedirectToAction("TestList", "TestAdministration");
             }
         }
 
@@ -100,12 +105,15 @@ namespace TestSystem.Controllers
             if (!ModelState.IsValid || usersIds == null) return new EmptyResult();
             using (var uow = new UnitOfWork())
             {
+                var questions = uow.QuestionRepository.GetQuestionsByTestId(assignTestPartialViewModel.TestId);
                 foreach (var userId in usersIds)
                 {
                     // Adding to userTest table.
                     assignTestPartialViewModel.UserId = userId;
                     var usertest = Mapper.Map<UserTest>(assignTestPartialViewModel);
                     uow.UserTestRepository.Add(usertest);
+                    // Populating userAnswer table with question and test id's
+                    usertest.UserAnswers = Mapper.Map<List<UserAnswer>>(questions);
                 }
                 uow.Commit();
             }
