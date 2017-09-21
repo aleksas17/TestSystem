@@ -1,0 +1,111 @@
+/*---------Table container-----------*/
+.test-statics-table {
+    background: #FFFFFF;
+    border-radius: 2px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+/*---------Table header-----------*/
+
+.test-statics-table > header {
+    display: flex;
+    flex-direction: column;
+}
+
+.test-statics-table > header > nav > h1 {
+    font-size: 22px;
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 500;
+}
+
+.test-statics-table > header > nav {
+    display: flex;
+    padding: 24px 14px 24px 24px;
+}
+
+.test-statics-table > header > ul {
+    display: flex;
+    font-size: 12px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.test-statics-table > header > ul > li,
+.t-s-table-main > li > div {
+    width: 100px;
+    padding: 24px;
+}
+
+.test-statics-table > header > ul,
+.t-s-table-main > li {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.test-statics-table > header > ul > li:nth-child(3),
+.t-s-table-main > li > div:nth-child(3),
+.test-statics-table > header > ul > li:nth-child(4),
+.t-s-table-main > li > div:nth-child(4),
+.test-statics-table > header > ul > li:last-child,
+.t-s-table-main > li > div:last-child {
+    text-align: center;
+    width: 50px;
+    padding-right: 56px;
+}
+
+.test-statics-table > header > ul > li:last-child,
+.t-s-table-main > li > div:last-child {
+    padding-right: 14px;
+}
+
+/*---------Table main items-----------*/
+
+.t-s-table-main {
+    display: flex;
+    flex-direction: column;
+    font-size: 13.5px;
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 500;
+}
+
+.t-s-table-main > li {
+    display: flex;
+}
+
+.t-s-table-main > li:hover {
+    background: #eeeeee;
+}
+
+.t-s-table-main > li > div {
+    padding: 17px 24px;
+}
+
+/*---------Table footer-----------*/
+
+.test-statics-table > footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.test-statics-table > footer > div svg {
+    border-radius: 50%;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    fill: rgba(0, 0, 0, 0.54);
+    margin: 12px 12px 12px 12px;
+}
+
+.test-statics-table > footer > div svg:first-child {
+    margin-left: 32px;
+}
+
+.test-statics-table > footer > div svg:last-child {
+    margin-right: 14px;
+}

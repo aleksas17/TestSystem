@@ -4,13 +4,16 @@
 <section class="item-container">
             
     <div id="test-container">
+
+        <div class="test-hider"><div></div><div></div></div>
+
         <div class="timer-loader-top"></div>
         <div class="timer-loader-right"></div>
         <div class="timer-loader-bottom"></div>
         <div class="timer-loader-left"></div>
                 
         <div id="test-time"><h2></h2></div>
-        <h2 class="test-name"></h2>
+        <h2 class="test-name">@Model.TestName</h2>
                 
         <div id="ts"></div>
 
@@ -25,22 +28,31 @@
 
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
+    /*--------Check if last question, Button changer from NEXT to FINISH-------*/
+    function CheckCurrentQuestion() {
+        if (questionsLeft == 0) $(".test-question button").text("finish");
+    }
+
     /*--------Time loading bar animation-------*/
     var questionsLeft = @Model.QuestionsLeft;
     var questions = @Model.TotalQuestions;
 
     function ProgressBar() {
         questionsLeft -= 1;
-        $(".test-question-number").text(questions - questionsLeft + " / " + questions);
-        $("#test-progress").css("transform", "translate3d(-" + 100 / questions * questionsLeft + "%,0,0)");
-        if (questionsLeft == questions) {
+        if (questionsLeft < 0) {
             $(".test-hider").css("transform", "rotate(45deg) translate3d(0,0,0)");
+        }
+        else {
+            $(".test-question-number").text(questions - questionsLeft + " / " + questions);
+            $("#test-progress").css("transform", "translate3d(-" + 100 / questions * questionsLeft + "%,0,0)");
         }
     }
 
     /*--------If answer was successfully sended to DB-------*/
     function onSuccess() {
+        $("#ts").css({ 'min-height': ($("#ts").height() + 'px') });
         ProgressBar();
+        CheckCurrentQuestion();
     }
 
     /*--------Main countdown timer metahod--------*/
@@ -100,13 +112,13 @@
     /*--------Jquery--------*/
     $(document).ready(function () {
         /*--------If use reconects, refresh progressbar-------*/
-        //ProgressBar(0);
+        ProgressBar();
 
         /*--------Load question with answers-------*/
         $("#ts").load("/UserTests/TestPartial/@Model.TestId");
 
         /*--------Timer set up-------*/
-        var display = document.querySelector('#test-time > h2'),
+        var display = document.querySelector("#test-time > h2"),
             testTime = @Model.TimeLeft,
             testTimer = new CountDownTimer(testTime);
 

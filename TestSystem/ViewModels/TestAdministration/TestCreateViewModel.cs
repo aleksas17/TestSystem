@@ -6,7 +6,7 @@ namespace TestSystem.ViewModels.TestAdministration
 {
     public class TestCreateViewModel
     {
-        #region Public Propertys
+        #region Public Properties
 
         /// <summary>
         /// Main test 

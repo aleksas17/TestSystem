@@ -8,5 +8,6 @@ namespace Data.IRepositories
         IEnumerable<UserTest> GetActivateUserTestsByUsername(string username);
         IEnumerable<UserTest> GetUserTestsByTestName(string testName);
         UserTest GetUserTestById(int id);
+        IEnumerable<UserTest> GetUserTestsByTestId(int testId);
     }
 }

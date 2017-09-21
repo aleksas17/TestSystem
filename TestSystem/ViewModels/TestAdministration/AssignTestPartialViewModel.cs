@@ -7,7 +7,7 @@ namespace TestSystem.ViewModels.TestAdministration
 {
     public class AssignTestPartialViewModel
     {
-        #region Public Propertys
+        #region Public Properties
 
         /// <summary>
         /// Test time.
@@ -35,10 +35,8 @@ namespace TestSystem.ViewModels.TestAdministration
         public DateTime? TestStart { get; set; }
 
         /// <summary>
-        /// Test time.
+        /// Stores user test question answers
         /// </summary>
-        //public double Time { get; set; } = 2;
-
         public List<UserAnswerModel> UserAnswers { get; set; }
 
         /// <summary>

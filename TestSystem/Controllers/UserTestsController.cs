@@ -42,6 +42,7 @@ namespace TestSystem.Controllers
                 var testViewModel = new TestViewModel
                 {
                     TestId = userTestId,
+                    TestName = uow.TestRepository.GetTestById(userTest.TestId).Name,
                     TimeLeft = (long)(userTest.TestStart.Value.AddMinutes(duration) - DateTime.Now).TotalSeconds,
                     TotalQuestions = userTest.UserAnswers.Count,
                     QuestionsLeft = userTest.UserAnswers.Select(s => s.AnswerId != null).Count()
@@ -99,8 +100,8 @@ namespace TestSystem.Controllers
                 var duration = userTest.Test.Duration;
                 if (userTest.TestStart != null && userTest.Status != "Finished")
                 {
-                    var timeLeft = userTest.TestStart.Value.AddMinutes(duration) - DateTime.Now;
-                    if (timeLeft < new TimeSpan(0, 0, 0))
+                    var timeLeft =  DateTime.Now - userTest.TestStart.Value;
+                    if (timeLeft > TimeSpan.FromMinutes(userTest.Test.Duration))
                     {
                         userTest.Time = TimeSpan.FromMinutes(userTest.Test.Duration);
                     }
@@ -111,7 +112,7 @@ namespace TestSystem.Controllers
                     userTest.Status = "finished";
                     //userTest.Time = (Convert.ToDateTime(userTest.TestStart) - DateTime.Now).TotalMinutes;
                     uow.Commit();
-                    return Content("<div class=\"height-helper\"></div>");
+                    return new EmptyResult();
                 }
                 return RedirectToAction("TestList");
             }

@@ -20,13 +20,16 @@
 
 html, body {
     background: #eeeeee;
+    height: 100%;
 }
 
 /*---------Main container-----------*/
 
 .item-container {
     display: flex;
+    height: 100%;
     justify-content: center;
+    align-items: center;
 }
 
 /*---------Time loader animation-----------*/
@@ -82,7 +85,6 @@ html, body {
 /*---------Test container-----------*/
 
 #test-container {
-    margin-top: 100px;
     background: #ffffff;
     width: 600px;
     display: flex;
@@ -271,5 +273,19 @@ html, body {
     background: -webkit-linear-gradient(left, #0099ff 1%,#017eff 100%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to right, #0099ff 1%,#017eff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0099ff', endColorstr='#017eff',GradientType=1 ); /* IE6-9 */
+}
+
+/*---------Test end hider-----------*/
+
+.test-hider {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: #017eff;
+    z-index: 50;
+    transition: 1s all ease-in-out;
+    transform: rotate(45deg) translate3d(-100%,0,0);
 }
 

@@ -188,6 +188,11 @@
     <Compile Include="Models\UserTests\UserAnswerModel.cs" />
     <Compile Include="Models\UserTests\UserTestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\CsvModelBinder.cs" />
     <Compile Include="Utilities\CustomRoleProvider.cs" />
     <Compile Include="Utilities\UserCsvModel.cs" />
@@ -197,6 +202,7 @@
     <Compile Include="ViewModels\TestAdministration\TestTemplatesViewModel.cs" />
     <Compile Include="ViewModels\TestAdministration\TestViewModel.cs" />
     <Compile Include="ViewModels\TestAdministration\TestViewPartialViewModel.cs" />
+    <Compile Include="ViewModels\TestAdministration\UsersScoresViewModel.cs" />
     <Compile Include="ViewModels\UserTests\TestListViewModel.cs" />
     <Compile Include="ViewModels\UserTests\TestPartialViewModel.cs" />
     <Compile Include="ViewModels\UserTests\TestViewModel.cs" />
@@ -210,6 +216,7 @@
     <Content Include="Content\Login.css" />
     <Content Include="Content\Navigation.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\TableStyle.css" />
     <Content Include="Content\Test.css" />
     <Content Include="Content\Users.css" />
     <Content Include="Content\UserTestList.css" />
@@ -223,6 +230,10 @@
     <Content Include="Resources\Svgs\teltonika_logo_name.svg" />
     <Content Include="Resources\Videos\Daytime_Traffic_Video.webm" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\AdminTestList.js" />
     <Content Include="Scripts\AssignTest.js" />
@@ -259,26 +270,15 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\TestAdministration\TestTemplates.cshtml" />
     <Content Include="Views\UserTests\TestList.cshtml" />
-    <Content Include="Views\TestAdministration\_TestTemplateProperties.cshtml" />
-    <Content Include="Views\TestAdministration\_TestTemplateQuestions.cshtml" />
     <Content Include="Views\Account\UserList.cshtml" />
     <Content Include="Views\Account\UserDialog.cshtml" />
-    <Content Include="Views\TestAdministration\_TestCreateDialog.cshtml" />
-    <Content Include="Views\TestAdministration\_TestActivateDialog.cshtml" />
-    <Content Include="Views\TestAdministration\Test.cshtml" />
-    <Content Include="Views\TestAdministration\_TestProperties.cshtml" />
-    <Content Include="Views\TestAdministration\_TestQuestions.cshtml" />
-    <Content Include="Views\TestAdministration\_TestStatistics.cshtml" />
     <Content Include="Views\UserTests\Test.cshtml" />
-    <Content Include="Views\TestAdministration\_UserStatistics.cshtml" />
-    <Content Include="Views\TestAdministration\_QuestionStatistics.cshtml" />
-    <Content Include="Views\TestAdministration\TestTemplatesPartial.cshtml" />
     <Content Include="Views\UserTests\TestPartial.cshtml" />
     <Content Include="Views\TestAdministration\TestList.cshtml" />
     <Content Include="Views\TestAdministration\AssignTestPartial.cshtml" />
     <Content Include="Views\TestAdministration\TestCreatePartial.cshtml" />
+    <Content Include="Views\TestAdministration\TestStatisticsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

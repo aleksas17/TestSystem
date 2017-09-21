@@ -168,6 +168,35 @@ namespace TestSystem.Controllers
             var pageNumber = (page ?? 1);
             return View(testModels.ToPagedList(pageNumber, pageSize));
         }
+
+        /// <summary>
+        /// Get all user scors for test
+        /// </summary>
+        /// <param name="testId">Witch test scors we want</param>
+        /// <param name="sortOrder"></param>
+        /// <param name="currentFilter"></param>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <returns>List of user statistic for test</returns>
+        [Authorize(Roles = "Admin")]
+        public ActionResult UsersScores(int testId, string sortOrder, string currentFilter, string searchString, int? page)
+        {
+            using (var uow = new UnitOfWork())
+            {
+                var userTests = uow.UserTestRepository.GetUserTestsByTestId(testId);
+                var usersScore = Mapper.Map<List<UsersScoresViewModel>>(userTests);
+
+                foreach (var userScore in usersScore)
+                {
+                    userScore.Position = usersScore.Count(a => a.Score > userScore.Score) + 1;
+                    userScore.Position += usersScore.Count(a => a.Score == userScore.Score && a.Time < userScore.Time);
+
+                }
+                var pageSize = 10;
+                var pageNumber = (page ?? 1);
+                return PartialView("TestStatisticsPartial", usersScore.ToPagedList(pageNumber, pageSize));
+            }
+        }
     }
 
     //    public ActionResult Test()
