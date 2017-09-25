@@ -151,4 +151,53 @@ button[disabled]{
     transform: translate3d(0,2px,0);
 }
 
+/*---------Checknox style-----------*/
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+}
+
+input[type="checkbox"]:focus {
+    outline: none;
+}
+
+input[type="checkbox"]:after {
+    cursor: pointer;
+    border: 2px solid #747474;
+    box-sizing: border-box;
+    border-radius: 2px;
+    content: '';
+    display: block;
+    height: 18px;
+    width: 18px;
+    transition: all .4s cubic-bezier(0.0, 0.0, 0.2, 1);
+}
+
+input[type="checkbox"]:checked:before {
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    display: table;
+    width: 4px;
+    height: 10px;
+    border: 2px solid #fff;
+    border-top: 0;
+    border-left: 0;
+    content: '';
+}
+
+input[type="checkbox"]:checked:after {
+    background-color: #017eff;
+    border-color: #017eff;
+}
+
+input[type="checkbox"]:disabled:after {
+    border-color: #afaeaf;
+}
+
+
 

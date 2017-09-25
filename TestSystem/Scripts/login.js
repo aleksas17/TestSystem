@@ -1,9 +1,4 @@
-﻿
-function playVid() {
-    myVideo.play();
-}    
-
-/*--------Jquery--------*/
+﻿/*--------Jquery--------*/
 $(document).ready(function () {
     /*--------Validation style--------*/
     $("#login-button").on("click",

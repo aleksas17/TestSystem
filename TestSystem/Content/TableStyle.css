@@ -1,42 +1,65 @@
 /*---------Table container-----------*/
-.test-statics-table {
-    background: #FFFFFF;
+
+.test-statics-table,
+.test-statics-table-questions {
+    background: #ffffff;
     border-radius: 2px;
     font-family: 'Roboto', sans-serif;
     font-size: 15px;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
 }
 
 /*---------Table header-----------*/
 
-.test-statics-table > header {
+.test-statics-table > header,
+.test-statics-table-questions > header {
     display: flex;
     flex-direction: column;
 }
 
-.test-statics-table > header > nav > h1 {
+.test-statics-table > header > nav > h1,
+.test-statics-table-questions > header > nav > h1 {
     font-size: 22px;
     color: rgba(0, 0, 0, 0.87);
     font-weight: 500;
 }
 
-.test-statics-table > header > nav {
+.test-statics-table > header > nav,
+.test-statics-table-questions > header > nav {
     display: flex;
     padding: 24px 14px 24px 24px;
+    transition: transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-.test-statics-table > header > ul {
+.test-statics-table > header > ul,
+.t-s-table-questions-main > li > ul:first-child,
+.t-s-table-questions-main > nav {
     display: flex;
     font-size: 12px;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.54);
 }
 
+.test-statics-table label {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 18px;
+}
+
 .test-statics-table > header > ul > li,
 .t-s-table-main > li > div {
     width: 100px;
     padding: 24px;
+    display: flex;
+    align-items: center;
+    height: 24px;
+}
+
+.t-s-table-main > li {
+    min-height: 58px;
 }
 
 .test-statics-table > header > ul,
@@ -62,7 +85,8 @@
 
 /*---------Table main items-----------*/
 
-.t-s-table-main {
+.t-s-table-main,
+.t-s-table-questions-main {
     display: flex;
     flex-direction: column;
     font-size: 13.5px;
@@ -72,10 +96,11 @@
 
 .t-s-table-main > li {
     display: flex;
+    transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .t-s-table-main > li:hover {
-    background: #eeeeee;
+    background: #ededee;
 }
 
 .t-s-table-main > li > div {
@@ -84,7 +109,8 @@
 
 /*---------Table footer-----------*/
 
-.test-statics-table > footer {
+.test-statics-table > footer,
+.test-statics-table-questions > footer {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -93,7 +119,8 @@
     font-weight: 500;
 }
 
-.test-statics-table > footer > div svg {
+.test-statics-table > footer > div svg,
+.test-statics-table-questions > footer > div svg {
     border-radius: 50%;
     cursor: pointer;
     width: 24px;
@@ -102,10 +129,142 @@
     margin: 12px 12px 12px 12px;
 }
 
-.test-statics-table > footer > div svg:first-child {
+.test-statics-table > footer > div svg:first-child,
+.test-statics-table-questions > footer > div svg:first-child {
     margin-left: 32px;
 }
 
-.test-statics-table > footer > div svg:last-child {
+.test-statics-table > footer > div svg:last-child,
+.test-statics-table-questions > footer > div svg:last-child {
     margin-right: 14px;
+}
+
+/*-------------Table questions-------------*/
+
+.t-s-table-questions-main > li {
+    overflow: auto;
+    flex-direction: column;
+}
+
+.t-s-table-questions-main > li > ul {
+    display: flex;
+}
+
+.t-s-table-questions-main > li > ul > li {
+    min-width: 20px;
+    text-align: center;
+    padding: 24px;
+}
+
+.t-s-table-questions-main > li > ul:first-child > li {
+    position: relative;
+    writing-mode: vertical-lr;
+    height: 70px;
+    cursor: pointer;
+}
+
+.t-s-table-questions-main > li > ul > li,
+.t-s-table-questions-main > nav > li {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.t-s-table-questions-main > li > ul:not(:first-child) > li {
+    padding: 17px 24px;
+}
+
+.t-s-table-questions-main > li > ul:last-child > li,
+.t-s-table-questions-main > li > ul:nth-last-child(2) > li {
+    padding-top: 8.5px;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 12px;
+    font-weight: bold;
+    background: #f5f5f5;
+    border-color: #ffffff;
+}
+
+.t-s-table-questions-main > li > ul:nth-last-child(2) > li {
+    padding: 17px 24px 8.5px 24px;
+}
+
+.t-s-table-questions-main {
+    flex-direction: row;
+}
+
+.t-s-table-questions-main > nav {
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column;
+}
+
+.t-s-table-questions-main > nav > li:first-child {
+    padding: 24px;
+}
+
+.t-s-table-questions-main > nav > li:not(:first-child) {
+    display: flex;
+    align-items: center;
+    padding: 17px 24px;
+    font-size: 13.5px;
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 500;
+}
+
+.t-s-table-questions-main > nav > li:last-child {
+    border: none;
+    display: flex;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 12px;
+    font-weight: bold;
+    background: #f5f5f5;
+}
+
+.t-s-table-questions-main > nav > li:last-child > p {
+    padding: 0px 24px;
+}
+
+.t-s-table-questions-main > nav > li:last-child > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.t-s-table-questions-main > nav > li:last-child > div > div:first-child {
+    padding: 17px 24px 8.5px 24px;
+    border-bottom: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+}
+
+.t-s-table-questions-main > nav > li:last-child > div > div:last-child {
+    padding: 8.5px 24px 17px 24px;
+    border-left: 1px solid #ffffff;
+}
+
+.t-s-table-questions-main > li > ul:first-child > li:hover > .tool-tip {
+    transform: scale3d(1, 1, 1);
+}
+
+.t-s-table-questions-main .tool-tip {
+    writing-mode: horizontal-tb;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3.5px 6px;
+    border-radius: 2px;
+    white-space: nowrap;
+    background: #737373;
+    font-family: 'Roboto', sans-serif;
+    font-size: 10px;
+    font-weight: 100;
+    color: #ffffff;
+    transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform: scale3d(0, 0, 0);
+    transform-origin: top center;
+}
+
+.table-item-hover {
+    transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    background: #ededee;
 }

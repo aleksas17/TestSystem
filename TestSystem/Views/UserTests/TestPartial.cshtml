@@ -18,12 +18,15 @@
          {
              <li>
                  @Html.RadioButton("answer", answer.AnswerId, new {id="option-" + answer.AnswerId })
-                 <label for="@("option-"+answer.AnswerId)">@answer.Name</label>
+                 <label for="@("option-" + answer.AnswerId)">@answer.Name</label>
                  <div class="check"></div>
              </li>
          }
      </ul>
     <button disabled="disabled" type="submit">next</button>
  }
+<script type="text/javascript">
+    var finishUrl = '@Url.Action("TestFinish", new { id = Model.UserTestId})';
+</script>
 @Scripts.Render("~/bundles/jquery")                 
 @Scripts.Render("~/Scripts/TestPartial.js")

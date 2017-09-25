@@ -5,7 +5,25 @@
             
     <div id="test-container">
 
-        <div class="test-hider"><div></div><div></div></div>
+        <div class="test-hider"></div>
+        <div class="test-finish-text">
+            <svg viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <circle cx="15.5" cy="9.5" r="1.5" />
+                <circle cx="8.5" cy="9.5" r="1.5" />
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-6c-2.33 0-4.32 1.45-5.12 3.5h1.67c.69-1.19 1.97-2 3.45-2s2.75.81 3.45 2h1.67c-.8-2.05-2.79-3.5-5.12-3.5z" />
+            </svg>
+            <p>Out of time</p>
+        </div>
+        <div class="test-finish-text">
+            <svg viewBox="0 0 24 24">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <circle cx="15.5" cy="9.5" r="1.5" />
+                <circle cx="8.5" cy="9.5" r="1.5" />
+                <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-4c-1.48 0-2.75-.81-3.45-2H6.88c.8 2.05 2.79 3.5 5.12 3.5s4.32-1.45 5.12-3.5h-1.67c-.7 1.19-1.97 2-3.45 2z" />
+            </svg>
+            <p>Thank you for doing the test</p>
+        </div>
 
         <div class="timer-loader-top"></div>
         <div class="timer-loader-right"></div>
@@ -28,6 +46,10 @@
 
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
+    // Need them to be global for checking purposes
+    var questionAnswered = 0;
+    var questions = 10
+
     /*--------Check if last question, Button changer from NEXT to FINISH-------*/
     function CheckCurrentQuestion() {
         if (questionsLeft == 0) $(".test-question button").text("finish");
@@ -41,6 +63,8 @@
         questionsLeft -= 1;
         if (questionsLeft < 0) {
             $(".test-hider").css("transform", "rotate(45deg) translate3d(0,0,0)");
+            $(".test-finish-text:last").addClass("test-finish");
+            RederectTestList();
         }
         else {
             $(".test-question-number").text(questions - questionsLeft + " / " + questions);
@@ -53,6 +77,11 @@
         $("#ts").css({ 'min-height': ($("#ts").height() + 'px') });
         ProgressBar();
         CheckCurrentQuestion();
+    }
+
+    /*--------Rederect back to test list-------*/
+    function RederectTestList() {
+        setTimeout(function () { window.location.href = "/UserTests/TestList" }, 4000);
     }
 
     /*--------Main countdown timer metahod--------*/
@@ -76,11 +105,20 @@
         (function timer() {
             diff = that.duration - (((Date.now() - start) / 1000) | 0);
 
+            // Checking if timer is 00:00
             if (diff > 0) {
-                setTimeout(timer, that.granularity);
+                // Checking if there are any more questions left, if not stop timer
+                if (questionAnswered == questions) {
+                    diff = 0;
+                    that.running = false;
+                }
+                else {
+                    setTimeout(timer, that.granularity);
+                }
             }
             else {
                 diff = 0;
+                TimerEnd();
                 that.running = false;
             }
 
@@ -109,7 +147,23 @@
         };
     };
 
-    /*--------Jquery--------*/
+    /*--------When test timer reaches 00:00--------*/
+    function TimerEnd() {
+        $("#test-time").addClass("test-time-end");
+        $("#test-time > h2").css("display", "none");
+        $(".test-finish-text:first").addClass("test-finish");
+        $.ajax({
+            type: "POST",
+            url: finishUrl,
+            //data: "{queryString:'" + searchVal + "'}",
+            //contentType: "application/json; charset=utf-8",
+            //dataType: "html",
+            //success: function (data) {
+                //alert("here" + data.d.toString());
+        });
+        RederectTestList();
+    }
+
     $(document).ready(function () {
         /*--------If use reconects, refresh progressbar-------*/
         ProgressBar();

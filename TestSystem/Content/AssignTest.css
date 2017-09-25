@@ -3,110 +3,50 @@
     visibility: visible;
 }
 
-.user-list-table {
-    margin: 20px 0px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 2px;
-    background: #ffffff;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
-    border: 1px solid #e6e6e6;
+.test-statics-table > header > ul > li:nth-child(2),
+.t-s-table-main > li > div:nth-child(2) {
+    width: 200px;
 }
 
-.user-list-table-controler {
-    background: #f5fcff;
+.test-statics-table > header > ul > li:last-child,
+.t-s-table-main > li > div:last-child {
+    justify-content: center;
+    width: 200px;
 }
 
-.user-list-table-controler label {
-    color: #017eff;
-    font-size: 14px;
+.test-statics-table > header > ul > li:first-child {
+    width: auto;
+    padding-right: 0;
 }
 
-.user-list-table-item,
-.user-list-table-header,
-.user-list-table-controler {
-    box-sizing: border-box;
-    padding: 15px 18px;
-    display: flex;
-    align-items: center;
-    font-family: 'Roboto', sans-serif;
-    font-size: 12px;
-    color: #a2a2a2;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: background .4s cubic-bezier(0.25, 0.8, 0.25, 1);
+.t-s-table-main > li > div:first-child {
+    width: auto;
+    padding: 17px 0px 17px 24px;
 }
 
-.user-list-table-header,
-.user-list-table-header > select {
-    display: flex;
-    align-items: center;
-    color: #757575;
-    font-weight: 500;
-    font-size: 11px;
+.selected-items {
+    background: #e7effd;
+    color: #127dfa;
+    font-size: 19px;
 }
 
-.user-list-table-header > select {
-    background: transparent;
-    padding: 0;
+.test-statics-table select {
     margin: 0;
-    margin-right: 25px;
-    border: none;
-    height: 24px;
-    font-family: 'Roboto', sans-serif;
-    transition: .1s ease-in-out;
-    -webkit-appearance: none; 
-    -moz-appearance: none;
-    appearance: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.54);
+    border: 0;
 }
 
-.user-list-table-item,
-.user-list-table-header {
-    border-bottom: 1px solid #e0e0e0;
+.test-statics-table footer {
+    display: none;
 }
 
-.user-list-table-item:hover {
-    background: #f5f5f5;
-}
-
-.user-list-item-holder {
-    max-height: 383px;
+.t-s-table-main {
+    max-height: 528px;
     overflow-y: auto;
-}
-
-.user-list-item-holder > div:last-child {
-    border: none;
-}
-
-.user-list-table-item {
-    color: #212121;
-}
-
-.user-list-table-item > label {
-    margin-right: 25px;
-}
-
-.user-list-table div input[type=checkbox] {
-    width: 14px;
-    height: 14px;
-    margin-right: 15px;
-    border: none;
-}
-
-.user-list-table div label {
-    transition: all 0.25s linear
-}
-
-.user-list-table div input[type=checkbox]:checked ~ label,
-.user-list-table div input[type=checkbox]:hover ~ label {
-    color: #017eff;
 }
 
 .create-new-user > button {
     margin-top: 20px
-}
-
-.input-holder input[type=text] {
-    width: 600px;
 }

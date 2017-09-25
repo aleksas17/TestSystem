@@ -27,11 +27,17 @@ namespace TestSystem.Controllers
             }
         }
 
+        /// <summary>
+        /// Set test satart time and start the timer
+        /// </summary>
+        /// <param name="userTestId">Which test to load</param>
+        /// <returns>Information about test to view</returns>
         public ActionResult Test(int userTestId)
         {
             using (var uow = new UnitOfWork())
             {
                 var userTest = uow.UserTestRepository.GetUserTestById(userTestId);
+                // Set test start time, when did user start test
                 if (userTest.TestStart == null)
                 {
                     userTest.TestStart = DateTime.Now;
@@ -47,8 +53,6 @@ namespace TestSystem.Controllers
                     TotalQuestions = userTest.UserAnswers.Count,
                     QuestionsLeft = userTest.UserAnswers.Select(s => s.AnswerId != null).Count()
                 };
-                Console.Write(testViewModel);
-         
                 return View(testViewModel);
             }
         }
@@ -92,13 +96,18 @@ namespace TestSystem.Controllers
             return RedirectToAction("TestPartial", new {id = userAnswerModel.UserTestId});
         }
 
+        /// <summary>
+        /// When user finish test count how long it took and set it as finished
+        /// </summary>
+        /// <param name="id">user test id</param>
+        /// <returns></returns>
         public ActionResult TestFinish(int id)
         {
             using (var uow = new UnitOfWork())
             {
                 var userTest = uow.UserTestRepository.GetUserTestById(id);
                 var duration = userTest.Test.Duration;
-                if (userTest.TestStart != null && userTest.Status != "Finished")
+                if (userTest.TestStart != null && userTest.Status != "finished")
                 {
                     var timeLeft =  DateTime.Now - userTest.TestStart.Value;
                     if (timeLeft > TimeSpan.FromMinutes(userTest.Test.Duration))
@@ -110,7 +119,6 @@ namespace TestSystem.Controllers
                         userTest.Time = timeLeft;
                     }
                     userTest.Status = "finished";
-                    //userTest.Time = (Convert.ToDateTime(userTest.TestStart) - DateTime.Now).TotalMinutes;
                     uow.Commit();
                     return new EmptyResult();
                 }

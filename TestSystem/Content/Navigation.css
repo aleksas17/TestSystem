@@ -5,15 +5,15 @@ body > nav {
     height: 100%;
     width: 300px;
     z-index: 100;
-    transform: translate3d(-220px,0,0);
+    transform: translate3d(-220px, 0, 0);
     transition: all .7s cubic-bezier(0.91, 0.01, 0.6, 0.99);
     overflow: hidden;
     background: #ffffff;
 }
 
 .slide-nav-back {
-    transform: translate3d(0,0,0);
-    -webkit-box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.35);
+    transform: translate3d(0, 0, 0);
+    -webkit-box-shadow: 2px 82px 15px rgba(0, 0, 0, 0.35);
 }
 
 nav > div:first-child {
@@ -23,7 +23,7 @@ nav > div:first-child {
     width: 100%;
     height: 100%;
     background-color: #017eff;
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
     transition: all 1s cubic-bezier(0.91, 0.01, 0.6, 0.99);
     backface-visibility: hidden;
     outline: 1px solid transparent;
@@ -32,25 +32,16 @@ nav > div:first-child {
 }
 
 .start-animation {
-    transform: translate3d(0,-55%,0) rotate(-75deg)!important;
+    transform: translate3d(0, -55%, 0) rotate(-75deg)!important;
 }
 
 .header-item-holder > header {
     display: flex;
     box-sizing: border-box;
-    justify-content: space-between;
+    justify-content: flex-end;
+    height: 80px;
     padding: 20px;
     margin-bottom: 150px;
-}
-
-.company-name {
-    position: relative;
-    z-index: 100;
-    width: 200px;
-    height: 40px;
-    background-image: url(../Resources/Svgs/teltonika_logo_name.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
 }
 
 /*---------Hamburger logo with it's animations-----------*/
@@ -60,15 +51,16 @@ nav > div:first-child {
     z-index: 100;
     display: block;
     position: relative;
-    cursor: pointer; 
-    width: 30px;
+    cursor: pointer;
+    width: 40px;
     box-sizing: border-box;
-    margin: 5px;
-    padding-top: 15px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
 }
 
-.hamburger-logo span, 
-.hamburger-logo span:before, 
+.hamburger-logo span,
+.hamburger-logo span:before,
 .hamburger-logo span:after {
     height: 3px;
     width: 30px;
@@ -120,6 +112,7 @@ nav > div:first-child {
     -webkit-transition: bottom .2s ease .1s, -webkit-transform .2s ease .3s;
 }
 
+
 /*---------Navigation list items-----------*/
 
 .header-item-holder {
@@ -132,6 +125,11 @@ nav > div:first-child {
 .header-item-holder ul {
     display: flex;
     flex-direction: column;
+    height: 100%;
+}
+
+.header-item-holder ul:first-child {
+    margin-top: 220px;
 }
 
 .header-item-holder ul li a {
@@ -164,4 +162,19 @@ nav > div:first-child {
 .header-item-holder ul hr {
     margin: 4px 0px;
     border: 1px solid #efeeef;
+}
+
+body > header {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background: #ffffff;
+    z-index: 100;
+}
+
+body > header > svg {
+    height: 40px;
+    margin: 20px 0px;
+    fill: #017eff;
 }
