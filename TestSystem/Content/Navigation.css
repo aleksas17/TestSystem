@@ -1,6 +1,6 @@
 ﻿/*---------Navigation-----------*/
 
-body > nav {
+.main-website-navigation {
     position: fixed;
     height: 100%;
     width: 300px;
@@ -16,7 +16,7 @@ body > nav {
     -webkit-box-shadow: 2px 82px 15px rgba(0, 0, 0, 0.35);
 }
 
-nav > div:first-child {
+.main-website-navigation > div:first-child {
     position: absolute;
     z-index: 100;
     padding: 100px;
@@ -164,7 +164,7 @@ nav > div:first-child {
     border: 1px solid #efeeef;
 }
 
-body > header {
+body > header:first-child {
     position: fixed;
     display: flex;
     justify-content: center;
@@ -173,7 +173,7 @@ body > header {
     z-index: 100;
 }
 
-body > header > svg {
+body > header:first-child > svg {
     height: 40px;
     margin: 20px 0px;
     fill: #017eff;

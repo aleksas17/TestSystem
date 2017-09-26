@@ -1,13 +1,16 @@
-﻿/*--------Pop up window--------*/
+﻿var PushedTestId;
+
+/*--------Pop up window--------*/
 
 function PopUpBox() {
     document.getElementById("create-new-user-helper").style.display = "flex";
     document.getElementById("create-new-user-helper").style.visibility = "visible";
 }
 
-function OpenTestStatistics(testId) {
+function OpenTestStatistics(id) {
+    PushedTestId = id;
     PopUpBox();
-    $("#create-new-user-helper").load("/TestAdministration/UsersScores/?testId=" + testId);
+    $("#create-new-user-helper").load("/TestAdministration/UsersStatistics/");
 }
 
 function OpenAssignTest(testId) {
@@ -19,4 +22,6 @@ function OpenCreateTest() {
     PopUpBox()
     $("#create-new-user-helper").load("/TestAdministration/CreateTest/");
 }
+
+
 

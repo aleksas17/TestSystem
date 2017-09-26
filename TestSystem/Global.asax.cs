@@ -77,7 +77,7 @@ namespace TestSystem
                 cnf.CreateMap<UserModel, User>().ForAllMembers(a=> a.Condition((src, dest, srcVal, destVal, c) => srcVal != null));
                 //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>().ForMember(a => a.Answers, b => b.MapFrom(src => src.Answers));
                 //cnf.CreateMap<Test, TestViewModel>(); <- if somthin dosen't work uncoment
-                cnf.CreateMap<UserTest, TestListViewModel>().ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Test.Name));
+                cnf.CreateMap<UserTest, TestListViewModel>();
                 cnf.CreateMap<UserAnswer, UserAnswerModel>();
                 cnf.CreateMap<Question, QuestionModel>();
                 cnf.CreateMap<QuestionModel, Question>();

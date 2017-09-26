@@ -64,6 +64,7 @@
 .login-card-left video {
     position: absolute;
     width: 200%;
+    left: -150px;
     mix-blend-mode: multiply;
     filter: grayscale(100%);
     z-index: 1;

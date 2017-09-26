@@ -47,8 +47,8 @@
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     // Need them to be global for checking purposes
-    var questionAnswered = 0;
-    var questions = 10
+    var questionsLeft = @Model.QuestionsLeft;
+    var questions = @Model.TotalQuestions;
 
     /*--------Check if last question, Button changer from NEXT to FINISH-------*/
     function CheckCurrentQuestion() {
@@ -56,9 +56,6 @@
     }
 
     /*--------Time loading bar animation-------*/
-    var questionsLeft = @Model.QuestionsLeft;
-    var questions = @Model.TotalQuestions;
-
     function ProgressBar() {
         questionsLeft -= 1;
         if (questionsLeft < 0) {

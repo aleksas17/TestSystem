@@ -169,6 +169,13 @@ namespace TestSystem.Controllers
             return View(testModels.ToPagedList(pageNumber, pageSize));
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult UsersStatistics()
+        {
+                return PartialView("TestStatisticsPartial");
+        }
+
         /// <summary>
         /// Get all user scors for test
         /// </summary>
@@ -179,7 +186,7 @@ namespace TestSystem.Controllers
         /// <param name="page"></param>
         /// <returns>List of user statistic for test</returns>
         [Authorize(Roles = "Admin")]
-        public ActionResult UsersScores(int testId, string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult TestStatisticsUsers(int testId, string sortOrder, string currentFilter, string searchString, int? page)
         {
             using (var uow = new UnitOfWork())
             {
@@ -194,8 +201,15 @@ namespace TestSystem.Controllers
                 }
                 var pageSize = 10;
                 var pageNumber = (page ?? 1);
-                return PartialView("TestStatisticsPartial", usersScore.ToPagedList(pageNumber, pageSize));
+                return PartialView("TestStatisticsUsersPartial", usersScore.ToPagedList(pageNumber, pageSize));
             }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult TestStatisticsQuestion()
+        {
+            return PartialView("TestStatisticsQuestionPartial");
         }
     }
 

@@ -1,5 +1,4 @@
-﻿@model PagedList.IPagedList<TestSystem.ViewModels.TestAdministration.UsersScoresViewModel>
-@Styles.Render("~/Content/TableStyle.css")
+﻿@Styles.Render("~/Content/TableStyle.css")
 
 <div class="create-new-test">
     <h1>
@@ -11,43 +10,13 @@
         </button>
     </h1>
 
-    <div class="test-statics-table">
-        <header>
-            <nav>
-                <h1>User List</h1>
-            </nav>
-            <ul>
-                <li>Firstname</li>
-                <li>Lastname</li>
-                <li>Score</li>
-                <li>Time</li>
-                <li>Position</li>
-            </ul>
-        </header>
-        <ul class="t-s-table-main">
-        @foreach (var user in Model)
-        {
-            <li>
-                <div>@user.FirstName</div>
-                <div>@user.LastName</div>
-                <div>@user.Score</div>
-                <div>@user.Time.ToString(@"mm\:ss")</div>
-                <div>@user.Position</div>
-            </li>
-        }
-        </ul>
-        <footer>
-            <div>1-10 of 100</div>
-            <div>
-                <svg viewBox="0 0 24 24">
-                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-                    <path d="M0 0h24v24H0z" fill="none" />
-                </svg>
-                <svg viewBox="0 0 24 24">
-                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-                    <path d="M0 0h24v24H0z" fill="none" />
-                </svg>
-            </div>
-        </footer>
-    </div>
+    <nav class="tab-controler">
+        <div>user statistics</div>
+        <div>question statistics</div>
+    </nav>
+
+    <section class="tab-holder"></section>  
 </div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/Scripts/TestStatistics.js")

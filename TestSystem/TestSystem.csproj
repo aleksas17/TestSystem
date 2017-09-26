@@ -227,12 +227,12 @@
     </Content>
     <Content Include="Resources\Svgs\navigate_next.svg" />
     <Content Include="Resources\Svgs\teltonika_logo_name.svg" />
-    <Content Include="Resources\Videos\Daytime_Traffic_Video.webm" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Resources\Videos\Daytime_Traffic_Video.webm" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\AdminTestList.js" />
     <Content Include="Scripts\AssignTest.js" />
@@ -256,7 +256,10 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Test.js" />
     <Content Include="Scripts\TestPartial.js" />
+    <Content Include="Scripts\TestStatistics.js" />
+    <Content Include="Scripts\TestStatisticsQuestion.js" />
     <Content Include="Scripts\Users.js" />
+    <Content Include="Scripts\UserTestList.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -278,6 +281,8 @@
     <Content Include="Views\TestAdministration\AssignTestPartial.cshtml" />
     <Content Include="Views\TestAdministration\TestCreatePartial.cshtml" />
     <Content Include="Views\TestAdministration\TestStatisticsPartial.cshtml" />
+    <Content Include="Views\TestAdministration\TestStatisticsUsersPartial.cshtml" />
+    <Content Include="Views\TestAdministration\TestStatisticsQuestionPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
