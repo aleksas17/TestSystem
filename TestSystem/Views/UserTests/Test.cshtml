@@ -105,7 +105,7 @@
             // Checking if timer is 00:00
             if (diff > 0) {
                 // Checking if there are any more questions left, if not stop timer
-                if (questionAnswered == questions) {
+                if (questionsLeft == questions) {
                     diff = 0;
                     that.running = false;
                 }
