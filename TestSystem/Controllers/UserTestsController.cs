@@ -72,7 +72,7 @@ namespace TestSystem.Controllers
                     return RedirectToAction("TestFinish",new {id});
                 }
                 var testPartialViewModel = Mapper.Map<TestPartialViewModel>(userAnswer);
-                return PartialView(testPartialViewModel);
+                return PartialView("TestPartial", testPartialViewModel);
             }
         }
 

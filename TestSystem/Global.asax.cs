@@ -48,9 +48,9 @@ namespace TestSystem
                     .ForMember(a => a.LastName, b => b.MapFrom(src => src.User.Lastname))
                     .ForMember("Score", opt => opt.MapFrom(b => b.UserAnswers.Count(a => a.Answer.IsCorrect == 1)));
                 // Map UserTest DB data to UserTestQuestionStatisticsModel, using this for statistics
-                cnf.CreateMap<UserTest, UserTestQuestionStatisticsModel>()
-                    .ForMember(a => a.UserTestAnswers, b => b.MapFrom(src => src.User))
-                    .ForMember(a => a.QuestionModel, b => b.MapFrom(src => src.Test.Questions));
+                //cnf.CreateMap<UserTest, UserTestQuestionStatisticsModel>()
+                //    .ForMember(a => a.UserTestAnswers, b => b.MapFrom(src => src.User))
+                //    .ForMember(a => a.QuestionModel, b => b.MapFrom(src => src.Test.Questions));
                 cnf.CreateMap<User, UserTestAnswersModel>();
 
                     //.ForMember(a => a.TotalAnswersGood, b => b.MapFrom((src => src.UserAnswers.GroupBy(a => a.QuestionId)).Count(a => a.Answer.IsCorrect == 1)));
@@ -74,8 +74,7 @@ namespace TestSystem
                 cnf.CreateMap<UserTest, UserStatisticsModel>()
                     .ForMember(a => a.Group,b => b.MapFrom(src => src.User));
                 cnf.CreateMap<UserCsvModel, User>();
-                cnf.CreateMap<UserAnswer, TestPartialViewModel>()
-                    .ForMember(a => a.QuestionModel, b => b.MapFrom(src => src.Question));
+                //cnf.CreateMap<UserAnswer, TestPartialViewModel>();
                 cnf.CreateMap<AssignTestPartialViewModel, UserTest>(); 
             });
             ModelBinders.Binders.Add(typeof(UserCsvModel[]), new CsvModelBinder<UserCsvModel>());

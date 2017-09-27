@@ -105,7 +105,7 @@
             // Checking if timer is 00:00
             if (diff > 0) {
                 // Checking if there are any more questions left, if not stop timer
-                if (questionAnswered == questions) {
+                if (questionsLeft == questions) {
                     diff = 0;
                     that.running = false;
                 }
@@ -152,11 +152,6 @@
         $.ajax({
             type: "POST",
             url: finishUrl,
-            //data: "{queryString:'" + searchVal + "'}",
-            //contentType: "application/json; charset=utf-8",
-            //dataType: "html",
-            //success: function (data) {
-                //alert("here" + data.d.toString());
         });
         RederectTestList();
     }
@@ -166,7 +161,7 @@
         ProgressBar();
 
         /*--------Load question with answers-------*/
-        $("#ts").load("/UserTests/TestPartial/@Model.TestId");
+        $("#ts").load("/UserTests/TestPartial/?id=@Model.TestId");
 
         /*--------Timer set up-------*/
         var display = document.querySelector("#test-time > h2"),

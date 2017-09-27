@@ -222,10 +222,6 @@ namespace TestSystem.Controllers
             {
                 var userTestsAnswers = uow.UserTestRepository.GetUserAnswersByTestId(testId);
                 var userAnswers = Mapper.Map<List<UserTestQuestionStatisticsModel>>(userTestsAnswers);
-                //var userTestsQuestions = uow.UserTestRepository.GetTestQuestionsByTestId(testId);
-                //var testQuestions = Mapper.Map<List<UserTestQuestionStatisticsModel>>(userTestsQuestions);
-                //var userTestQuestionStatisticsModel = new UserTestQuestionStatisticsModel();
-                //foreach(var question in userTestQuestionStatisticsModel.)
                 var pageSize = 10;
                 var pageNumber = (page ?? 1);
                 return PartialView("TestStatisticsQuestionPartial", userAnswers.ToPagedList(pageNumber, pageSize));

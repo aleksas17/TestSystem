@@ -7,6 +7,6 @@ namespace TestSystem.ViewModels.UserTests
     {
         public int UserAnswerId { get; set; }
         public int UserTestId { get; set; }
-        public QuestionModel QuestionModel { get; set; }
+        public QuestionModel Question { get; set; }
     }
 }

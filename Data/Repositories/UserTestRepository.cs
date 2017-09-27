@@ -58,10 +58,5 @@ namespace Data.Repositories
                 .Include(a => a.UserAnswers)
                 .Include(a => a.Test.Questions.Select(b => b.Answers));
         }
-
-        public IEnumerable<UserTest> GetTestQuestionsByTestId(int testId)
-        {
-            return DbSet.Include(a => a.Test.Questions.Select(b => b.Answers));
-        }
     }
 }
