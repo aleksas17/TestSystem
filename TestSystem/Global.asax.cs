@@ -13,7 +13,6 @@ using TestSystem.Models.UserTests;
 using TestSystem.Utilities;
 using TestSystem.ViewModels.TestAdministration;
 using TestSystem.ViewModels.UserTests;
-//using TestViewModel = TestSystem.ViewModels.TestAdministration.TestViewModel;
 
 namespace TestSystem
 {
@@ -43,46 +42,37 @@ namespace TestSystem
             /// Creating maps between one object to another
             Mapper.Initialize(cnf =>
             {
-                // Map UserTest DB data to UserScoresViewModel
+                // Map UserTest DB data to UserScoresViewModel, using this for statistics
                 cnf.CreateMap<UserTest, UsersScoresViewModel>()
                     .ForMember(a => a.FirstName, b => b.MapFrom(src => src.User.FirstName))
                     .ForMember(a => a.LastName, b => b.MapFrom(src => src.User.Lastname))
                     .ForMember("Score", opt => opt.MapFrom(b => b.UserAnswers.Count(a => a.Answer.IsCorrect == 1)));
+                // Map UserTest DB data to UserTestQuestionStatisticsModel, using this for statistics
+                cnf.CreateMap<UserTest, UserTestQuestionStatisticsModel>()
+                    .ForMember(a => a.UserTestAnswers, b => b.MapFrom(src => src.User))
+                    .ForMember(a => a.QuestionModel, b => b.MapFrom(src => src.Test.Questions));
+                cnf.CreateMap<User, UserTestAnswersModel>();
+
+                    //.ForMember(a => a.TotalAnswersGood, b => b.MapFrom((src => src.UserAnswers.GroupBy(a => a.QuestionId)).Count(a => a.Answer.IsCorrect == 1)));
                 // Map TestCreateViewModel data to Test DB
                 cnf.CreateMap<TestCreateViewModel, Test>();
-                //
                 cnf.CreateMap<QuestionModel, Question>();
+
                 cnf.CreateMap<AnswerModel, Answer>();
                 cnf.CreateMap<Answer, AnswerModel>();
-
-                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>()
-                //    .ForMember(dest => dest.Answers, opt => opt.MapFrom(src => src.Answers));
-
-                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>();
-                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>()
-                //    .ConstructUsing(ct => Mapper.Map<Models.TestAdministration.QuestionModel>(ct.Answers))
-                //    .ForAllMembers(opt => opt.Ignore());
-                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>()
-                //    .ForMember(a => a.Answers, b => b.MapFrom(src => src.Answers));
-
-                //cnf.CreateMap<Answer, Models.TestAdministration.AnswerModel>();
-
-                //cnf.CreateMap<Test, TestTemplatesPartialViewModel>()
-                //    .ForMember(a => a.QuestionModels, b => b.MapFrom(src => src.Questions));
-                //cnf.CreateMap<Test, TestTemplatesViewModel>();
-
                 cnf.CreateMap<User, UserModel>();
                 cnf.CreateMap<Test, TestModel>();
-                //cnf.CreateMap<Answer, TestAnswer>();
-                cnf.CreateMap<UserModel, User>().ForAllMembers(a=> a.Condition((src, dest, srcVal, destVal, c) => srcVal != null));
+                cnf.CreateMap<UserModel, User>()
+                    .ForAllMembers(a=> a.Condition((src, dest, srcVal, destVal, c) => srcVal != null));
                 //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>().ForMember(a => a.Answers, b => b.MapFrom(src => src.Answers));
-                //cnf.CreateMap<Test, TestViewModel>(); <- if somthin dosen't work uncoment
                 cnf.CreateMap<UserTest, TestListViewModel>();
                 cnf.CreateMap<UserAnswer, UserAnswerModel>();
-                cnf.CreateMap<Question, QuestionModel>();
-                cnf.CreateMap<QuestionModel, Question>();
+                cnf.CreateMap<Question, QuestionModel>()
+                .ForMember(a=>a.TotalAnswersGood, b=>b.MapFrom(src=>src.Answers.Count))
+                .ForMember(a=>a.TotalAnswersBad, b=>b.MapFrom(src=>src.Test));
                 cnf.CreateMap<Question, UserAnswer>();
-                cnf.CreateMap<UserTest, UserStatisticsModel>().ForMember(a => a.Group,b => b.MapFrom(src => src.User));
+                cnf.CreateMap<UserTest, UserStatisticsModel>()
+                    .ForMember(a => a.Group,b => b.MapFrom(src => src.User));
                 cnf.CreateMap<UserCsvModel, User>();
                 cnf.CreateMap<UserAnswer, TestPartialViewModel>()
                     .ForMember(a => a.QuestionModel, b => b.MapFrom(src => src.Question));

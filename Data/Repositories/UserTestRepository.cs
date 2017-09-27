@@ -50,5 +50,18 @@ namespace Data.Repositories
         {
             return DbSet.Include(a => a.User).Include(a => a.UserAnswers.Select(b => b.Answer)).Where(a => a.TestId == testId);
         }
+
+        public IEnumerable<UserTest> GetUserAnswersByTestId(int testId)
+        {
+            return DbSet.Include(a => a.Test).Where(a => a.TestId == testId).Where(a => a.Status == "finished")
+                .Include(a => a.User)
+                .Include(a => a.UserAnswers)
+                .Include(a => a.Test.Questions.Select(b => b.Answers));
+        }
+
+        public IEnumerable<UserTest> GetTestQuestionsByTestId(int testId)
+        {
+            return DbSet.Include(a => a.Test.Questions.Select(b => b.Answers));
+        }
     }
 }

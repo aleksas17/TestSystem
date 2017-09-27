@@ -1,9 +1,9 @@
 ﻿function TestStatisticsUsersPartial() {
-    $("#create-new-user-helper").load("/TestAdministration/TestStatisticsUsers/?testId=" + PushedTestId);
+    $(".tab-holder").load("/TestAdministration/TestStatisticsUsers/?testId=" + PushedTestId);
 }
 
 function TestStatisticsQuestionPartial() {
-    $(".tab-holder").load("/TestAdministration/TestStatisticsQuestion");
+    $(".tab-holder").load("/TestAdministration/TestStatisticsQuestion/?testId=" + PushedTestId);
 }
 
 $(document).ready(function () {

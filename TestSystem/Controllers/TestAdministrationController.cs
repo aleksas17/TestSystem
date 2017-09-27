@@ -205,11 +205,31 @@ namespace TestSystem.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all user scors for test
+        /// </summary>
+        /// <param name="testId">Witch test scors we want</param>
+        /// <param name="sortOrder"></param>
+        /// <param name="currentFilter"></param>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <returns>List of user statistic for test</returns>
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public ActionResult TestStatisticsQuestion()
+        public ActionResult TestStatisticsQuestion(int testId, string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return PartialView("TestStatisticsQuestionPartial");
+            using (var uow = new UnitOfWork())
+            {
+                var userTestsAnswers = uow.UserTestRepository.GetUserAnswersByTestId(testId);
+                var userAnswers = Mapper.Map<List<UserTestQuestionStatisticsModel>>(userTestsAnswers);
+                //var userTestsQuestions = uow.UserTestRepository.GetTestQuestionsByTestId(testId);
+                //var testQuestions = Mapper.Map<List<UserTestQuestionStatisticsModel>>(userTestsQuestions);
+                //var userTestQuestionStatisticsModel = new UserTestQuestionStatisticsModel();
+                //foreach(var question in userTestQuestionStatisticsModel.)
+                var pageSize = 10;
+                var pageNumber = (page ?? 1);
+                return PartialView("TestStatisticsQuestionPartial", userAnswers.ToPagedList(pageNumber, pageSize));
+            }
         }
     }
 

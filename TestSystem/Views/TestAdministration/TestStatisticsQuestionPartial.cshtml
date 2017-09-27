@@ -1,4 +1,4 @@
-﻿
+﻿@model PagedList.IPagedList<TestSystem.ViewModels.TestAdministration.UserTestQuestionStatisticsModel>
 
 <div class="test-statics-table-questions">
     <header>
@@ -9,10 +9,10 @@
     <ul class="t-s-table-questions-main">
         <nav>
             <li>Firstname Lastname</li>
-            <li>Aleksandras Judelis</li>
-            <li>Aleksandras Judelis</li>
-            <li>Aleksandras Judelis</li>
-            <li>Aleksandras Judelis</li>
+        @foreach (var user in Model)
+        {
+            <li>@user.FirstName @user.LastName</li>
+        }
             <li>
                 <p>Subtotal</p>
                 <div>
@@ -23,106 +23,28 @@
         </nav>
         <li>
             <ul>
+            @foreach (var question in Model[0].QuestionModel)
+            {
                 <li>
                     Question 1
-                    <span class="tool-tip">1 klausimas</span>
+                    <span class="tool-tip">@question.Name</span>
                 </li>
-                <li>
-                    Question 2
-                    <span class="tool-tip">2 klausimas</span>
-                </li>
-                <li>
-                    Question 3
-                    <span class="tool-tip">3 klausimas</span>
-                </li>
-                <li>
-                    Question 4
-                    <span class="tool-tip">4 klausimas</span>
-                </li>
-                <li>
-                    Question 5
-                    <span class="tool-tip">5 klausimas</span>
-                </li>
-                <li>
-                    Question 6
-                    <span class="tool-tip">6 klausimas</span>
-                </li>
-                <li>
-                    Question 7
-                    <span class="tool-tip">7 klausimas</span>
-                </li>
-                <li>
-                    Question 8
-                    <span class="tool-tip">8 klausimas</span>
-                </li>
-                <li>
-                    Question 9
-                    <span class="tool-tip">9 klausimas</span>
-                </li>
-                <li>
-                    Question 10
-                    <span class="tool-tip">10 klausimas</span>
-                </li>
+            }
             </ul>
+            @foreach (var user in Model)
+            {
             <ul>
-                <li>O</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>X</li>
+                @foreach (var userAnswer in user.UserAnswers) {
+                    <li>@userAnswer.Answer.IsCorrect</li>
+                }
             </ul>
-            <ul>
-                <li>O</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>X</li>
-            </ul>
-            <ul>
-                <li>O</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>X</li>
-            </ul>
-            <ul>
-                <li>O</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>O</li>
-                <li>X</li>
-                <li>X</li>
-            </ul>
+            }
             <ul>
                 <li>10</li>
                 <li>5</li>
                 <li>4</li>
                 <li>10</li>
                 <li>8</li>
-                <li>7</li>
-                <li>9</li>
-                <li>10</li>
-                <li>5</li>
-                <li>10</li>
             </ul>
             <ul>
                 <li>2</li>
@@ -130,11 +52,6 @@
                 <li>10</li>
                 <li>5</li>
                 <li>4</li>
-                <li>7</li>
-                <li>9</li>
-                <li>7</li>
-                <li>10</li>
-                <li>3</li>
             </ul>
         </li>
 
