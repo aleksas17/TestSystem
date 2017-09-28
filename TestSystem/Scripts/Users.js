@@ -53,5 +53,22 @@ $(document).ready(function () {
             return;
         CloseCreateUser();
     });
-
+    /// TODO: Search on keyup 
+    //$("#SearchString").bind("keyup", function () {
+    //    $("#list-search").delay(200).submit();
+    //});
+    
+    //$("#list-search").submit(function (event) {
+    //    event.preventDefault();
+    //    var searchUrl = '/Account/UserList?SearchString=' + $("#SearchString").val();
+    //    $.ajax({
+    //        type: "post",
+    //        dataType: "html",
+    //        url: searchUrl,
+    //        data: $("#list-search").serialize(),
+    //        success: function (response) {
+    //            $(".item-container-shadow").load(" .item-container-shadow");
+    //        }
+    //        });
+    //});
 });

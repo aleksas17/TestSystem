@@ -186,6 +186,7 @@ namespace TestSystem.Controllers
         /// <param name="page"></param>
         /// <returns>List of user statistic for test</returns>
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public ActionResult TestStatisticsUsers(int testId, string sortOrder, string currentFilter, string searchString, int? page)
         {
             using (var uow = new UnitOfWork())
@@ -199,7 +200,7 @@ namespace TestSystem.Controllers
                     userScore.Position += usersScore.Count(a => a.Score == userScore.Score && a.Time < userScore.Time);
 
                 }
-                var pageSize = 10;
+                var pageSize = 4;
                 var pageNumber = (page ?? 1);
                 return PartialView("TestStatisticsUsersPartial", usersScore.ToPagedList(pageNumber, pageSize));
             }

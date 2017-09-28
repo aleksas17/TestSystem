@@ -37,6 +37,10 @@
     color: rgba(0, 0, 0, 0.54);
 }
 
+.test-statics-table > header > ul:first-of-type {
+    border-bottom: 2px solid #0099ff;
+}
+
 .test-statics-table label {
     position: relative;
     display: flex;
@@ -112,23 +116,34 @@
     font-weight: 500;
 }
 
-.test-statics-table > footer > div svg,
-.test-statics-table-questions > footer > div svg {
-    border-radius: 50%;
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-    fill: rgba(0, 0, 0, 0.54);
-    margin: 12px 12px 12px 12px;
+.test-statics-table .pagination,
+.test-statics-table-questions .pagination {
+    width: auto;
+    height: auto;
 }
 
-.test-statics-table > footer > div svg:first-child,
-.test-statics-table-questions > footer > div svg:first-child {
+.test-statics-table .disabled.PagedList-skipToPrevious,
+.test-statics-table-questions .disabled.PagedList-skipToPrevious,
+.test-statics-table .disabled.PagedList-skipToNext,
+.test-statics-table-questions .disabled.PagedList-skipToNext {
+    background-image: url("../Resources/Svgs/navigate_next_disabled.svg");
+}
+
+.test-statics-table .PagedList-skipToPrevious,
+.test-statics-table-questions .PagedList-skipToPrevious,
+.test-statics-table .PagedList-skipToNext,
+.test-statics-table-questions .PagedList-skipToNext {
+    padding: 0;
+    margin: 5px;
+}
+
+.test-statics-table .PagedList-skipToPrevious,
+.test-statics-table-questions .PagedList-skipToPrevious {
     margin-left: 32px;
 }
 
-.test-statics-table > footer > div svg:last-child,
-.test-statics-table-questions > footer > div svg:last-child {
+.test-statics-table .PagedList-skipToNext,
+.test-statics-table-questions .PagedList-skipToNext {
     margin-right: 14px;
 }
 

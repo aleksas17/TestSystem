@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<TestSystem.ViewModels.TestAdministration.UsersScoresViewModel>
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<TestSystem.ViewModels.TestAdministration.UsersScoresViewModel>
 
 <div class="test-statics-table">
     <header>
@@ -25,18 +26,14 @@
             </li>
         }
     </ul>
-    <footer>
-        <div>1-10 of 100</div>
+    <footer>       
+        <div>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) - @Model.PageCount</div>
         <div>
-            <svg viewBox="0 0 24 24">
-                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-                <path d="M0 0h24v24H0z" fill="none" />
-            </svg>
-            <svg viewBox="0 0 24 24">
-                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-                <path d="M0 0h24v24H0z" fill="none" />
-            </svg>
+            @Html.PagedListPager(Model, page => Url.Action("TestStatisticsUsers",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), PagedListRenderOptions.Minimal)
         </div>
     </footer>
 </div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/Scripts/TestStatisticsUsers.js")
 

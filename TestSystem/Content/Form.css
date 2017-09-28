@@ -12,7 +12,8 @@ input[type=hidden] {
 }
 
 .input-holder > input[type=text],
-.input-holder > input[type=password] {
+.input-holder > input[type=password],
+.input-holder > input[type=number] {
     width: 100%;
     color: #8a8a8a;
     background: transparent;
@@ -28,7 +29,8 @@ input[type=hidden] {
 }
 
 .input-holder > input[type=text]:focus,
-.input-holder > input[type=password]:focus { 
+.input-holder > input[type=password]:focus,
+.input-holder > input[type=number]:focus { 
     outline: none;
     border-color: transparent;
 }
@@ -53,7 +55,9 @@ input[type=hidden] {
 .input-holder > input[type=text]:focus ~ label,
 .input-holder > input[type=text]:valid ~ label,
 .input-holder > input[type=password]:focus ~ label,
-.input-holder > input[type=password]:valid ~ label {
+.input-holder > input[type=password]:valid ~ label,
+.input-holder > input[type=number]:focus ~ label,
+.input-holder > input[type=number]:valid ~ label {
     top: -15px;
     font-size: 12px;
     color: #017eff;
@@ -93,7 +97,9 @@ input[type=hidden] {
 .input-holder > input[type=text]:focus ~ .input-bar:before,
 .input-holder > input[type=text]:focus ~ .input-bar:after,
 .input-holder > input[type=password]:focus ~ .input-bar:before,
-.input-holder > input[type=password]:focus ~ .input-bar:after {
+.input-holder > input[type=password]:focus ~ .input-bar:after,
+.input-holder > input[type=number]:focus ~ .input-bar:before,
+.input-holder > input[type=number]:focus ~ .input-bar:after {
     width: 50%;
 }
 

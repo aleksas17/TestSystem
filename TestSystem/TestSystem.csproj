@@ -226,6 +226,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Svgs\navigate_next.svg" />
+    <Content Include="Resources\Svgs\navigate_next_disabled.svg" />
     <Content Include="Resources\Svgs\teltonika_logo_name.svg" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -258,6 +259,7 @@
     <Content Include="Scripts\TestPartial.js" />
     <Content Include="Scripts\TestStatistics.js" />
     <Content Include="Scripts\TestStatisticsQuestion.js" />
+    <Content Include="Scripts\TestStatisticsUsers.js" />
     <Content Include="Scripts\Users.js" />
     <Content Include="Scripts\UserTestList.js" />
     <Content Include="Web.config" />
