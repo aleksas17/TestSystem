@@ -208,21 +208,22 @@ namespace TestSystem.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public ActionResult TestStatisticsQuestion()
+        public ActionResult TestStatisticsQuestion(int testId)
         {
+            var testStatisticsQuestionViewModel = new TestStatisticsQuestionViewModel();
             using (var uow = new UnitOfWork())
             {
-                var userAnswers = uow.UserAnswerRepository.GetUserAnswersByTestId(1).GroupBy(a=>a.QuestionId);
-                var quest = new Dictionary<int?, int>();
-                foreach(var a in userAnswers)
+                var userAnswers = uow.UserAnswerRepository.GetUserAnswersByTestId(testId).GroupBy(a=>a.QuestionId);
+                
+                foreach (var a in userAnswers)
                 {
                     var count = a.Where(x => x.Answer.IsCorrect == 1).Count();
-                    var sdsd = a.Key;
-                    quest.Add(a.Key, value: count);
+                    testStatisticsQuestionViewModel.QuestionTotalGood.Add(a.Key, value: count);
                 }
-
+                var testQuestions = uow.QuestionRepository.GetQuestionsByTestId(testId);
+                var questionsNames = Mapper.Map<List<TestStatisticsQuestionViewModel>>(testQuestions);
             }
-                return PartialView("TestStatisticsQuestionPartial");
+            return PartialView("TestStatisticsQuestionPartial", testStatisticsQuestionViewModel);
         }
     }
 

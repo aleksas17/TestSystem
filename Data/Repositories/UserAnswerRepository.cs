@@ -24,7 +24,6 @@ namespace Data.Repositories
         public IEnumerable<UserAnswer> GetUserAnswersByTestId(int testId)
         {
             var userAnswers = DbSet.Include(a => a.UserTest).Include(a=>a.Answer).Where(a => a.UserTest.TestId == testId && a.UserTest.Status == "finished");
-
             return userAnswers;
         }
     }

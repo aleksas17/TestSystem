@@ -25,6 +25,13 @@ function AddChoice() {
         + '</div>'
         + '</div>'
         + '<span class="field-validation-error"><span>Choice cant be empty</span></span>');
+    if (currentChoise == 0) {
+        $('input[name="Questions[' + currentQuestion + '].Name"]').focus();
+    }
+    else {
+        $('input[name="Questions[' + currentQuestion + '].Answers[' + currentChoise + '].Name"]').focus();
+    }
+    
     currentChoise += 1;
 }
 
@@ -80,6 +87,7 @@ $(document).ready(function () {
         currentChoise = 0;
         $("#question-creator .input-holder-question input[type=hidden]").prop("value", currentQuestion);
         $("#question-creator .input-holder-question .input-holder input[type=text]").prop("name", "Questions[" + currentQuestion + "].Name");
+        $('input[name="Questions[' + currentQuestion + '].Name"]').val("");
         AddChoice();
         // Seting up firs choice to be checked when we clear question-creator
         $("#question-creator .input-radio-checkbox input[type=radio]").prop('checked', true);
@@ -88,6 +96,7 @@ $(document).ready(function () {
 
     $(".create-new-test").submit(function () {
         $("#question-creator input").prop("disabled", true);
+        $("#question-creator input").val(" ");
         return true; //send
     });
 });

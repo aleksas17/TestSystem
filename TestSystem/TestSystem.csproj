@@ -198,6 +198,7 @@
     <Compile Include="Utilities\UserCsvModel.cs" />
     <Compile Include="ViewModels\TestAdministration\AssignTestPartialViewModel.cs" />
     <Compile Include="ViewModels\TestAdministration\TestCreateViewModel.cs" />
+    <Compile Include="ViewModels\TestAdministration\TestStatisticsQuestionViewModel.cs" />
     <Compile Include="ViewModels\TestAdministration\TestTemplatesPartialViewModel.cs" />
     <Compile Include="ViewModels\TestAdministration\TestTemplatesViewModel.cs" />
     <Compile Include="ViewModels\TestAdministration\TestViewModel.cs" />

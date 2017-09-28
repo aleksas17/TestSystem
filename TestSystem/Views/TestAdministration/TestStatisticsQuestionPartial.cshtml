@@ -1,4 +1,4 @@
-﻿
+﻿@model TestSystem.ViewModels.TestAdministration.TestStatisticsQuestionViewModel
 
 <div class="test-statics-table-questions">
     <header>
@@ -23,11 +23,15 @@
         </nav>
         <li>
             <ul>
+                @foreach (var question in Model.Name)
+                {
                 <li>
-                    Question 1
+                    @question
                     <span class="tool-tip">1 klausimas</span>
                 </li>
-                <li>
+                }
+                
+                @*<li>
                     Question 2
                     <span class="tool-tip">2 klausimas</span>
                 </li>
@@ -62,7 +66,7 @@
                 <li>
                     Question 10
                     <span class="tool-tip">10 klausimas</span>
-                </li>
+                </li>*@
             </ul>
             <ul>
                 <li>O</li>

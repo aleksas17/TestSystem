@@ -54,6 +54,7 @@ namespace TestSystem
                 cnf.CreateMap<QuestionModel, Question>();
                 cnf.CreateMap<AnswerModel, Answer>();
                 cnf.CreateMap<Answer, AnswerModel>();
+                cnf.CreateMap<Question, TestStatisticsQuestionViewModel>();
 
                 //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>()
                 //    .ForMember(dest => dest.Answers, opt => opt.MapFrom(src => src.Answers));
