@@ -46,6 +46,8 @@
         <ul class="t-s-table-main">
         @foreach (var user in Model.UserModel)
         {
+            if (user.Role != "Admin")
+            {
             <li>
                 <div>
                     <label>
@@ -55,6 +57,7 @@
                 <div>@user.FirstName @user.Lastname</div>
                 <div>@user.Group</div>
             </li>
+            }
         } 
         </ul>
         <footer>

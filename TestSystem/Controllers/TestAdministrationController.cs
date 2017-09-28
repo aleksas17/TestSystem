@@ -200,7 +200,7 @@ namespace TestSystem.Controllers
                     userScore.Position += usersScore.Count(a => a.Score == userScore.Score && a.Time < userScore.Time);
 
                 }
-                var pageSize = 4;
+                var pageSize = 7;
                 var pageNumber = (page ?? 1);
                 return PartialView("TestStatisticsUsersPartial", usersScore.ToPagedList(pageNumber, pageSize));
             }

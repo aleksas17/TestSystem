@@ -25,7 +25,7 @@
 }
 
 .selected-items {
-    background: #e7effd;
+    background: #f5fcff;
     color: #127dfa;
     font-size: 19px;
 }
@@ -43,7 +43,7 @@
 }
 
 .t-s-table-main {
-    max-height: 528px;
+    max-height: 412px;
     overflow-y: auto;
 }
 
