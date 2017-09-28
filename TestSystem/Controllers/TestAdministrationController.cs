@@ -210,7 +210,19 @@ namespace TestSystem.Controllers
         [HttpGet]
         public ActionResult TestStatisticsQuestion()
         {
-            return PartialView("TestStatisticsQuestionPartial");
+            using (var uow = new UnitOfWork())
+            {
+                var userAnswers = uow.UserAnswerRepository.GetUserAnswersByTestId(1).GroupBy(a=>a.QuestionId);
+                var quest = new Dictionary<int?, int>();
+                foreach(var a in userAnswers)
+                {
+                    var count = a.Where(x => x.Answer.IsCorrect == 1).Count();
+                    var sdsd = a.Key;
+                    quest.Add(a.Key, value: count);
+                }
+
+            }
+                return PartialView("TestStatisticsQuestionPartial");
         }
     }
 

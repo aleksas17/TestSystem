@@ -50,5 +50,13 @@ namespace Data.Repositories
         {
             return DbSet.Include(a => a.User).Include(a => a.UserAnswers.Select(b => b.Answer)).Where(a => a.TestId == testId);
         }
+
+        //public IEnumerable<UserTest> GetTestQuestionsByTestId(int testId)
+        //{
+        //    var authorsWithManyBooks =
+        //        DbSet.Select(b => new { UserTest = b, b.UserAnswers })
+        //        .Select(b => new { UserAnswers = b,  });
+        //}
+        
     }
 }
