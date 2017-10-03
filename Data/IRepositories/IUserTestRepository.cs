@@ -9,5 +9,6 @@ namespace Data.IRepositories
         IEnumerable<UserTest> GetUserTestsByTestName(string testName);
         UserTest GetUserTestById(int id);
         IEnumerable<UserTest> GetUserTestsByTestId(int testId);
+        IEnumerable<UserTest> GetUserAnswersByTestId(int testId);
     }
 }

@@ -3,7 +3,7 @@ namespace Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class ts : DbMigration
     {
         public override void Up()
         {
@@ -67,13 +67,13 @@ namespace Data.Migrations
                 c => new
                     {
                         UserId = c.Int(nullable: false, identity: true),
-                        Role = c.String(),
+                        Role = c.String(maxLength: 140),
                         Username = c.String(nullable: false, maxLength: 25),
                         Password = c.String(nullable: false, maxLength: 25),
-                        Position = c.String(),
-                        Group = c.String(),
-                        FirstName = c.String(),
-                        Lastname = c.String(),
+                        Position = c.String(maxLength: 140),
+                        Group = c.String(maxLength: 140),
+                        FirstName = c.String(maxLength: 140),
+                        Lastname = c.String(maxLength: 140),
                     })
                 .PrimaryKey(t => t.UserId);
             

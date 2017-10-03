@@ -8,9 +8,9 @@ namespace Data.Configurations
         public UserConfiguration()
         {
             ToTable("User");
-            Property(g => g.Username).IsRequired().HasMaxLength(25);
+            Property(g => g.Username).IsRequired().HasMaxLength(200);
             Property(g => g.UserId).IsRequired();
-            Property(g => g.Password).IsRequired().HasMaxLength(25);
+            Property(g => g.Password).IsRequired().HasMaxLength(200);
             //Property(g => g.Role).IsOptional();
         }
     }

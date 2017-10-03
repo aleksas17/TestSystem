@@ -35,7 +35,7 @@
                 <li>
                     <select>
                         <option>Group Name</option>
-                    @foreach (var group in Model.UserModel)
+                    @foreach (var group in Model.Users)
                     {
                         <option>@group.Group</option>
                     }
@@ -44,19 +44,25 @@
             </ul>
         </header>
         <ul class="t-s-table-main">
-        @foreach (var user in Model.UserModel)
+        @foreach (var user in Model.Users)
         {
             if (user.Role != "Admin")
             {
-            <li>
-                <div>
-                    <label>
-                        <input type="checkbox" name="usersIds" value="@user.UserId" />
-                    </label>
-                </div>
-                <div>@user.FirstName @user.Lastname</div>
-                <div>@user.Group</div>
-            </li>
+                foreach (var userTest in user.UserTests)
+                {
+                    if (userTest.Status != "active")
+                    {
+                        <li>
+                            <div>
+                                <label>
+                                    <input type="checkbox" name="usersIds" value="@user.UserId" />
+                                </label>
+                            </div>
+                            <div>@user.FirstName @user.Lastname</div>
+                            <div>@user.Group</div>
+                        </li>
+                    }
+                }
             }
         } 
         </ul>

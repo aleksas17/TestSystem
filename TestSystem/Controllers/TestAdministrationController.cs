@@ -8,6 +8,9 @@ using TestSystem.Models.TestAdministration;
 using PagedList;
 using TestSystem.ViewModels.TestAdministration;
 using TestSystem.Models.Account;
+using System.Web;
+using System.IO;
+using System;
 
 namespace TestSystem.Controllers
 {
@@ -65,7 +68,7 @@ namespace TestSystem.Controllers
         /// <returns>Partial view with viewmodel</returns>
         [Authorize(Roles ="Admin")]
         [HttpGet]
-        public ActionResult AssignTest(int? id)
+        public ActionResult AssignTest(int id)
         {
             var assignTestPartialViewModel = new AssignTestPartialViewModel();
             using (var uow = new UnitOfWork())
@@ -79,7 +82,7 @@ namespace TestSystem.Controllers
                     var userModel = Mapper.Map<UserModel>(user);
                     userModels.Add(userModel);
                 }
-                assignTestPartialViewModel.UserModel = userModels;
+                assignTestPartialViewModel.Users = userModels;
                 // Geting test name and id.
                 var test = uow.TestRepository.Get(id);
                 assignTestPartialViewModel.TestName = test.Name;
@@ -169,6 +172,7 @@ namespace TestSystem.Controllers
             return View(testModels.ToPagedList(pageNumber, pageSize));
         }
 
+
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult UsersStatistics()
@@ -202,28 +206,114 @@ namespace TestSystem.Controllers
                 }
                 var pageSize = 7;
                 var pageNumber = (page ?? 1);
-                return PartialView("TestStatisticsUsersPartial", usersScore.ToPagedList(pageNumber, pageSize));
+                return PartialView("TestStatisticsUsersPartial", usersScore.OrderBy(a=>a.Position).ToPagedList(pageNumber, pageSize));
             }
         }
 
+        //[Authorize(Roles = "Admin")]
+        //[HttpGet]
+        //public ActionResult TestStatisticsQuestion(int testId)
+        //{
+        //    var testStatisticsQuestionViewModel = new TestStatisticsQuestionViewModel();
+        //    using (var uow = new UnitOfWork())
+        //    {
+        //        var userAnswers = uow.UserAnswerRepository.GetUserAnswersByTestId(testId).GroupBy(a => a.QuestionId);
+        //        var mydictionary = new Dictionary<int?, int>();
+        //        foreach (var a in userAnswers)
+        //        {
+        //            var count = a.Where(x => x.Answer.IsCorrect == 1).Count();
+        //            mydictionary.Add(a.Key, value: count);
+        //        }
+        //        testStatisticsQuestionViewModel.QuestionTotalGood = mydictionary;
+        //        var testQuestions = uow.TestRepository.GetTestById(testId);
+        //        //var questionsNames = Mapper.Map<TestStatisticsQuestionViewModel>(testQuestions);
+        //        //testStatisticsQuestionViewModel.Questions.Add(questionsNames.Questions);
+        //    }
+        //    return PartialView("TestStatisticsQuestionPartial");
+        //}
+
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public ActionResult TestStatisticsQuestion(int testId)
+        public ActionResult TestStatisticsQuestion(int testId, string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var testStatisticsQuestionViewModel = new TestStatisticsQuestionViewModel();
             using (var uow = new UnitOfWork())
             {
-                var userAnswers = uow.UserAnswerRepository.GetUserAnswersByTestId(testId).GroupBy(a=>a.QuestionId);
-                
-                foreach (var a in userAnswers)
+                var userTestsAnswers = uow.UserTestRepository.GetUserAnswersByTestId(testId);
+                var userAnswers = Mapper.Map<List<TestStatisticsQuestionViewModel>>(userTestsAnswers);
+                var answers = uow.UserAnswerRepository.GetUserAnswersByTestId(testId).GroupBy(a => a.Question.Name);
+                var mydictionary = new Dictionary<string, int>();
+                var totalAnswers = 0;
+                foreach (var a in answers)
                 {
-                    var count = a.Where(x => x.Answer.IsCorrect == 1).Count();
-                    testStatisticsQuestionViewModel.QuestionTotalGood.Add(a.Key, value: count);
+                    var count = a.Where(x => x.AnswerId != null).Where(x => x.Answer.IsCorrect == 1).Count();
+                    mydictionary.Add(a.Key, value: count);
                 }
-                var testQuestions = uow.QuestionRepository.GetQuestionsByTestId(testId);
-                var questionsNames = Mapper.Map<List<TestStatisticsQuestionViewModel>>(testQuestions);
+                foreach (var user in userAnswers.Select(b => b.UserTestAnswer))
+                {
+                    totalAnswers += 1;
+                }
+                if (userAnswers.Count > 0)
+                {
+                    for (int i = 0; i < userAnswers.Count(); i++)
+                    {
+                        userAnswers[i].QuestionTotalGood = mydictionary;
+                        userAnswers[i].TotalUserAnswers = totalAnswers;
+                    }
+                }
+                var pageSize = 7;
+                var pageNumber = (page ?? 1);
+                return PartialView("TestStatisticsQuestionPartial", userAnswers.ToPagedList(pageNumber, pageSize));
             }
-            return PartialView("TestStatisticsQuestionPartial", testStatisticsQuestionViewModel);
+        }
+    
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase upload)
+        {
+            if (ModelState.IsValid)
+            {
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    if (upload.FileName.EndsWith(".csv"))
+                    {
+                        var stream = upload.InputStream;
+                        using (var reader = new StreamReader(stream))
+                        {
+                            var questions = new List<Question>();
+                            while (!reader.EndOfStream)
+                            {
+                                var line = reader.ReadLine().Split(';');
+                                var question = new Question()
+                                {
+                                    Name = line[0],
+                                    TestId = 2
+                                };
+
+                                var answers = new List<Answer>();
+                                for (var a = 2; a < line.Length; a++)
+                                {
+                                    var answer = new Answer
+                                    {
+                                        Name = line[a],
+                                        IsCorrect = (a - 1) == Convert.ToInt32(line[1]) ? 1 : 0,
+                                    };
+
+                                    answers.Add(answer);
+                                }
+                                question.Answers = answers;
+                                questions.Add(question);
+                            }
+                            using (var uow = new UnitOfWork())
+                            {
+                                uow.QuestionRepository.AddRange(questions);
+                                uow.Commit();
+                            }
+                        }
+                    }
+                }
+            }
+            return RedirectToAction("TestList", "TestAdministration");
         }
     }
 
@@ -247,7 +337,7 @@ namespace TestSystem.Controllers
     //        }
     //    }
 
-        
+
     //    public ActionResult TestTemplatesPartial(int testId)
     //    {
     //        using (var uow = new UnitOfWork())
@@ -274,8 +364,8 @@ namespace TestSystem.Controllers
     //    [HttpPost]
     //    public ActionResult _TestStatistics()
     //    {
-            
-            
+
+
     //        return PartialView();
     //    }
 
@@ -285,10 +375,10 @@ namespace TestSystem.Controllers
     //        using (var uow = new UnitOfWork())
     //        {
     //            var test = uow.UserTestRepository.GetUserTestsByTestName(testName);
-                
+
     //            var model =Mapper.Map<List<UserStatisticsModel>>(test);
-                
-                
+
+
     //            return View(model.ToPagedList(1,8));
     //        }
     //    }
@@ -309,54 +399,6 @@ namespace TestSystem.Controllers
     //            var testModel = Mapper.Map<TestTemplatesViewModel>(test);
     //            return PartialView(testModel);
     //        }
-    //    }
-
-    //    [HttpPost]
-    //    public ActionResult Upload(HttpPostedFileBase upload, int testId)
-    //    {
-    //        if (ModelState.IsValid)
-    //        {
-    //            if (upload != null && upload.ContentLength > 0)
-    //            {
-    //                if (upload.FileName.EndsWith(".csv"))
-    //                {
-    //                    var stream = upload.InputStream;
-    //                    using (var reader = new StreamReader(stream))
-    //                    {
-    //                        var questions = new List<Question>();
-    //                        while (!reader.EndOfStream)
-    //                        {
-    //                            var line = reader.ReadLine().Split(';',',');
-    //                            var question = new Question()
-    //                            {
-    //                                Name = line[0],
-    //                                TestId = testId
-    //                            };
-
-    //                            var answers = new List<Answer>();
-    //                            for (var a = 2; a < line.Length;a++)
-    //                            {
-    //                                var answer = new Answer
-    //                                {
-    //                                    Name = line[a],
-    //                                    IsCorrect = (a-1) == Convert.ToInt32(line[1]) ? 1 : 0,
-    //                                };
-
-    //                                answers.Add(answer);
-    //                            }
-    //                            question.Answers = answers;
-    //                            questions.Add(question);
-    //                        }
-    //                        using (var uow = new UnitOfWork())
-    //                        {
-    //                            uow.QuestionRepository.AddRange(questions);
-    //                            uow.Commit();
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //        return RedirectToAction("TestTemplates","TestAdministration");
     //    }
 
     //    [HttpPost]

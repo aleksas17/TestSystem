@@ -183,6 +183,7 @@
     <Compile Include="Models\TestAdministration\QuestionModel.cs" />
     <Compile Include="Models\TestAdministration\TestModel.cs" />
     <Compile Include="Models\TestAdministration\UserStatisticsModel.cs" />
+    <Compile Include="Models\TestAdministration\UserTestAnswersModel.cs" />
     <Compile Include="Models\TestAdministration\UserTestStaticsModel.cs" />
     <Compile Include="Models\UserTests\TestModelView.cs" />
     <Compile Include="Models\UserTests\UserAnswerModel.cs" />

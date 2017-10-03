@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using TestSystem.Models.UserTests;
 
 namespace TestSystem.Models.Account
 {
@@ -23,5 +25,7 @@ namespace TestSystem.Models.Account
         public string FirstName { get; set; }
         [Required(ErrorMessage = "Lastname can't be empty")]
         public string Lastname { get; set; }
+
+        public virtual List<UserTestModel> UserTests { get; set; }
     }
 }

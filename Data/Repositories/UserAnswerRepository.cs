@@ -15,8 +15,13 @@ namespace Data.Repositories
         public UserAnswer GetNextUserAnswer(int userTestId)
         {
             //.OrderBy(r => Guid.NewGuid()).Take(5)
-
-            var userAnswer = DbSet.Include(a => a.Question.Answers).FirstOrDefault(a => a.AnswerId == null && a.UserTestId == userTestId );
+            UserAnswer userAnswer;
+            var userAnswer2 = DbSet.Include(a => a.Question.Answers).Where(a => a.AnswerId == null && a.UserTestId == userTestId).OrderBy(r => Guid.NewGuid()).Take(1).ToList();
+            if (userAnswer2.Count <= 0)
+                userAnswer = null;
+            else
+               userAnswer = userAnswer2[0];
+            var answers = DbSet.Include(a => a.Question.Answers).Where(a => a.AnswerId == null && a.UserTestId == userTestId);
             if (userAnswer != null) userAnswer.Question.Answers = userAnswer.Question.Answers.OrderBy(r => Guid.NewGuid()).Take(5).ToList();
             return userAnswer;
         }

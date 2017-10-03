@@ -37,23 +37,30 @@ namespace TestSystem.Controllers
             using (var uow = new UnitOfWork())
             {
                 var userTest = uow.UserTestRepository.GetUserTestById(userTestId);
-                // Set test start time, when did user start test
-                if (userTest.TestStart == null)
+                if (userTest.Status == "active")
                 {
-                    userTest.TestStart = DateTime.Now;
-                    uow.Commit();
+                    // Set test start time, when did user start test
+                    if (userTest.TestStart == null)
+                    {
+                        userTest.TestStart = DateTime.Now;
+                        uow.Commit();
+                    }
+
+                    var duration = userTest.Test.Duration;
+                    var testViewModel = new TestViewModel
+                    {
+                        TestId = userTestId,
+                        TestName = uow.TestRepository.GetTestById(userTest.TestId).Name,
+                        TimeLeft = (long)(userTest.TestStart.Value.AddMinutes(duration) - DateTime.Now).TotalSeconds,
+                        TotalQuestions = userTest.UserAnswers.Count,
+                        QuestionsLeft = userTest.UserAnswers.Select(s => s.AnswerId).Where(a => !a.HasValue).Count()
+                    };
+                    return View(testViewModel);
                 }
-                
-                var duration = userTest.Test.Duration;
-                var testViewModel = new TestViewModel
+                else
                 {
-                    TestId = userTestId,
-                    TestName = uow.TestRepository.GetTestById(userTest.TestId).Name,
-                    TimeLeft = (long)(userTest.TestStart.Value.AddMinutes(duration) - DateTime.Now).TotalSeconds,
-                    TotalQuestions = userTest.UserAnswers.Count,
-                    QuestionsLeft = userTest.UserAnswers.Select(s => s.AnswerId != null).Count()
-                };
-                return View(testViewModel);
+                    return RedirectToAction("TestList");
+                }   
             }
         }
 

@@ -63,9 +63,13 @@
     <Compile Include="IRepositories\IUserRepository.cs" />
     <Compile Include="IRepositories\IUserTestRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
-    <Compile Include="Migrations\201709210517185_InitialCreate.cs" />
-    <Compile Include="Migrations\201709210517185_InitialCreate.Designer.cs">
-      <DependentUpon>201709210517185_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201709291203455_ts.cs" />
+    <Compile Include="Migrations\201709291203455_ts.Designer.cs">
+      <DependentUpon>201709291203455_ts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709291206215_ts2.cs" />
+    <Compile Include="Migrations\201709291206215_ts2.Designer.cs">
+      <DependentUpon>201709291206215_ts2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,8 +93,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709210517185_InitialCreate.resx">
-      <DependentUpon>201709210517185_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709291203455_ts.resx">
+      <DependentUpon>201709291203455_ts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709291206215_ts2.resx">
+      <DependentUpon>201709291206215_ts2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

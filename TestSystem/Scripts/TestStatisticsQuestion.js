@@ -17,5 +17,21 @@
             $(this).parent().removeClass("table-item-hover");
         }
     );
-
+    // function for bad answers
+    var totalQuestions = $(".t-s-table-questions-main > li > ul:first-child").find('li').length;
+    for (var i = 1; i <= totalQuestions; i++) {
+        var totalQuetionsBad = totalUserAnswers - +($(".t-s-table-questions-main > li > ul:nth-last-child(2) > li:nth-child(" + i + ")").text());
+        $(".t-s-table-questions-main > li > ul:last-child").append("<li>" + totalQuetionsBad + "</li>")
+    }
+    // Change page in statistic table without reloading main window
+    $(".tab-holder a").on("click", function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: $(this).attr('href') + "&testId=" + PushedTestId,
+            type: "GET",
+        }).done(function (partialViewResult) {
+            $(".tab-holder").html(partialViewResult);
+        });
+    });
+    
 });

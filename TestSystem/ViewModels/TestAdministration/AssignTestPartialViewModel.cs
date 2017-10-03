@@ -39,10 +39,12 @@ namespace TestSystem.ViewModels.TestAdministration
         /// </summary>
         public List<UserAnswerModel> UserAnswers { get; set; }
 
+        public IEnumerable<UserTestModel> UserTests { get; set; }
+
         /// <summary>
         /// Model for user list to select from.
         /// </summary>
-        public IEnumerable<UserModel> UserModel { get; set; }
+        public IEnumerable<UserModel> Users { get; set; }
 
         #endregion
     }

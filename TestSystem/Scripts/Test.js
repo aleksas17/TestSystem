@@ -57,7 +57,7 @@ CountDownTimer.parse = function (seconds) {
 
 /*--------Jquery--------*/
 
-
+$(document).ready(function () {
 
     /*--------Validation-------*/
 
@@ -102,3 +102,4 @@ CountDownTimer.parse = function (seconds) {
 
     $("#test-progress").css("transform", "translate3d(-" + (100 / questions) * (questions - questionAnswered) + "%,0,0)");
 
+});

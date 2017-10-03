@@ -54,7 +54,14 @@ namespace TestSystem
                 cnf.CreateMap<QuestionModel, Question>();
                 cnf.CreateMap<AnswerModel, Answer>();
                 cnf.CreateMap<Answer, AnswerModel>();
-                cnf.CreateMap<Question, TestStatisticsQuestionViewModel>();
+                cnf.CreateMap<Test, TestStatisticsQuestionViewModel>();
+
+                // Map UserTest DB data to UserTestQuestionStatisticsModel, using this for statistics
+                cnf.CreateMap<UserTest, TestStatisticsQuestionViewModel>()
+                    .ForMember(a => a.UserTestAnswer, b => b.MapFrom(src => src.User))
+                    .ForMember(a=>a.Answer, b=>b.MapFrom(src =>src.UserAnswers.Select(a=>a.Answer)))
+                    .ForMember(a => a.QuestionModel, b => b.MapFrom(src => src.Test.Questions));
+                cnf.CreateMap<User, UserTestAnswersModel>();
 
                 //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>()
                 //    .ForMember(dest => dest.Answers, opt => opt.MapFrom(src => src.Answers));
@@ -72,7 +79,7 @@ namespace TestSystem
                 //    .ForMember(a => a.QuestionModels, b => b.MapFrom(src => src.Questions));
                 //cnf.CreateMap<Test, TestTemplatesViewModel>();
 
-                cnf.CreateMap<User, UserModel>();
+                //cnf.CreateMap<User, UserModel>().ForMember(a => a.UserTests, b => b.);
                 cnf.CreateMap<Test, TestModel>();
                 //cnf.CreateMap<Answer, TestAnswer>();
                 cnf.CreateMap<UserModel, User>().ForAllMembers(a=> a.Condition((src, dest, srcVal, destVal, c) => srcVal != null));
@@ -80,6 +87,7 @@ namespace TestSystem
                 //cnf.CreateMap<Test, TestViewModel>(); <- if somthin dosen't work uncoment
                 cnf.CreateMap<UserTest, TestListViewModel>();
                 cnf.CreateMap<UserAnswer, UserAnswerModel>();
+                cnf.CreateMap<UserAnswerModel, UserAnswer>();
                 cnf.CreateMap<Question, QuestionModel>();
                 cnf.CreateMap<QuestionModel, Question>();
                 cnf.CreateMap<Question, UserAnswer>();

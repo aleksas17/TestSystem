@@ -100,3 +100,30 @@
 <section id="create-new-user-helper">
     <div class="create-new-user"></div>
 </section>
+
+<script type="text/javascript">
+
+        function UploadFile() {
+            document.forms["upload"].submit();
+        }
+
+        function CreateUser() {
+            alert("yolo");
+            $("#partial").load("/Account/AddEditRecord");
+
+        }
+
+        $(document).ready(function () {
+            $.ajaxSetup({ cache: false });
+
+
+            $(document).on("click", ".createUser", function (e) {
+                alert("ts");
+                e.preventDefault();
+
+                var url = $(this).attr('href');
+                alert(value);
+                $("#partial").load(url);
+            });
+        });
+</script>

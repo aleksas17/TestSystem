@@ -47,17 +47,16 @@
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     // Need them to be global for checking purposes
-    var questionsLeft = @Model.QuestionsLeft;
-    var questions = @Model.TotalQuestions;
+    var questionsLeft,
+        questions;
 
     /*--------Check if last question, Button changer from NEXT to FINISH-------*/
     function CheckCurrentQuestion() {
-        if (questionsLeft == 0) $(".test-question button").text("finish");
+        if (questionsLeft <= 0) $(".test-question button").text("finish");
     }
 
     /*--------Time loading bar animation-------*/
     function ProgressBar() {
-        questionsLeft -= 1;
         if (questionsLeft < 0) {
             $(".test-hider").css("transform", "rotate(45deg) translate3d(0,0,0)");
             $(".test-finish-text:last").addClass("test-finish");
@@ -72,6 +71,7 @@
     /*--------If answer was successfully sended to DB-------*/
     function onSuccess() {
         $("#ts").css({ 'min-height': ($("#ts").height() + 'px') });
+        questionsLeft -= 1;
         ProgressBar();
         CheckCurrentQuestion();
     }
@@ -152,21 +152,24 @@
         $.ajax({
             type: "POST",
             url: finishUrl,
-            //data: "{queryString:'" + searchVal + "'}",
-            //contentType: "application/json; charset=utf-8",
-            //dataType: "html",
-            //success: function (data) {
-                //alert("here" + data.d.toString());
         });
         RederectTestList();
     }
 
     $(document).ready(function () {
-        /*--------If use reconects, refresh progressbar-------*/
-        ProgressBar();
+        /*--------Update question left and total questions if user refresh page-------*/
+        questionsLeft = @Model.QuestionsLeft - 1;
+        questions = @Model.TotalQuestions;
 
         /*--------Load question with answers-------*/
         $("#ts").load("/UserTests/TestPartial/@Model.TestId");
+
+        /*--------If use reconects, refresh progressbar and check if it is last question-------*/
+        setTimeout(function () {
+            $("#ts").css({ 'min-height': ($("#ts").height() + 'px') });
+            ProgressBar();
+            CheckCurrentQuestion();
+        }, 100);
 
         /*--------Timer set up-------*/
         var display = document.querySelector("#test-time > h2"),
