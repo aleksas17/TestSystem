@@ -25,7 +25,5 @@ namespace TestSystem.Models.Account
         public string FirstName { get; set; }
         [Required(ErrorMessage = "Lastname can't be empty")]
         public string Lastname { get; set; }
-
-        public virtual List<UserTestModel> UserTests { get; set; }
     }
 }

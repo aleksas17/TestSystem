@@ -77,10 +77,17 @@ namespace TestSystem.Controllers
                 var userModels = new List<UserModel>();
                 IEnumerable<User> users;
                 users = uow.UserRepository.GetAll();
+
                 foreach (var user in users)
                 {
-                    var userModel = Mapper.Map<UserModel>(user);
-                    userModels.Add(userModel);
+                    var userTest = user.UserTests.FirstOrDefault(a => a.TestId == id);
+                    var status = userTest != null ? userTest.Status : string.Empty;
+                    if (userTest==null ||status == "finished")
+                    {
+                        var userModel = Mapper.Map<UserModel>(user);
+                        userModels.Add(userModel);
+                    }
+                    
                 }
                 assignTestPartialViewModel.Users = userModels;
                 // Geting test name and id.

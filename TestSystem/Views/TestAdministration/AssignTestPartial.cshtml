@@ -48,10 +48,6 @@
         {
             if (user.Role != "Admin")
             {
-                foreach (var userTest in user.UserTests)
-                {
-                    if (userTest.Status != "active")
-                    {
                         <li>
                             <div>
                                 <label>
@@ -61,8 +57,6 @@
                             <div>@user.FirstName @user.Lastname</div>
                             <div>@user.Group</div>
                         </li>
-                    }
-                }
             }
         } 
         </ul>

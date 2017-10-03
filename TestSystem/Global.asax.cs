@@ -30,7 +30,7 @@ namespace TestSystem
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             using (var db = new TestSystemContext())
             {
-                Database.SetInitializer(new DropCreateDatabaseIfModelChanges<TestSystemContext>());
+                Database.SetInitializer(new CreateDatabaseIfNotExists<TestSystemContext>());
                 db.Database.Initialize(true);
             }
 
@@ -79,7 +79,7 @@ namespace TestSystem
                 //    .ForMember(a => a.QuestionModels, b => b.MapFrom(src => src.Questions));
                 //cnf.CreateMap<Test, TestTemplatesViewModel>();
 
-                //cnf.CreateMap<User, UserModel>().ForMember(a => a.UserTests, b => b.);
+                cnf.CreateMap<User, UserModel>();
                 cnf.CreateMap<Test, TestModel>();
                 //cnf.CreateMap<Answer, TestAnswer>();
                 cnf.CreateMap<UserModel, User>().ForAllMembers(a=> a.Condition((src, dest, srcVal, destVal, c) => srcVal != null));
