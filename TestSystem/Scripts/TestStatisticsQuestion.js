@@ -17,6 +17,26 @@
             $(this).parent().removeClass("table-item-hover");
         }
     );
+    // Tooltip only for question Name
+    $('.t-s-table-questions-main > li > ul:first-child > li').hover(function () {
+        // Hover over code
+        var title = $(this).attr('title');
+        $(this).data('tipText', title).removeAttr('title');
+        $('<p class="tool-tip"></p>').text(title).appendTo('body').fadeIn('none');
+    }, function () {
+        // Hover out code
+        $(this).attr('title', $(this).data('tipText'));
+        $('.tool-tip').remove();
+    }).mousemove(function (e) {
+        var mousex = e.pageX + 20; //Get X coordinates
+        var mousey = e.pageY + 20; //Get Y coordinates
+        if (mousex > $("body").width() / 2) {
+            $('.tool-tip').css({ top: mousey, right: $("body").width() - mousex + 100, left: "auto" })
+        }
+        else {
+            $('.tool-tip').css({ top: mousey, left: mousex, right: "auto" })
+        }
+    });
     // function for bad answers
     var totalQuestions = $(".t-s-table-questions-main > li > ul:first-child").find('li').length;
     for (var i = 1; i <= totalQuestions; i++) {

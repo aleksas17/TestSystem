@@ -1,3 +1,8 @@
+@keyframes toolTipPopUp {
+    from {transform: scale3d(0, 0, 0);}
+    to {transform: scale3d(1, 1, 1);}
+}
+
 .test-statics-table,
 .test-statics-table-questions {
     background: #ffffff;
@@ -35,10 +40,6 @@
     font-size: 12px;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.54);
-}
-
-.test-statics-table > header > ul:first-of-type {
-    border-bottom: 2px solid #0099ff;
 }
 
 .test-statics-table label {
@@ -91,6 +92,7 @@
     font-size: 13.5px;
     color: rgba(0, 0, 0, 0.87);
     font-weight: 500;
+    max-width: 90vw;
 }
 
 .t-s-table-main > li {
@@ -116,41 +118,31 @@
     font-weight: 500;
 }
 
-.test-statics-table .pagination,
-.test-statics-table-questions .pagination {
-    width: auto;
-    height: auto;
+.test-statics-table > footer > div svg,
+.test-statics-table-questions > footer > div svg {
+    border-radius: 50%;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    fill: rgba(0, 0, 0, 0.54);
+    margin: 12px 12px 12px 12px;
 }
 
-.test-statics-table .disabled.PagedList-skipToPrevious,
-.test-statics-table-questions .disabled.PagedList-skipToPrevious,
-.test-statics-table .disabled.PagedList-skipToNext,
-.test-statics-table-questions .disabled.PagedList-skipToNext {
-    background-image: url("../Resources/Svgs/navigate_next_disabled.svg");
-}
-
-.test-statics-table .PagedList-skipToPrevious,
-.test-statics-table-questions .PagedList-skipToPrevious,
-.test-statics-table .PagedList-skipToNext,
-.test-statics-table-questions .PagedList-skipToNext {
-    padding: 0;
-    margin: 5px;
-}
-
-.test-statics-table .PagedList-skipToPrevious,
-.test-statics-table-questions .PagedList-skipToPrevious {
+.test-statics-table > footer > div svg:first-child,
+.test-statics-table-questions > footer > div svg:first-child {
     margin-left: 32px;
 }
 
-.test-statics-table .PagedList-skipToNext,
-.test-statics-table-questions .PagedList-skipToNext {
+.test-statics-table > footer > div svg:last-child,
+.test-statics-table-questions > footer > div svg:last-child {
     margin-right: 14px;
 }
 
 /*-------------Table questions-------------*/
 
 .t-s-table-questions-main > li {
-    overflow: auto;
+    overflow-x: auto;
+    white-space: nowrap;
     flex-direction: column;
 }
 
@@ -166,15 +158,19 @@
 
 .t-s-table-questions-main > li > ul:first-child > li {
     position: relative;
-    writing-mode: vertical-lr;
+    width: 68px;
     height: 70px;
     cursor: pointer;
+}
+
+.t-s-table-questions-main > li > ul:first-child > li > p {
+    writing-mode: vertical-lr;
+    white-space: nowrap;
 }
 
 .t-s-table-questions-main > li > ul > li,
 .t-s-table-questions-main > nav > li {
     border-bottom: 1px solid #e5e5e5;
-    white-space: nowrap;
 }
 
 .t-s-table-questions-main > li > ul:not(:first-child) > li {
@@ -200,9 +196,10 @@
 }
 
 .t-s-table-questions-main > nav {
-    margin-top: 56px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    margin-bottom: 18px;
 }
 
 .t-s-table-questions-main > nav > li:first-child {
@@ -216,6 +213,7 @@
     font-size: 13.5px;
     color: rgba(0, 0, 0, 0.87);
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .t-s-table-questions-main > nav > li:last-child {
@@ -248,15 +246,16 @@
     border-left: 1px solid #ffffff;
 }
 
-.t-s-table-questions-main > li > ul:first-child > li:hover > .tool-tip {
-    transform: scale3d(1, 1, 1);
+.table-item-hover {
+    transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    background: #ededee;
 }
 
-.t-s-table-questions-main .tool-tip {
-    writing-mode: horizontal-tb;
+/*-------------ToolTip for questions names-------------*/
+
+.tool-tip {
     position: absolute;
-    bottom: -20px;
-    left: -100%;
+    display: none;
     padding: 3.5px 6px;
     border-radius: 2px;
     white-space: nowrap;
@@ -265,16 +264,10 @@
     font-size: 10px;
     font-weight: 100;
     color: #ffffff;
-    transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
-    transform: scale3d(0, 0, 0);
+    transform: scale3d(1, 1, 1);
     transform-origin: top center;
-    display: table-cell;
-    z-index: 100;
-}
-
-.table-item-hover {
-    transition: all .3s cubic-bezier(0.4, 0.0, 0.2, 1);
-    background: #ededee;
+    z-index: 1000;
+    animation: toolTipPopUp .3s cubic-bezier(0.4, 0.0, 0.2, 1)
 }
 
 /*-------------Tab Navigation-------------*/
@@ -313,3 +306,5 @@
     text-transform: uppercase;
     cursor: pointer;
 }
+
+/*-------------Tab holder-------------*/

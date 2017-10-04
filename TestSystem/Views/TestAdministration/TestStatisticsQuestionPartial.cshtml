@@ -7,7 +7,7 @@
             <h1>User List</h1>
         </nav>
     </header>
-    <ul class="t-s-table-questions-main" style="overflow:scroll;max-width:1000px;max-height:800px">
+    <ul class="t-s-table-questions-main">
         <nav>
             <li>Firstname Lastname</li>
             @foreach (var user in Model)
@@ -26,9 +26,8 @@
             <ul>
                 @for (var a = 1; a < Model[0].QuestionModel.Count + 1; a++)
                 {
-                    <li>
-                        Question @a
-                        <span class="tool-tip">@Model[0].QuestionModel[a - 1].Name</span>
+                    <li title="@Model[0].QuestionModel[a - 1].Name">
+                        <p>Question @a</p>
                     </li>
                 }
             </ul>
