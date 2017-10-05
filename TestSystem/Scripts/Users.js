@@ -1,4 +1,14 @@
-﻿/*--------Bubble Popup--------*/
+﻿/*--------Creating csv template for import--------*/
+function CreateTemplate() {
+    var csv = 'USERNAME;FIRSTNAME;LASTNAME;PASWORD;POSTION;GROUP;ROLE';
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'UserTemplate.csv';
+    hiddenElement.click();
+}
+
+/*--------Bubble Popup--------*/
 
 var bubbleVisibleName;
 

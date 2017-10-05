@@ -1,7 +1,16 @@
 ﻿var PushedTestId;
 
-/*--------Popup window--------*/
+/*--------Creating csv template for import--------*/
+function CreateTemplate() {
+    var csv = 'TESTO PAVADINIMAS;TESTO LAIKAS (min)\nTesto Pavadinimas;20\nKLAUSIMAS;KURIS TEISINGAS ATSAKYMAS (nr.);ATSAKYMAI\n1 klausimas;3;1 atsakymas;2 atsakymas;3 atsakymas;4 atsakymas';
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'TestTemplate.csv';
+    hiddenElement.click();
+}
 
+/*--------Popup window--------*/
 function PopUpBox() {
     document.getElementById("create-new-user-helper").style.display = "flex";
     document.getElementById("create-new-user-helper").style.visibility = "visible";
@@ -24,14 +33,12 @@ function OpenCreateTest() {
 }
 
 /*--------Close popup--------*/
-
 function CloseCreateUser() {
     document.getElementById("create-new-user-helper").style.display = "none";
     document.getElementById("create-new-user-helper").style.visibility = "hidden";
 }
 
 /*--------Bubble popup--------*/
-
 var bubbleVisibleName;
 
 function HideBubblePopups() {
@@ -46,7 +53,6 @@ function PopupBubbleOpen(myId) {
 }
 
 /*--------Search box--------*/
-
 function SearchFocus() {
     document.getElementById("list-search").style.background = "#ffffff";
     document.getElementById("list-search").style.boxShadow = "rgba(0,0,0,0.24) 0px 1px 1px 0px";
@@ -63,7 +69,18 @@ $(document).ready(function () {
             return;
         CloseCreateUser();
     });
+    // Check if there any test list is empty
+    $(".no-test-in-list").hide();
+    if ($(".item-container-shadow li").length <= 0) {
+        $(".item-header, .item-container-shadow").hide();
+        $(".no-test-in-list").show();
+    }
+    else {
+        $(".item-header, .item-container-shadow").show();
+        $(".no-test-in-list").hide();
+    }
 });
+
 
 
 

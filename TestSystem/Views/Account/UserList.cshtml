@@ -27,6 +27,13 @@
                 </svg>
             </button>
 
+            <button class="list-csv-template" onclick="CreateTemplate()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                </svg>
+            </button>
+
             @using (Html.BeginForm("ImportUsers", "Account", FormMethod.Post, new { enctype = "multipart/form-data", name = "upload", @class = "list-import-item"}))
             {
                 <input class="list-import-item" id="model" type="file" accept="csv" name="model" onchange="UploadFile()" />
@@ -43,6 +50,7 @@
         <li>@Html.ActionLink("LastName", "UserList", new { sortOrder = ViewBag.LastNameSortParm, currentFilter = ViewBag.CurrentFilter })</li>
         <li>@Html.ActionLink("Position", "UserList", new { sortOrder = ViewBag.PositionSortParm, currentFilter = ViewBag.CurrentFilter })</li>
         <li>@Html.ActionLink("Group", "UserList", new { sortOrder = ViewBag.GroupSortParm, currentFilter = ViewBag.CurrentFilter })</li>
+        <li>@Html.ActionLink("Role", "UserList", new { sortOrder = ViewBag.GroupSortParm, currentFilter = ViewBag.CurrentFilter })</li>
         <li></li>
     </ul>
 
@@ -57,6 +65,7 @@
                     <li>@Html.DisplayFor(modelItem => user.Lastname)</li>
                     <li>@Html.DisplayFor(modelItem => user.Position)</li>
                     <li>@Html.DisplayFor(modelItem => user.Group)</li>
+                    <li>@Html.DisplayFor(modelItem => user.Role)</li>
                     <li id="@user.UserId" onclick="PopupBubbleOpen(this.id)">
                         <svg viewBox="0 0 24 24">
                             <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
@@ -76,6 +85,8 @@
                         </li>
                         <li>Edit</li>
                     </ul>
+                    @if (user.Role != "Admin")
+                    {
                     <ul>
                         <li>
                             <svg>
@@ -84,17 +95,28 @@
                         </li>
                         <li>@Html.ActionLink("Delete", "DeleteRecord", new { id = user.UserId }, new { id = "confirmDialog" })</li>
                     </ul>
+                    }
                 </ul>
 
             </li>
         }
 
     </ul>
+    @if (Model.PageCount > 1)
+    {
     <div class="pagination-current-page">
          Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     </div>
     @Html.PagedListPager(Model, page => Url.Action("UserList",
-        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions
+        {
+            DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+            DisplayLinkToLastPage = PagedListDisplayMode.Never,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+            MaximumPageNumbersToDisplay = 3
+        });
+    }
 </section>
 
 <section id="create-new-user-helper">
@@ -102,28 +124,11 @@
 </section>
 
 <script type="text/javascript">
+    function UploadFile() {
+        document.forms["upload"].submit();
+    }
 
-        function UploadFile() {
-            document.forms["upload"].submit();
-        }
-
-        function CreateUser() {
-            alert("yolo");
-            $("#partial").load("/Account/AddEditRecord");
-
-        }
-
-        $(document).ready(function () {
-            $.ajaxSetup({ cache: false });
-
-
-            $(document).on("click", ".createUser", function (e) {
-                alert("ts");
-                e.preventDefault();
-
-                var url = $(this).attr('href');
-                alert(value);
-                $("#partial").load(url);
-            });
-        });
+    $(document).ready(function () {
+        $.ajaxSetup({ cache: false });
+    });
 </script>

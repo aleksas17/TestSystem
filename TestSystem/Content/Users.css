@@ -183,6 +183,11 @@
     border-radius: 50%;
 }
 
+.PagedList-skipToPrevious.disabled,
+.PagedList-skipToNext.disabled {
+    background-image: url("../Resources/Svgs/navigate_next_disabled.svg");
+}
+
 .PagedList-skipToPrevious {
     transform: rotate(180deg)
 }
@@ -198,6 +203,7 @@ item-container > .pagination-container .PagedList-skipToNext:hover {
     white-space: nowrap;
     overflow: hidden;
     height: 100%;
+    width: 100%;
 }
 
 /*---------User list controlls-----------*/
@@ -252,7 +258,8 @@ item-container > .pagination-container .PagedList-skipToNext:hover {
 }
 
 .list-create-item,
-.list-import-item {
+.list-import-item,
+.list-csv-template {
     -webkit-appearance: none;
     width: 24px;
     height: 24px;
@@ -270,7 +277,8 @@ item-container > .pagination-container .PagedList-skipToNext:hover {
 }
 
 .list-create-item svg,
-.list-import-item svg {
+.list-import-item svg,
+.list-csv-template {
     fill: #777777;
 }
 
@@ -284,7 +292,8 @@ item-container > .pagination-container .PagedList-skipToNext:hover {
 }
 
 .list-create-item:hover,
-.list-import-item:hover {
+.list-import-item:hover,
+.list-csv-template:hover {
     background: #bebebe;
 }
 
@@ -380,4 +389,25 @@ item-container > .pagination-container .PagedList-skipToNext:hover {
 .create-new-user h1 button svg,
 .create-new-test h1 button svg {
     fill: #717171;
+}
+
+/*---------No test inside list notifier-----------*/
+
+.no-test-in-list {
+    width: 100%;
+    height: calc(100vh - 156px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #b4b4b4;
+    font-weight: 500;
+}
+
+.no-test-in-list > svg {
+    width: 80px;
+    fill: #b4b4b4;
+    margin-bottom: 10px;
 }

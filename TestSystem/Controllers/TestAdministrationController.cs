@@ -11,6 +11,7 @@ using TestSystem.Models.Account;
 using System.Web;
 using System.IO;
 using System;
+using System.Text;
 
 namespace TestSystem.Controllers
 {
@@ -188,13 +189,13 @@ namespace TestSystem.Controllers
         }
 
         /// <summary>
-        /// Get all user scors for test
+        /// Get all user scors from test
         /// </summary>
         /// <param name="testId">Witch test scors we want</param>
-        /// <param name="sortOrder"></param>
-        /// <param name="currentFilter"></param>
-        /// <param name="searchString"></param>
-        /// <param name="page"></param>
+        /// <param name="sortOrder">Not inplamented</param>
+        /// <param name="currentFilter">Not inplamented</param>
+        /// <param name="searchString">Not inplamented</param>
+        /// <param name="page">Whitch page</param>
         /// <returns>List of user statistic for test</returns>
         [Authorize(Roles = "Admin")]
         [HttpGet]
@@ -217,28 +218,15 @@ namespace TestSystem.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
-        //[HttpGet]
-        //public ActionResult TestStatisticsQuestion(int testId)
-        //{
-        //    var testStatisticsQuestionViewModel = new TestStatisticsQuestionViewModel();
-        //    using (var uow = new UnitOfWork())
-        //    {
-        //        var userAnswers = uow.UserAnswerRepository.GetUserAnswersByTestId(testId).GroupBy(a => a.QuestionId);
-        //        var mydictionary = new Dictionary<int?, int>();
-        //        foreach (var a in userAnswers)
-        //        {
-        //            var count = a.Where(x => x.Answer.IsCorrect == 1).Count();
-        //            mydictionary.Add(a.Key, value: count);
-        //        }
-        //        testStatisticsQuestionViewModel.QuestionTotalGood = mydictionary;
-        //        var testQuestions = uow.TestRepository.GetTestById(testId);
-        //        //var questionsNames = Mapper.Map<TestStatisticsQuestionViewModel>(testQuestions);
-        //        //testStatisticsQuestionViewModel.Questions.Add(questionsNames.Questions);
-        //    }
-        //    return PartialView("TestStatisticsQuestionPartial");
-        //}
-
+        /// <summary>
+        /// Get all questions answers from test
+        /// </summary>
+        /// <param name="testId">Witch test questions we want</param>
+        /// <param name="sortOrder">Not inplamented</param>
+        /// <param name="currentFilter">Not inplamented</param>
+        /// <param name="searchString">Not inplamented</param>
+        /// <param name="page">Whitch page</param>
+        /// <returns>List of qeustions and user answers</returns>
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult TestStatisticsQuestion(int testId, string sortOrder, string currentFilter, string searchString, int? page)
@@ -273,7 +261,11 @@ namespace TestSystem.Controllers
             }
         }
     
-
+        /// <summary>
+        /// CSV file uploader for test
+        /// </summary>
+        /// <param name="upload">csv file</param>
+        /// <returns>Create test from csv file and realod page</returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase upload)
@@ -285,16 +277,33 @@ namespace TestSystem.Controllers
                     if (upload.FileName.EndsWith(".csv"))
                     {
                         var stream = upload.InputStream;
-                        using (var reader = new StreamReader(stream))
+                        using (var reader = new StreamReader(stream, Encoding.Default, true))
                         {
+                            string TestheaderLine = reader.ReadLine();
+                            var line = reader.ReadLine().Split(';');
+                            var test = new Test()
+                            {
+                                Name = line[0],
+                                Duration = Convert.ToInt32(line[1]),
+                                Language = "LT",
+                                Status = "Active"
+                            };
+                            int testId;
+                            using (var uow = new UnitOfWork())
+                            {
+                                uow.TestRepository.Add(test);
+                                uow.Commit();
+                                testId = uow.TestRepository.GetTestByName(test.Name).TestId;
+                            }
+                            reader.ReadLine();
                             var questions = new List<Question>();
                             while (!reader.EndOfStream)
                             {
-                                var line = reader.ReadLine().Split(';');
+                                line = reader.ReadLine().Split(';');
                                 var question = new Question()
                                 {
                                     Name = line[0],
-                                    TestId = 2
+                                    TestId = testId
                                 };
 
                                 var answers = new List<Answer>();
@@ -323,165 +332,4 @@ namespace TestSystem.Controllers
             return RedirectToAction("TestList", "TestAdministration");
         }
     }
-
-    //    public ActionResult Test()
-    //    {
-    //        using (var uow = new UnitOfWork())
-    //        {
-    //            var tests = uow.TestRepository.GetAllActivatedTests();
-    //            var testModels = Mapper.Map<List<TestViewModel>>(tests);
-    //            return View(testModels);
-    //        }
-    //    }
-
-    //    public ActionResult TestTemplates()
-    //    {
-    //        using (var uow = new UnitOfWork())
-    //        {
-    //            var tests = uow.TestRepository.GetAllByStatus("Inactive");
-    //            var testModels = Mapper.Map<List<TestTemplatesViewModel>>(tests);
-    //            return View(testModels);
-    //        }
-    //    }
-
-
-    //    public ActionResult TestTemplatesPartial(int testId)
-    //    {
-    //        using (var uow = new UnitOfWork())
-    //        {
-    //            var test = uow.TestRepository.GetTestById(testId);
-    //            var testModel = Mapper.Map<TestTemplatesPartialViewModel>(test);
-    //            return View(testModel);
-    //        }
-    //    }
-
-    //    [HttpPost]
-    //    public ActionResult _TestProperties(string testName)
-    //    {
-    //        using (var uow = new UnitOfWork())
-    //        {
-    //            var test = uow.TestRepository.GetTestByName(testName);
-    //            var testModel = Mapper.Map<TestViewModel>(test);
-    //            testModel.FinishedTests = test.UserTests.Count(a => a.Status == "Finished")+"/" +test.UserTests.Count;
-
-    //            return PartialView();
-    //        }
-    //    }
-
-    //    [HttpPost]
-    //    public ActionResult _TestStatistics()
-    //    {
-
-
-    //        return PartialView();
-    //    }
-
-    //    [HttpPost]
-    //    public ActionResult _UserStatistics(string testName)
-    //    {
-    //        using (var uow = new UnitOfWork())
-    //        {
-    //            var test = uow.UserTestRepository.GetUserTestsByTestName(testName);
-
-    //            var model =Mapper.Map<List<UserStatisticsModel>>(test);
-
-
-    //            return View(model.ToPagedList(1,8));
-    //        }
-    //    }
-
-    //    [HttpPost]
-    //    public ActionResult _QuestionStatistics()
-    //    {
-    //        return null;
-    //    }
-
-
-    //    [HttpPost]
-    //    public ActionResult _TestTemplateProperties(string testName)
-    //    {
-    //        using (var uow = new UnitOfWork())
-    //        {
-    //            var test = uow.TestRepository.GetTestByName(testName);
-    //            var testModel = Mapper.Map<TestTemplatesViewModel>(test);
-    //            return PartialView(testModel);
-    //        }
-    //    }
-
-    //    [HttpPost]
-    //    public ActionResult _TestTemplateQuestions(string testName)
-    //    {
-    //        using (var uow = new UnitOfWork())
-    //        {
-    //            var questions = uow.QuestionRepository.GetQuestionsByTestName(testName);
-    //            var questionModels = Mapper.Map<IEnumerable<Question>, IEnumerable<QuestionModel>>(questions);
-
-    //            return PartialView(questionModels);
-    //        }
-    //    }
-
-    //    [HttpGet]
-    //    public ActionResult AddTest()
-    //    {
-    //        return PartialView("_TestCreateDialog");
-    //    }
-
-    //    [HttpPost]
-    //    public ActionResult AddTest(TestTemplatesViewModel testModel)
-    //    {
-    //        if (ModelState.IsValid)
-    //        {
-    //            using (var uow = new UnitOfWork())
-    //            {
-    //                var test = new Test()
-    //                {
-    //                    Name = testModel.Name,
-    //                    Status = "Inactive",
-    //                    Language = "temp"
-    //                };
-    //                uow.TestRepository.Add(test);
-    //                uow.Commit();
-    //            }
-    //            return JavaScript("location.reload(true)");
-    //        }
-    //        return RedirectToAction("AddTest",testModel);
-    //    }
-
-    //    public ActionResult ActivateTest(int? id)
-    //    {
-
-    //        return View("_TestActivateDialog");
-    //    }
-
-    //    [HttpPost]
-    //    public ActionResult ActivateTest(int testId)
-    //    {
-    //        if (ModelState.IsValid)
-    //        {
-    //            using (var uow = new UnitOfWork())
-    //            {
-    //                var test = uow.TestRepository.GetTestById(testId);
-    //                test.Status = "active";
-    //                test.TestEnd = DateTime.Now.AddHours(2);
-    //                var users = uow.UserRepository.GetAll();
-    //                var userTests = new List<UserTest>();
-    //                foreach (var user in users)
-    //                {
-    //                    var userTest = new UserTest
-    //                    {
-    //                        Status = "Inactive",
-    //                        UserId = user.UserId,
-    //                        TestId = test.TestId,
-    //                        UserAnswers = Mapper.Map<List<UserAnswer>>(test.Questions)
-    //                    };
-
-    //                    userTests.Add(userTest);
-    //                }
-    //                uow.UserTestRepository.AddRange(userTests);
-    //                uow.Commit();
-    //            }
-    //        }
-    //        return null;
-    //    }
-    //}
 }

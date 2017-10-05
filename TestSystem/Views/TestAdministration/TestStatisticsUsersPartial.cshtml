@@ -17,13 +17,16 @@
     <ul class="t-s-table-main">
         @foreach (var user in Model)
         {
-            <li>
-                <div>@user.FirstName</div>
-                <div>@user.LastName</div>
-                <div>@user.Score</div>
-                <div>@user.Time.ToString(@"mm\:ss")</div>
-                <div>@user.Position</div>
-            </li>
+            if (user.Time.TotalSeconds != 0)
+            {
+                <li>
+                    <div>@user.FirstName</div>
+                    <div>@user.LastName</div>
+                    <div>@user.Score</div>
+                    <div>@user.Time.ToString(@"mm\:ss")</div>
+                    <div>@user.Position</div>
+                </li>
+            }
         }
     </ul>
     <footer>       

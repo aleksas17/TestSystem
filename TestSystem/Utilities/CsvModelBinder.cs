@@ -25,7 +25,7 @@ namespace TestSystem.Utilities
                 return null;
             }
 
-            using (var reader = new StreamReader(file.InputStream))
+            using (var reader = new StreamReader(file.InputStream, Encoding.Default, true))
             {
                 try
                 {

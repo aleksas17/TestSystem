@@ -180,6 +180,7 @@ html, body {
     z-index: 9;
     cursor: pointer;
     -webkit-transition: all 0.25s linear;
+    float: left;
 }
 
 .test-question ul li:hover label{

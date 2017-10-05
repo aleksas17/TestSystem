@@ -24,12 +24,15 @@
         </nav>
         <li>
             <ul>
-                @for (var a = 1; a < Model[0].QuestionModel.Count + 1; a++)
+            @if (Model.Count != 0)
+            {
+                for (var a = 1; a < Model[0].QuestionModel.Count + 1; a++)
                 {
                     <li title="@Model[0].QuestionModel[a - 1].Name">
                         <p>Question @a</p>
                     </li>
                 }
+            }
             </ul>
             @foreach (var user in Model)
             {
@@ -48,10 +51,13 @@
                 </ul>
             }
             <ul>
-                @foreach (var questions in Model[0].QuestionModel)
+            @if (Model.Count != 0)
+            {
+                foreach (var questions in Model[0].QuestionModel)
                 {
                     <li>@Model[0].QuestionTotalGood[questions.Name]</li>
                 }
+            }
             </ul>
             <ul></ul>
         </li>
@@ -67,7 +73,7 @@
 </div>
 
 <script type="text/javascript">
-    var totalUserAnswers = @Model[0].TotalUserAnswers;
+    var totalUserAnswers = @if (Model.Count != 0) { @Model[0].TotalUserAnswers; };
 </script>
 
 @Scripts.Render("~/bundles/jquery")
