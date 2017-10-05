@@ -39,6 +39,9 @@ namespace TestSystem.ViewModels.TestAdministration
         /// </summary>
         public List<UserAnswerModel> UserAnswers { get; set; }
 
+        /// <summary>
+        /// Assigned tests for user
+        /// </summary>
         public IEnumerable<UserTestModel> UserTests { get; set; }
 
         /// <summary>

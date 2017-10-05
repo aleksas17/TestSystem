@@ -1,10 +1,7 @@
 ﻿/*--------Jquery--------*/
-function onSuccess() {
-
-}
-
 var currentQuestion = 0;
 var currentChoise = 1;
+
 /*--------Add choise--------*/
 function AddChoice() {
     $(".field-validation-error:last").after("<div class='choice'>"
@@ -31,7 +28,6 @@ function AddChoice() {
     else {
         $('input[name="Questions[' + currentQuestion + '].Answers[' + currentChoise + '].Name"]').focus();
     }
-    
     currentChoise += 1;
 }
 
@@ -94,9 +90,14 @@ $(document).ready(function () {
         $("#question-creator .input-radio-checkbox input[type=radio]").prop('value', 1);
     });
 
+    /*--------Bypass required field--------*/
+    $(".create-new-test button").click(function () {
+        $("#question-creator input").val(" ");
+    });
+
+    /*--------Create test form POST--------*/
     $(".create-new-test").submit(function () {
         $("#question-creator input").prop("disabled", true);
-        $("#question-creator input").val(" ");
         return true; //send
     });
 });

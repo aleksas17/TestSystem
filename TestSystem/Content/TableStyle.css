@@ -72,6 +72,8 @@
 .t-s-table-main > li > div:nth-child(3),
 .test-statics-table > header > ul > li:nth-child(4),
 .t-s-table-main > li > div:nth-child(4),
+.test-statics-table > header > ul > li:nth-child(5),
+.t-s-table-main > li > div:nth-child(5),
 .test-statics-table > header > ul > li:last-child,
 .t-s-table-main > li > div:last-child {
     display: flex;
@@ -83,6 +85,7 @@
 .test-statics-table > header > ul > li:last-child,
 .t-s-table-main > li > div:last-child {
     padding-right: 14px;
+    width: 190px;
 }
 
 .t-s-table-main,
@@ -307,4 +310,9 @@
     cursor: pointer;
 }
 
-/*-------------Tab holder-------------*/
+/*-------------Pagination for table-------------*/
+
+.test-statics-table .pagination > li,
+.test-statics-table-questions .pagination > li {
+    margin: 0;
+}

@@ -14,6 +14,10 @@ namespace TestSystem.Controllers
 {
     public class AccountController : Controller
     {
+        /// <summary>
+        /// Login page
+        /// </summary>
+        /// <returns>If user Admin rederect to Admin test list, if user is User rederect to user test list</returns>
         public ActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
@@ -26,6 +30,12 @@ namespace TestSystem.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Login form post to check if Username and Password is valid
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns>Rederect to specifick page depending on role</returns>
         [HttpPost]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
@@ -53,6 +63,11 @@ namespace TestSystem.Controllers
                 return View();
             }
         }
+
+        /// <summary>
+        /// Logsout user from system
+        /// </summary>
+        /// <returns>Rederects to login page</returns>
         [Authorize]
         public ActionResult Logout()
         {
@@ -60,6 +75,14 @@ namespace TestSystem.Controllers
             return RedirectToAction("Login", "Account");
         }
 
+        /// <summary>
+        /// Sortin user list and searching in user list
+        /// </summary>
+        /// <param name="sortOrder">What sort order is right now</param>
+        /// <param name="currentFilter">what filter we selected</param>
+        /// <param name="searchString">user name</param>
+        /// <param name="page">In which page we are right now</param>
+        /// <returns>Sorted list / Searchted item</returns>
         [Authorize(Roles = "Admin")]
         public ActionResult UserList(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -137,6 +160,11 @@ namespace TestSystem.Controllers
             return View(userModels.ToPagedList(pageNumber,pageSize));
         }
 
+        /// <summary>
+        /// Add / Edit user
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns>Partial view with filled infromation in inputs</returns>
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult AddEditRecord(int? id)
@@ -163,6 +191,12 @@ namespace TestSystem.Controllers
             return PartialView("UserDialog");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult AddEditRecord(UserModel userModel, string cmd)
@@ -202,10 +236,14 @@ namespace TestSystem.Controllers
                     return JavaScript("location.reload(true)");
                 }
             }
-           
             return PartialView("UserDialog", userModel);
         }
 
+        /// <summary>
+        /// Delete user
+        /// </summary>
+        /// <param name="id">User id</param>
+        /// <returns>Refresh page</returns>
         public ActionResult DeleteRecord(int id)
         {
             using (var uow=new UnitOfWork())
@@ -217,6 +255,11 @@ namespace TestSystem.Controllers
             return RedirectToAction("UserList","Account");
         }
 
+        /// <summary>
+        /// Import user from csv filde
+        /// </summary>
+        /// <param name="model">csv file</param>
+        /// <returns>Refresh page</returns>
         public ActionResult ImportUsers(UserCsvModel[] model)
         {
             if (ModelState.IsValid)

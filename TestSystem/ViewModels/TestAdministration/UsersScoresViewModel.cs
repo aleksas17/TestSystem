@@ -27,9 +27,14 @@ namespace TestSystem.ViewModels.TestAdministration
         public TimeSpan Time { get; set; }
 
         /// <summary>
-        /// 
+        /// User postion (programer, QA, CEO,...)
         /// </summary>
         public int Position { get; set; }
+
+        /// <summary>
+        /// When did user start the test
+        /// </summary>
+        public DateTime? TestStart { get; set; }
 
         #endregion
     }

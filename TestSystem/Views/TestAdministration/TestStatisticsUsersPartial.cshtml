@@ -12,6 +12,7 @@
             <li>Score</li>
             <li>Time</li>
             <li>Position</li>
+            <li>Date</li>
         </ul>
     </header>
     <ul class="t-s-table-main">
@@ -25,6 +26,7 @@
                     <div>@user.Score</div>
                     <div>@user.Time.ToString(@"mm\:ss")</div>
                     <div>@user.Position</div>
+                    <div>@user.TestStart.Value.Date</div>
                 </li>
             }
         }

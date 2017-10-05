@@ -15,6 +15,7 @@ using System.Text;
 
 namespace TestSystem.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TestAdministrationController : Controller
     {
         /// <summary>
@@ -38,7 +39,6 @@ namespace TestSystem.Controllers
         /// Create test popup.
         /// </summary>
         /// <returns>Create test partial view</returns>
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult CreateTest()
         {
@@ -50,7 +50,6 @@ namespace TestSystem.Controllers
         /// </summary>
         /// <param name="testCreateViewModel">Test values</param>
         /// <returns>Refresh curent page</returns>
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult CreateTest(TestCreateViewModel testCreateViewModel)
         {
@@ -67,7 +66,6 @@ namespace TestSystem.Controllers
         /// </summary>
         /// <param name="id">Test id</param>
         /// <returns>Partial view with viewmodel</returns>
-        [Authorize(Roles ="Admin")]
         [HttpGet]
         public ActionResult AssignTest(int id)
         {
@@ -104,7 +102,6 @@ namespace TestSystem.Controllers
         /// </summary>
         /// <param name="assignTestPartialViewModel">Test id, test time and start date</param>
         /// <param name="usersIds">Selected users</param>
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult AssignTestPartial(AssignTestPartialViewModel assignTestPartialViewModel, int[] usersIds)
         {
@@ -132,9 +129,8 @@ namespace TestSystem.Controllers
         /// <param name="sortOrder">What sort order is right now</param>
         /// <param name="currentFilter">what filter we selected</param>
         /// <param name="searchString">Test name</param>
-        /// <param name="page">In witch test list page we are searchin and filtering</param>
+        /// <param name="page">In which page we are right now</param>
         /// <returns>Sorted list / Searchted item</returns>
-        [Authorize(Roles = "Admin")]
         public ActionResult TestList(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -180,12 +176,14 @@ namespace TestSystem.Controllers
             return View(testModels.ToPagedList(pageNumber, pageSize));
         }
 
-
-        [Authorize(Roles = "Admin")]
+        /// <summary>
+        /// Get user statistics partial view
+        /// </summary>
+        /// <returns>partial view</returns>
         [HttpGet]
         public ActionResult UsersStatistics()
         {
-                return PartialView("TestStatisticsPartial");
+            return PartialView("TestStatisticsPartial");
         }
 
         /// <summary>
@@ -197,7 +195,6 @@ namespace TestSystem.Controllers
         /// <param name="searchString">Not inplamented</param>
         /// <param name="page">Whitch page</param>
         /// <returns>List of user statistic for test</returns>
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult TestStatisticsUsers(int testId, string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -227,7 +224,6 @@ namespace TestSystem.Controllers
         /// <param name="searchString">Not inplamented</param>
         /// <param name="page">Whitch page</param>
         /// <returns>List of qeustions and user answers</returns>
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult TestStatisticsQuestion(int testId, string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -266,7 +262,6 @@ namespace TestSystem.Controllers
         /// </summary>
         /// <param name="upload">csv file</param>
         /// <returns>Create test from csv file and realod page</returns>
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase upload)
         {
