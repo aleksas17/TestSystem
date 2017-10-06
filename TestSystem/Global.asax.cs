@@ -13,6 +13,8 @@ using TestSystem.Models.UserTests;
 using TestSystem.Utilities;
 using TestSystem.ViewModels.TestAdministration;
 using TestSystem.ViewModels.UserTests;
+using System;
+using TestSystem.Controllers;
 //using TestViewModel = TestSystem.ViewModels.TestAdministration.TestViewModel;
 
 namespace TestSystem
@@ -98,6 +100,42 @@ namespace TestSystem
                 cnf.CreateMap<AssignTestPartialViewModel, UserTest>(); 
             });
             ModelBinders.Binders.Add(typeof(UserCsvModel[]), new CsvModelBinder<UserCsvModel>());
+        }
+
+        /// <summary>
+        /// Error redirector to my custom error pages
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError();
+            HttpException httpex = ex as HttpException;
+            RouteData data = new RouteData();
+            data.Values.Add("controller", "Error");
+            if (httpex == null)
+            {
+                data.Values.Add("action", "gener");
+            }
+            else
+            {
+                switch(httpex.GetHttpCode())
+                {
+                    case 404:
+                        data.Values.Add("action", "Http404");
+                        break;
+                    case 405:
+                        data.Values.Add("action", "Http405");
+                        break;
+                    default:
+                        data.Values.Add("action", "General");
+                        break;
+                }
+            }
+            Server.ClearError();
+            Response.TrySkipIisCustomErrors = true;
+            IController error = new ErrorController();
+            error.Execute(new RequestContext(new HttpContextWrapper(Context), data));
         }
     }
 }

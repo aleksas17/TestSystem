@@ -177,6 +177,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\TestAdministrationController.cs" />
     <Compile Include="Controllers\UserTestsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -217,6 +218,7 @@
   <ItemGroup>
     <Content Include="Content\AssignTest.css" />
     <Content Include="Content\CreateTest.css" />
+    <Content Include="Content\ErrorPage.css" />
     <Content Include="Content\Form.css" />
     <Content Include="Content\Global.css" />
     <Content Include="Content\jquery-ui.min.css" />
@@ -246,6 +248,7 @@
     <Content Include="Scripts\AdminTestList.js" />
     <Content Include="Scripts\AssignTest.js" />
     <Content Include="Scripts\CreateTest.js" />
+    <Content Include="Scripts\ErrorPage.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -293,6 +296,9 @@
     <Content Include="Views\TestAdministration\TestStatisticsPartial.cshtml" />
     <Content Include="Views\TestAdministration\TestStatisticsUsersPartial.cshtml" />
     <Content Include="Views\TestAdministration\TestStatisticsQuestionPartial.cshtml" />
+    <Content Include="Views\Error\Http404.cshtml" />
+    <Content Include="Views\Error\Http405.cshtml" />
+    <Content Include="Views\Error\General.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

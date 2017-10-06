@@ -1,0 +1,66 @@
+﻿body,
+html {
+    margin: 0 auto;
+    padding: 0 auto;
+    background: #f9f9f9;
+}
+
+.background-topography {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.background-topography > div {
+    overflow: hidden;
+    width: 200vw;
+    height: 200vh;
+    background: #0099ff;
+    transform: rotate(-45deg);
+
+}
+
+.background-topography > div > svg {
+    position: absolute;
+    top: -400px;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-135deg);
+}
+
+.background-topography > div > svg > path {
+    fill: none;
+    stroke: #eef1f6;
+    stroke-miterlimit:10;
+    stroke-width: 1;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+}
+
+.error-type-text {
+    top:0; bottom:0; left:0; right:0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 30vw;
+    color: #0099ff;
+    z-index: 1000;
+}
+
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dashoffset: 1000;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}

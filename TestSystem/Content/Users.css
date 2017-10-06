@@ -42,9 +42,33 @@
     color: #555555;
 }
 
-.item-header  >li {
+.item-header > li {
     width: 200px;
     font-weight: 500;
+}
+
+.item-header > li:nth-last-child(2),
+.item-container-shadow > .form-test > ul > li:nth-last-child(2),
+.item-header > li:nth-last-child(3),
+.item-container-shadow > .form-test > ul > li:nth-last-child(3) {
+    width: 60px;
+}
+
+.item-header > li:nth-last-child(2),
+.item-container-shadow > .form-test > ul > li:nth-last-child(2),
+.item-header > li:nth-last-child(3),
+.item-container-shadow > .form-test > ul > li:nth-last-child(3),
+.item-header > li:nth-last-child(4),
+.item-container-shadow > .form-test > ul > li:nth-last-child(4) {
+    display: flex;
+    justify-content: center;
+}
+
+.item-header > li:first-child,
+.item-container-shadow > .form-test > ul > li:first-child {
+    width: 250px;
+    display: inline;
+    white-space: nowrap;
 }
 
 .form-test > ul:first-child > li {

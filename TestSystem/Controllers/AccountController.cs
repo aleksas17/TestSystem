@@ -37,7 +37,7 @@ namespace TestSystem.Controllers
         /// <param name="returnUrl"></param>
         /// <returns>Rederect to specifick page depending on role</returns>
         [HttpPost]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(LoginModel model)
         {
             if (!ModelState.IsValid) return View();
             using (var uow = new UnitOfWork())
@@ -49,11 +49,6 @@ namespace TestSystem.Controllers
                 {
                     Session.Clear();
                     FormsAuthentication.SetAuthCookie(username, false);
-                    if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
-                    {
-                        return Redirect(returnUrl);
-                    }
                     var role = uow.UserRepository.GetUserRole(username);
                     return role == "Admin"
                         ? RedirectToAction("TestList", "TestAdministration")

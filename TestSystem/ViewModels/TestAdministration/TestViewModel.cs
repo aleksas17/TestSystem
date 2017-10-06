@@ -26,9 +26,6 @@ namespace TestSystem.ViewModels.TestAdministration
         /// </summary>
         public DateTime? TestEnd { get; set; }
 
-
-        public string FinishedTests { get; set; }
-
         #endregion
     }
 }
