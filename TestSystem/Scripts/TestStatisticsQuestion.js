@@ -27,14 +27,14 @@
         // Hover out code
         $(this).attr('title', $(this).data('tipText'));
         $('.tool-tip').remove();
-    }).mousemove(function (e) {
-        var mousex = e.pageX + 20; //Get X coordinates
-        var mousey = e.pageY + 20; //Get Y coordinates
-        if (mousex > $("body").width() / 2) {
-            $('.tool-tip').css({ top: mousey, right: $("body").width() - mousex + 100, left: "auto" })
-        }
-        else {
-            $('.tool-tip').css({ top: mousey, left: mousex, right: "auto" })
+        }).mousemove(function (e) {
+            var mousex = e.pageX; //Get X coordinates
+            var mousey = e.pageY + $('.tool-tip').height() * 2; //Get Y coordinates
+            if (mousex > $("body").width() / 2) {
+                $('.tool-tip').css({ top: mousey, left: mousex - $('.tool-tip').width()})
+            }
+            else {
+                $('.tool-tip').css({ top: mousey, left: mousex})
         }
     });
     // function for bad answers
@@ -46,12 +46,13 @@
     // Change page in statistic table without reloading main window
     $(".tab-holder a").on("click", function (event) {
         event.preventDefault();
-        $.ajax({
-            url: $(this).attr('href') + "&testId=" + PushedTestId,
-            type: "GET",
-        }).done(function (partialViewResult) {
-            $(".tab-holder").html(partialViewResult);
-        });
+        if ($(this).attr('href') != null) {
+            $.ajax({
+                url: $(this).attr('href') + "&testId=" + PushedTestId,
+                type: "GET",
+            }).done(function (partialViewResult) {
+                $(".tab-holder").html(partialViewResult);
+            });
+        }
     });
-    
 });

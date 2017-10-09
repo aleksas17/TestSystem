@@ -2,7 +2,7 @@
 
 namespace TestSystem.Utilities
 {
-    [DelimitedRecord(",")]
+    [DelimitedRecord(";")]
     [IgnoreFirst(1)]
     public class UserCsvModel
     {

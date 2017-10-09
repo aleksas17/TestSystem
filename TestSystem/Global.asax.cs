@@ -91,11 +91,11 @@ namespace TestSystem
             data.Values.Add("controller", "Error");
             if (httpex == null)
             {
-                data.Values.Add("action", "gener");
+                data.Values.Add("action", "Index");
             }
             else
             {
-                switch(httpex.GetHttpCode())
+                switch (httpex.GetHttpCode())
                 {
                     // Page not found
                     case 404:

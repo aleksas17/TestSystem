@@ -1,8 +1,3 @@
-@keyframes toolTipPopUp {
-    from {transform: scale3d(0, 0, 0);}
-    to {transform: scale3d(1, 1, 1);}
-}
-
 .test-statics-table,
 .test-statics-table-questions {
     background: #ffffff;
@@ -264,13 +259,12 @@
     white-space: nowrap;
     background: #737373;
     font-family: 'Roboto', sans-serif;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 100;
     color: #ffffff;
     transform: scale3d(1, 1, 1);
     transform-origin: top center;
     z-index: 1000;
-    animation: toolTipPopUp .3s cubic-bezier(0.4, 0.0, 0.2, 1)
 }
 
 /*-------------Tab Navigation-------------*/
