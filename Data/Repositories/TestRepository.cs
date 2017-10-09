@@ -10,22 +10,36 @@ namespace Data.Repositories
     {
         public TestRepository(TestSystemContext testSystemContext) : base(testSystemContext) { }
 
+        /// <summary>
+        /// Get test by its ID
+        /// </summary>
+        /// <param name="id">Test id</param>
+        /// <returns>Test</returns>
         public Test GetTestById(int id)
         {
             return DbSet.Include(a => a.Questions.Select(b => b.Answers)).Include(a=>a.UserTests)
                 .SingleOrDefault(a => a.TestId == id);
         }
 
-        public IEnumerable<Test> GetAllByStatus(string status)
-        {
-            return DbSet.Where(a => a.Status == status);
-        }
+        //public IEnumerable<Test> GetAllByStatus(string status)
+        //{
+        //    return DbSet.Where(a => a.Status == status);
+        //}
 
+        /// <summary>
+        /// Get test by its name
+        /// </summary>
+        /// <param name="name">Test name</param>
+        /// <returns>Test</returns>
         public Test GetTestByName(string name)
         {
             return DbSet.SingleOrDefault(a => a.Name == name);
         }
 
+        /// <summary>
+        /// Get all active tests for user
+        /// </summary>
+        /// <returns>Active test list</returns>
         public IEnumerable<Test> GetAllActivatedTests()
         {
             return DbSet.Where(a => a.Status == "Active" || a.Status == "Finished");

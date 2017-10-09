@@ -9,6 +9,6 @@ namespace Data.IRepositories
         string GetUserRole(string username);
         bool CheckIfUsernameExists(string username);
         IEnumerable<User> SearchByKeyword(string keyword);
-        void BulkMergeUsers(IEnumerable<User> users);
+        void AddUsers(IEnumerable<User> users);
     }
 }

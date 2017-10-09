@@ -14,7 +14,6 @@ namespace Data.Repositories
 
         public UserAnswer GetNextUserAnswer(int userTestId)
         {
-            //.OrderBy(r => Guid.NewGuid()).Take(5)
             UserAnswer userAnswer;
             var userAnswer2 = DbSet.Include(a => a.Question.Answers).Where(a => a.AnswerId == null && a.UserTestId == userTestId).OrderBy(r => Guid.NewGuid()).Take(1).ToList();
             if (userAnswer2.Count <= 0)

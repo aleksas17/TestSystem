@@ -262,7 +262,8 @@ namespace TestSystem.Controllers
                 using (var uow = new UnitOfWork())
                 {
                     var users = Mapper.Map<List<User>>(model);
-                    uow.UserRepository.BulkMergeUsers(users);
+                    uow.UserRepository.AddUsers(users);
+                    uow.Commit();
                 }
             }
             return RedirectToAction("UserList");

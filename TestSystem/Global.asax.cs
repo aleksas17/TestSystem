@@ -52,41 +52,19 @@ namespace TestSystem
                     .ForMember("Score", opt => opt.MapFrom(b => b.UserAnswers.Count(a => a.Answer.IsCorrect == 1)));
                 // Map TestCreateViewModel data to Test DB
                 cnf.CreateMap<TestCreateViewModel, Test>();
-                //
                 cnf.CreateMap<QuestionModel, Question>();
                 cnf.CreateMap<AnswerModel, Answer>();
                 cnf.CreateMap<Answer, AnswerModel>();
                 cnf.CreateMap<Test, TestStatisticsQuestionViewModel>();
-
                 // Map UserTest DB data to UserTestQuestionStatisticsModel, using this for statistics
                 cnf.CreateMap<UserTest, TestStatisticsQuestionViewModel>()
                     .ForMember(a => a.UserTestAnswer, b => b.MapFrom(src => src.User))
                     .ForMember(a=>a.Answer, b=>b.MapFrom(src =>src.UserAnswers.Select(a=>a.Answer)))
                     .ForMember(a => a.QuestionModel, b => b.MapFrom(src => src.Test.Questions));
                 cnf.CreateMap<User, UserTestAnswersModel>();
-
-                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>()
-                //    .ForMember(dest => dest.Answers, opt => opt.MapFrom(src => src.Answers));
-
-                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>();
-                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>()
-                //    .ConstructUsing(ct => Mapper.Map<Models.TestAdministration.QuestionModel>(ct.Answers))
-                //    .ForAllMembers(opt => opt.Ignore());
-                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>()
-                //    .ForMember(a => a.Answers, b => b.MapFrom(src => src.Answers));
-
-                //cnf.CreateMap<Answer, Models.TestAdministration.AnswerModel>();
-
-                //cnf.CreateMap<Test, TestTemplatesPartialViewModel>()
-                //    .ForMember(a => a.QuestionModels, b => b.MapFrom(src => src.Questions));
-                //cnf.CreateMap<Test, TestTemplatesViewModel>();
-
                 cnf.CreateMap<User, UserModel>();
                 cnf.CreateMap<Test, TestModel>();
-                //cnf.CreateMap<Answer, TestAnswer>();
                 cnf.CreateMap<UserModel, User>().ForAllMembers(a=> a.Condition((src, dest, srcVal, destVal, c) => srcVal != null));
-                //cnf.CreateMap<Question, Models.TestAdministration.QuestionModel>().ForMember(a => a.Answers, b => b.MapFrom(src => src.Answers));
-                //cnf.CreateMap<Test, TestViewModel>(); <- if somthin dosen't work uncoment
                 cnf.CreateMap<UserTest, TestListViewModel>();
                 cnf.CreateMap<UserAnswer, UserAnswerModel>();
                 cnf.CreateMap<UserAnswerModel, UserAnswer>();
@@ -105,8 +83,6 @@ namespace TestSystem
         /// <summary>
         /// Error redirector to my custom error pages
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError();
@@ -121,12 +97,15 @@ namespace TestSystem
             {
                 switch(httpex.GetHttpCode())
                 {
+                    // Page not found
                     case 404:
                         data.Values.Add("action", "Http404");
                         break;
+                    // Method Not Allowed
                     case 405:
                         data.Values.Add("action", "Http405");
                         break;
+                    // All other errors
                     default:
                         data.Values.Add("action", "General");
                         break;
