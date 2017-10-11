@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using Data.IRepositories;
 using Models;
+using System.Data.Entity.SqlServer;
 
 namespace Data.Repositories
 {
@@ -49,6 +50,17 @@ namespace Data.Repositories
         public IEnumerable<UserTest> GetUserTestsByTestId(int testId)
         {
             return DbSet.Include(a => a.User).Include(a => a.UserAnswers.Select(b => b.Answer)).Where(a => a.TestId == testId);
+        }
+
+        /// <summary>
+        /// Get user tests where time is not 0. 
+        /// Using this to filter out test that not began.
+        /// </summary>
+        /// <param name="testId">Which id to look up</param>
+        /// <returns>List of user test that are not</returns>
+        public IEnumerable<UserTest> GetUserTestsByTestIdWhereTimeNotZero(int testId)
+        {
+            return DbSet.Include(a => a.User).Include(a => a.UserAnswers.Select(b => b.Answer)).Where(a => a.TestId == testId && SqlFunctions.DatePart("second", a.Time) != 0);
         }
 
         public IEnumerable<UserTest> GetUserAnswersByTestId(int testId)

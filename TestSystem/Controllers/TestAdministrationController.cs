@@ -200,14 +200,13 @@ namespace TestSystem.Controllers
         {
             using (var uow = new UnitOfWork())
             {
-                var userTests = uow.UserTestRepository.GetUserTestsByTestId(testId);
+                var userTests = uow.UserTestRepository.GetUserTestsByTestIdWhereTimeNotZero(testId);
                 var usersScore = Mapper.Map<List<UsersScoresViewModel>>(userTests);
 
                 foreach (var userScore in usersScore)
                 {
                     userScore.Position = usersScore.Count(a => a.Score > userScore.Score) + 1;
                     userScore.Position += usersScore.Count(a => a.Score == userScore.Score && a.Time < userScore.Time);
-
                 }
                 var pageSize = 7;
                 var pageNumber = (page ?? 1);

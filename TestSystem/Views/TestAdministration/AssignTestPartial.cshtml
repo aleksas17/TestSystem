@@ -35,10 +35,20 @@
                 <li>
                     <select>
                         <option>Group Name</option>
-                    @foreach (var group in Model.Users)
-                    {
-                        <option>@group.Group</option>
-                    }
+                        @{
+                            var groupFilter = new List<string>();
+                            // filter out duplicates
+                            foreach (var group in Model.Users)
+                            {
+                                // Check if group name exist in list and is not admin
+                                if (groupFilter.FirstOrDefault(stringToCheck => stringToCheck.Contains(group.Group)) == null && group.Group != "Admin")
+                                {
+                                    groupFilter.Add(group.Group);
+                                    // Add to drop down list
+                                    <option>@group.Group</option>
+                                }
+                            }
+                        }
                     </select>
                 </li>
             </ul>
