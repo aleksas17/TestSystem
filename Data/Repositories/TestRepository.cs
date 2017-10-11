@@ -21,11 +21,6 @@ namespace Data.Repositories
                 .SingleOrDefault(a => a.TestId == id);
         }
 
-        //public IEnumerable<Test> GetAllByStatus(string status)
-        //{
-        //    return DbSet.Where(a => a.Status == status);
-        //}
-
         /// <summary>
         /// Get test by its name
         /// </summary>

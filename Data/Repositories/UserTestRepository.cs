@@ -29,7 +29,7 @@ namespace Data.Repositories
         /// <returns>All tests by given name</returns>
         public IEnumerable<UserTest> GetUserTestsByTestName(string testName)
         {
-            return DbSet.Include(a=>a.UserAnswers).Include(a=>a.User).Where(a => a.Test.Name == testName);
+            return DbSet.Include(a => a.UserAnswers).Include(a => a.User).Where(a => a.Test.Name == testName);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Data.Repositories
         /// <returns>All tests by given id</returns>
         public UserTest GetUserTestById(int id)
         {
-            return DbSet.Include(a=>a.Test).SingleOrDefault(x => x.UserTestId == id);
+            return DbSet.Include(a=>a.Test).Include(a=>a.User).SingleOrDefault(x => x.UserTestId == id);
         }
 
         /// <summary>

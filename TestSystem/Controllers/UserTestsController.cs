@@ -28,15 +28,18 @@ namespace TestSystem.Controllers
         }
 
         /// <summary>
-        /// Set test satart time and start the timer
+        /// Set test start time and start the timer
         /// </summary>
         /// <param name="userTestId">Which test to load</param>
         /// <returns>Information about test to view</returns>
         public ActionResult Test(int userTestId)
         {
+            var name = HttpContext.User.Identity.Name;
             using (var uow = new UnitOfWork())
             {
                 var userTest = uow.UserTestRepository.GetUserTestById(userTestId);
+                if(userTest!=null? !(userTest.User.Username == name):true)
+                    return RedirectToAction("TestList");
                 if (userTest.Status == "active")
                 {
                     // Set test start time, when did user start test
@@ -71,12 +74,13 @@ namespace TestSystem.Controllers
         /// <returns>Next user question with answer / no more questions go to TestFinish action</returns>
         public ActionResult TestPartial(int id)
         {
+            var name = HttpContext.User.Identity.Name;
             using (var uow = new UnitOfWork())
             {
                 var userAnswer = uow.UserAnswerRepository.GetNextUserAnswer(id);
-                if (userAnswer == null )
+                if (userAnswer == null)
                 {
-                    return RedirectToAction("TestFinish",new {id});
+                    return RedirectToAction("TestFinish", new { id });
                 }
                 var testPartialViewModel = Mapper.Map<TestPartialViewModel>(userAnswer);
                 return PartialView(testPartialViewModel);

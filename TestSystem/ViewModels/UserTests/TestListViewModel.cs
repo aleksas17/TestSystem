@@ -17,6 +17,11 @@ namespace TestSystem.ViewModels.UserTests
         /// </summary>
         public TestModel Test { get; set; }
 
+        /// <summary>
+        /// User id
+        /// </summary>
+        public int UserId { get; set; }
+
         #endregion
     }
 }
