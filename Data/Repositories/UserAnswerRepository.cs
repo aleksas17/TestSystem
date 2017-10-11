@@ -3,7 +3,6 @@ using System.Data.Entity;
 using System.Linq;
 using Data.IRepositories;
 using Models;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Data.Repositories
@@ -15,12 +14,13 @@ namespace Data.Repositories
         public UserAnswer GetNextUserAnswer(int userTestId)
         {
             UserAnswer userAnswer;
-            var userAnswer2 = DbSet.Include(a => a.Question.Answers).Where(a => a.AnswerId == null && a.UserTestId == userTestId).OrderBy(r => Guid.NewGuid()).Take(1).ToList();
+            var userAnswer2 = DbSet.Include(a => a.Question.Answers).Include(a => a.UserTest.User).Where(a => a.AnswerId == null && a.UserTestId == userTestId).OrderBy(r => Guid.NewGuid()).Take(1).ToList();
             if (userAnswer2.Count <= 0)
                 userAnswer = null;
             else
-               userAnswer = userAnswer2[0];
-            var answers = DbSet.Include(a => a.Question.Answers).Where(a => a.AnswerId == null && a.UserTestId == userTestId);
+                userAnswer = userAnswer2[0];
+               
+            //var answers = DbSet.Include(a => a.Question.Answers).Where(a => a.AnswerId == null && a.UserTestId == userTestId);
             if (userAnswer != null) userAnswer.Question.Answers = userAnswer.Question.Answers.OrderBy(r => Guid.NewGuid()).Take(5).ToList();
             return userAnswer;
         }

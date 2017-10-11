@@ -38,7 +38,8 @@ namespace TestSystem.Controllers
             using (var uow = new UnitOfWork())
             {
                 var userTest = uow.UserTestRepository.GetUserTestById(userTestId);
-                if(userTest!=null? !(userTest.User.Username == name):true)
+                // Check if test belongs to user
+                if(userTest != null? !(userTest.User.Username == name):true)
                     return RedirectToAction("TestList");
                 if (userTest.Status == "active")
                 {
@@ -70,7 +71,7 @@ namespace TestSystem.Controllers
         /// <summary>
         /// Get next test question and answers
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">User test id</param>
         /// <returns>Next user question with answer / no more questions go to TestFinish action</returns>
         public ActionResult TestPartial(int id)
         {
@@ -78,6 +79,10 @@ namespace TestSystem.Controllers
             using (var uow = new UnitOfWork())
             {
                 var userAnswer = uow.UserAnswerRepository.GetNextUserAnswer(id);
+                var userTest = uow.UserTestRepository.GetUserTestById(id);
+                // Check if test belongs to user
+                if (userTest != null ? !(userTest.User.Username == name) : true)
+                    return RedirectToAction("TestList");
                 if (userAnswer == null)
                 {
                     return RedirectToAction("TestFinish", new { id });
@@ -114,9 +119,13 @@ namespace TestSystem.Controllers
         /// <returns></returns>
         public ActionResult TestFinish(int id)
         {
+            var name = HttpContext.User.Identity.Name;
             using (var uow = new UnitOfWork())
             {
                 var userTest = uow.UserTestRepository.GetUserTestById(id);
+                // Check if test belongs to user
+                if (userTest != null ? !(userTest.User.Username == name) : true)
+                    return RedirectToAction("TestList");
                 var duration = userTest.Test.Duration;
                 if (userTest.TestStart != null && userTest.Status != "finished")
                 {
