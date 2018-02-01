@@ -39,7 +39,7 @@ namespace TestSystem.Controllers
             {
                 var userTest = uow.UserTestRepository.GetUserTestById(userTestId);
                 // Check if test belongs to user
-                if(userTest != null? !(userTest.User.Username == name):true)
+                if(userTest != null ? !(userTest.User.Username == name) : true)
                     return RedirectToAction("TestList");
                 if (userTest.Status == "active")
                 {

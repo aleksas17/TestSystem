@@ -226,6 +226,7 @@
     <Content Include="Global.asax" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Resources\Svgs\navigate_next.svg" />
     <Content Include="Resources\Svgs\navigate_next_disabled.svg" />

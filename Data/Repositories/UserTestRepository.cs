@@ -60,7 +60,8 @@ namespace Data.Repositories
         /// <returns>List of user test that are not</returns>
         public IEnumerable<UserTest> GetUserTestsByTestIdWhereTimeNotZero(int testId)
         {
-            return DbSet.Include(a => a.User).Include(a => a.UserAnswers.Select(b => b.Answer)).Where(a => a.TestId == testId && SqlFunctions.DatePart("second", a.Time) != 0);
+            var userTests = DbSet.Include(a => a.User).Include(a => a.UserAnswers.Select(b => b.Answer)).Where(a => a.TestId == testId).ToList();
+            return userTests.Where(a => a.Time.TotalSeconds != 0);
         }
 
         public IEnumerable<UserTest> GetUserAnswersByTestId(int testId)

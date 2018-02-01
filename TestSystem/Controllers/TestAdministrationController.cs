@@ -200,6 +200,7 @@ namespace TestSystem.Controllers
         {
             using (var uow = new UnitOfWork())
             {
+                var test = uow.UserTestRepository.GetUserTestsByTestIdWhereTimeNotZero(testId).ToList();
                 var userTests = uow.UserTestRepository.GetUserTestsByTestIdWhereTimeNotZero(testId);
                 var usersScore = Mapper.Map<List<UsersScoresViewModel>>(userTests);
 
@@ -228,14 +229,14 @@ namespace TestSystem.Controllers
         {
             using (var uow = new UnitOfWork())
             {
-                var userTestsAnswers = uow.UserTestRepository.GetUserAnswersByTestId(testId);
+                var userTestsAnswers = uow.UserTestRepository.GetUserAnswersByTestId(testId).ToList();
+                var answers = uow.UserAnswerRepository.GetUserAnswersByTestId(testId).GroupBy(a => a.Question.QuestionId).ToList();
                 var userAnswers = Mapper.Map<List<TestStatisticsQuestionViewModel>>(userTestsAnswers);
-                var answers = uow.UserAnswerRepository.GetUserAnswersByTestId(testId).GroupBy(a => a.Question.Name);
-                var mydictionary = new Dictionary<string, int>();
+                var mydictionary = new Dictionary<int, int>();
                 var totalAnswers = 0;
                 foreach (var a in answers)
                 {
-                    var count = a.Where(x => x.AnswerId != null).Where(x => x.Answer.IsCorrect == 1).Count();
+                    var count = a.Where(x => x.AnswerId != null && x.Answer.IsCorrect == 1).Count();
                     mydictionary.Add(a.Key, value: count);
                 }
                 foreach (var user in userAnswers.Select(b => b.UserTestAnswer))

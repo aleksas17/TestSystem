@@ -32,7 +32,7 @@ namespace TestSystem
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             using (var db = new TestSystemContext())
             {
-                Database.SetInitializer(new CreateDatabaseIfNotExists<TestSystemContext>());
+                Database.SetInitializer<TestSystemContext>(new CreateDatabaseIfNotExists<TestSystemContext>());
                 db.Database.Initialize(true);
             }
 

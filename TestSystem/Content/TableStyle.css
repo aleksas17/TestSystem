@@ -49,9 +49,18 @@
 .t-s-table-main > li > div {
     width: 100px;
     padding: 24px;
-    display: flex;
-    align-items: center;
-    height: 24px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 24px;
+}
+
+.test-statics-table > header > ul > li:nth-child(0),
+.test-statics-table > header > ul > li:nth-child(1),
+.t-s-table-main > li > div:nth-child(0),
+.t-s-table-main > li > div:nth-child(1) {
+    width: 150px;
+    text-overflow: ellipsis;
 }
 
 .t-s-table-main > li {
@@ -71,8 +80,7 @@
 .t-s-table-main > li > div:nth-child(5),
 .test-statics-table > header > ul > li:last-child,
 .t-s-table-main > li > div:last-child {
-    display: flex;
-    justify-content: center;
+    text-align: center;
     width: 50px;
     padding-right: 56px;
 }
@@ -142,6 +150,7 @@
     overflow-x: auto;
     white-space: nowrap;
     flex-direction: column;
+    margin-bottom: 17px;
 }
 
 .t-s-table-questions-main > li > ul {
@@ -156,7 +165,6 @@
 
 .t-s-table-questions-main > li > ul:first-child > li {
     position: relative;
-    width: 68px;
     height: 70px;
     cursor: pointer;
 }
@@ -231,6 +239,7 @@
 .t-s-table-questions-main > nav > li:last-child > div {
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 .t-s-table-questions-main > nav > li:last-child > div > div:first-child {

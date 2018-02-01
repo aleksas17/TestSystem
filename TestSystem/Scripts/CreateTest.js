@@ -33,6 +33,8 @@ function AddChoice() {
 
 /*--------When document fully loads--------*/
 $(document).ready(function () {
+    $(".create-new-test").css("display", "flex");
+
     /*--------Custom radio button by class grouping, add and remove check from item when needed--------*/
     $('body').on("change", "input[type=radio]", function () {
         var checkboxClassName = $(this).attr("class");

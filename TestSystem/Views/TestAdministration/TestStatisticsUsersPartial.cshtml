@@ -19,8 +19,8 @@
     @foreach (var user in Model)
     {
         <li>
-            <div>@user.FirstName</div>
-            <div>@user.LastName</div>
+            <div title="@user.FirstName">@user.FirstName</div>
+            <div title="@user.LastName">@user.LastName</div>
             <div>@user.Score</div>
             <div>@user.Time.ToString(@"mm\:ss")</div>
             <div>@user.Position</div>

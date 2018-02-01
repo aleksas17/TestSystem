@@ -11,7 +11,7 @@ namespace TestSystem.ViewModels.TestAdministration
         /// <summary>
         /// How much there are questions answered good
         /// </summary>
-        public Dictionary<string, int> QuestionTotalGood { get; set; }
+        public Dictionary<int, int> QuestionTotalGood { get; set; }
 
         /// <summary>
         /// How much user did the test
